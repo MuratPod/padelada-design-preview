@@ -1,0 +1,16 @@
+{
+  "name": "Padelada",
+  "short_name": "Padelada",
+  "description": "Pádel donde todo es justo: parejas por nivel real, ranking verificado y Falta uno.",
+  "lang": "es",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#FFF1EA",
+  "theme_color": "#24123A",
+  "icons": [
+    { "src": "/assets/app-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/app-icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

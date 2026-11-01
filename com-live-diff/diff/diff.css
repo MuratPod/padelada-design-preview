@@ -1,0 +1,43 @@
+/* com-live-diff — surgical layer over live home-v7 (dist-preview). D4 only. */
+:root{--mint:#FFB547}
+.nobr{white-space:nowrap}
+.hero h1{letter-spacing:-.025em}
+/* pillar eyebrow: plain type, no chip */
+.dx-pillar{margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#FFB547}
+/* hero drive-in */
+.dx-drive .hero-stage{will-change:transform;transform:translate3d(0,var(--dx-y,0px),0) scale(var(--dx-s,1));transition:none}
+.dx-drive .copy{transform:translate3d(0,var(--dx-ty,0px),0)}
+/* counting rating */
+.dx-rating{display:flex;flex-direction:column;align-items:center;gap:6px;margin:8px 0 18px}
+.dx-num{font-size:clamp(72px,11vw,148px);font-weight:700;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:#F5F5F7}
+.dx-rating-note{font-size:15px;color:#A8AAB2}
+/* Paddi: flat conversation, no cards, no hover */
+.dx-paddi .copy{max-width:720px}
+.dx-paddi-talk{width:min(680px,100%);margin:8px auto 0;display:grid;grid-template-columns:72px 1fr;gap:4px 24px;align-items:start;text-align:left}
+.dx-paddi-face{grid-row:1/3;width:72px;height:72px}
+.dx-lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:22px;border-left:1px solid rgba(245,245,247,.14);padding-left:24px}
+.dx-lines li{font-size:19px;line-height:1.45;color:#F5F5F7}
+.dx-lines .dx-q{color:#A8AAB2}
+.dx-who{display:block;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;color:#A8AAB2}
+.dx-a .dx-who{color:#FFB547}
+.dx-paddi-foot{grid-column:2;margin:22px 0 0 24px;font-size:14px;color:#A8AAB2}
+@media(max-width:699px){.dx-paddi-talk{grid-template-columns:1fr;padding:0 22px}.dx-paddi-face{grid-row:auto;width:56px;height:56px}.dx-paddi-foot{grid-column:1;margin-left:24px}.dx-lines li{font-size:17px}}
+/* Messenger: horizontal swipe of phone screens */
+#chats.dx-swipe .shots{display:flex;gap:40px;width:100%;max-width:none;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 max(24px,calc(50vw - 170px));scrollbar-width:none;overscroll-behavior-x:contain}
+#chats.dx-swipe .shots::-webkit-scrollbar{display:none}
+#chats.dx-swipe .shots figure{flex:0 0 min(320px,76vw);scroll-snap-align:center;margin:0;display:flex;flex-direction:column;align-items:center}
+#chats.dx-swipe .shots .phone{width:100%}
+.dx-dots{display:flex;justify-content:center;gap:10px;margin-top:22px}
+.dx-dots button{width:8px;height:8px;border-radius:50%;border:0;padding:0;background:rgba(245,245,247,.28);cursor:pointer;transition:background .3s,transform .3s}
+.dx-dots button[aria-current=true]{background:#FFB547;transform:scale(1.25)}
+/* Apple Watch: de-card the live w11 rail — flat stage, swipe, no lift, no green glow */
+#reloj .w11-video{background:radial-gradient(60% 70% at 50% 108%,rgba(255,181,71,.16),transparent 70%),#0B0C0E;box-shadow:none}
+#reloj .w11-cards{display:flex!important;gap:56px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 max(24px,calc(50% - 160px))}
+#reloj .w11-cards::-webkit-scrollbar{display:none}
+#reloj .w11-card{flex:0 0 min(320px,78vw);scroll-snap-align:center;background:none!important;box-shadow:none!important;border-radius:0;transform:none!important;overflow:visible}
+#reloj .w11-card:hover{transform:none!important;box-shadow:none!important}
+#reloj .w11-stage{background:radial-gradient(50% 55% at 50% 55%,rgba(255,181,71,.10),transparent 72%);height:340px}
+#reloj .w11-text{padding:18px 4px 0;text-align:center}
+#reloj .w11-nav{display:none!important}
+@media(prefers-reduced-motion:reduce){.dx-drive .hero-stage,.dx-drive .copy{transform:none!important}.dx-dots button{transition:none}}
+.lang-suggest,[class*="lang-toast"],[class*="lang-hint"]{display:none!important}

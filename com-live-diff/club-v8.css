@@ -1,0 +1,113 @@
+/* Club Padelada page v8. Builds on home-v7.css (scenes, reveal, device + bezel); only club-specific additions live here. */
+.club-hero{padding-bottom:40px}
+.club-hero .copy{max-width:720px}
+.club-hero .sub+.sub{margin-top:2px}
+@media(min-width:1440px){
+ .scene.hero.club-hero{flex-direction:column;align-items:center;text-align:center;padding:72px 48px 40px;gap:32px}
+ .scene.hero.club-hero .copy{align-items:center;text-align:center;flex:none;max-width:760px}
+ .scene.hero.club-hero .sub{text-align:center}
+ .scene.hero.club-hero .cta{justify-content:center}
+ .scene.hero.club-hero h1{max-width:12em}
+}
+.club-hero .sub{max-width:34em}
+
+/* Sections: same heading scale and rhythm as the homepage scenes. */
+.cs{padding-top:72px;gap:36px}
+.cs h2{font-weight:400;letter-spacing:-.035em;line-height:1.08;font-size:var(--story-h2);max-width:14em}
+.cs .copy{gap:16px;max-width:720px}
+.cs .sub{max-width:40em;font-weight:400;font-size:clamp(17px,1.25vw,20px);line-height:1.5;letter-spacing:-.011em;text-wrap:pretty}
+.cs .shots{display:grid;gap:28px 40px;align-items:start}
+.cs .shots figure{margin:0;min-width:0;display:flex;flex-direction:column;align-items:center}
+.cs .shots .phone{width:min(300px,100%)}
+.cs .screen{background:#FFF1EA}
+.cs figcaption{font-size:16px;font-weight:500;line-height:1.35;letter-spacing:-.011em;color:var(--muted);margin-top:14px;max-width:18em;text-align:center}
+.cs .shots.one{grid-template-columns:minmax(0,1fr);width:min(300px,100%)}
+.cs .shots.three{grid-template-columns:repeat(3,minmax(0,1fr));width:min(1040px,100%);gap:28px 32px}
+.cs .shots.three .phone{width:min(280px,100%)}
+
+/* Free list + subscription: copy on the left, phone on the right. */
+.club-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);align-items:center;gap:64px;width:min(1000px,100%);text-align:left}
+.club-split .copy{align-items:flex-start;max-width:none;gap:16px}
+.club-split .shots.one{width:100%}
+/* Phone on the left (no photos since Murat 18:46: copy and devices alternate sides). */
+.club-split.flip{grid-template-columns:minmax(0,300px) minmax(0,1fr)}
+.club-split.flip .shots{order:-1}
+.cs h2.h2s{font-size:clamp(26px,3vw,40px);margin-top:36px}
+
+/* Accessible accordion. */
+.faq{padding-bottom:96px}
+.faq-list{width:min(760px,100%);text-align:left;border-top:1px solid color-mix(in srgb,var(--ink) 14%,transparent)}
+.faq-item{border-bottom:1px solid color-mix(in srgb,var(--ink) 14%,transparent)}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;padding:16px 0;font-size:clamp(18px,1.5vw,21px);font-weight:500;line-height:1.3;letter-spacing:-.014em;color:var(--ink);text-wrap:pretty}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'';flex:none;width:10px;height:10px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-3px) rotate(45deg);transition:transform .3s var(--ease)}
+.faq-item[open] summary::after{transform:translateY(2px) rotate(-135deg)}
+.faq-item summary:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:8px}
+.faq-item p{margin:0 0 20px;max-width:36em;font-size:clamp(17px,1.25vw,20px);line-height:1.5;color:var(--muted);letter-spacing:-.011em;text-wrap:pretty}
+
+@media(max-width:1023px){
+ .club-split{grid-template-columns:minmax(0,1fr);gap:40px;text-align:center}
+ .club-split .copy{align-items:center}
+ .club-split .shots.one{width:min(300px,100%);margin-inline:auto}
+ .club-split.flip{grid-template-columns:minmax(0,1fr)}
+ .club-split.flip .shots{order:0}
+}
+@media(max-width:860px){
+ .cs{padding-top:28px;gap:28px}
+ .cs .shots.three{display:flex;width:100%;max-width:none;gap:14px;padding:0 18px 2px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:18px;overscroll-behavior-x:contain;scrollbar-width:none}
+ .cs .shots.three::-webkit-scrollbar{display:none}
+ .cs .shots.three figure{flex:0 0 78%;scroll-snap-align:start}
+ .cs .shots.three .phone{width:100%}
+ .cs .shots.three .device.phone{filter:none}
+ .faq{padding-bottom:64px}
+}
+@media(prefers-reduced-motion:reduce){.faq-item summary::after{transition:none}}
+
+/* Sample member cards (.pd-card from level-colors.css). */
+.club-cards{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:20px;width:min(1080px,100%);text-align:left}
+.club-cards li{min-width:0;flex:0 0 calc((100% - 60px)/4)}
+.club-cards .pd-card{width:100%}
+.club-cards .pd-card.is-guest .pd-card__level strong{opacity:.45}
+.club-cards:focus-visible{outline:2px solid var(--ink);outline-offset:6px;border-radius:16px}
+
+@media(max-width:1023px){
+ .club-cards li{flex-basis:calc((100% - 40px)/3)}
+}
+@media(max-width:860px){
+ .club-cards{flex-wrap:nowrap;justify-content:flex-start;width:100%;gap:14px;padding:0 18px 32px;margin-bottom:-18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:18px;overscroll-behavior-x:contain;scrollbar-width:none}
+ .club-cards::-webkit-scrollbar{display:none}
+ .club-cards li{flex:0 0 min(78%,320px);scroll-snap-align:start}
+}
+/* Member card: physical card (ISO ID-1, 85.6:54), corners 7% of the width, foil sheen + fine noise, Wallet-pass feel. Sizes scale with the card (container query). */
+.club-cards li{container-type:inline-size}
+.club-cards .pd-card{aspect-ratio:85.6/54;border-radius:7cqw;padding:6cqw 6.4cqw 6.2cqw;gap:0 4.4cqw;box-shadow:0 0 0 1px rgba(255,255,255,.3) inset,0 0 0 1px rgba(36,18,58,.08),0 2px 4px rgba(20,8,40,.10),0 22px 34px -16px rgba(20,8,40,.42)}
+.club-cards .pd-card>*{position:relative;z-index:2}
+.club-cards .pd-card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;opacity:.16;mix-blend-mode:multiply;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .14 0 0 0 0 .07 0 0 0 0 .23 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.club-cards .pd-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;box-shadow:none;background:linear-gradient(112deg,rgba(255,255,255,0) 14%,rgba(255,255,255,.42) 34%,rgba(255,255,255,.10) 46%,rgba(255,255,255,0) 58%),linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0) 42%)}
+.club-cards .pd-card.is-guest::before,.club-cards .pd-card.is-guest::after{display:none}
+.club-cards .pd-card__brand{font-size:min(3.4cqw,12px)}
+.club-cards .pd-card__mark{display:inline-flex;align-items:center;gap:2.2cqw;min-width:0}
+.club-cards .pd-card__mark img{display:block;width:7.6cqw;height:7.6cqw;flex:none}
+.club-cards .pd-card__mark b{font-size:5.6cqw;line-height:1}
+.club-cards .pd-card__mark em{font-style:normal;font-weight:500;font-size:3.4cqw;letter-spacing:.2em;text-transform:uppercase;opacity:.72;white-space:nowrap}
+.club-cards .pd-card__chip{font-size:3.7cqw;padding:1.3cqw 3cqw;line-height:1.2}
+.club-cards .pd-card__level{gap:2.4cqw;font-size:3.4cqw}
+.club-cards .pd-card__level strong{font-size:17cqw}
+.club-cards .pd-card__photo{width:21cqw;height:21cqw;box-shadow:0 0 0 .8cqw rgba(255,255,255,.95),0 1.4cqw 3cqw -1cqw rgba(36,18,58,.4)}
+.club-cards .pd-card__name{font-size:6.2cqw}
+.club-cards .pd-card__meta{font-size:4cqw;margin-top:.8cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.25}
+.club-cards .pd-card.is-captain{border-width:1.5cqw;box-shadow:inset 0 0 0 .55cqw rgba(36,18,58,.62),0 0 0 1px var(--gold-deep),0 2px 4px rgba(20,8,40,.10),0 22px 34px -16px rgba(20,8,40,.42)}
+.club-cards .pd-card.is-captain .pd-card__photo{box-shadow:0 0 0 .8cqw #fff,0 0 0 1.9cqw var(--gold)}
+.club-cards .pd-card.is-captain .pd-card__chip{font-size:3.7cqw}
+.club-cards .pd-card.is-guest{box-shadow:0 0 0 1px var(--pd-card-guest-line) inset,0 14px 26px -20px rgba(20,8,40,.35)}
+.club-cards .pd-card.is-guest .pd-card__mark img{filter:grayscale(1);opacity:.55}
+
+/* Phones sit on the page background: the soft shadow follows the device silhouette, no lighter plate behind the frame. */
+.cs .phone::before{box-shadow:none}
+.cs .device.phone{filter:drop-shadow(0 26px 30px rgba(36,18,58,.16))}
+.club-cards .pd-card.is-guest .pd-card__mark em{display:none}
+.club-cards .pd-card__brand{gap:2cqw}
+
+/* Тёмная тема D4: остатки сливового (#352052/#CDBFD6/--night/#FFF1EA) -> графит */
+html[data-theme=dark] .cs .screen{background:#0B0C0E}html[data-theme=dark] .cs .device.phone{filter:drop-shadow(0 26px 30px rgba(0,0,0,.45))}
+@media(prefers-color-scheme:dark){html:not([data-theme=light]) .cs .screen{background:#0B0C0E}html:not([data-theme=light]) .cs .device.phone{filter:drop-shadow(0 26px 30px rgba(0,0,0,.45))}}

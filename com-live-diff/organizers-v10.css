@@ -1,0 +1,108 @@
+/* /<lang>/organizers/ — «Организаторам» v10. Sits on home-v7.css (header, tokens, device bezels, reveal, .band).
+   Devices stand directly on the page background: no frame, plate or tinted box behind a phone or the watch. */
+.og-hero h1{font-size:clamp(40px,7.4vw,92px);font-weight:400;letter-spacing:-.045em;line-height:1.02;max-width:11em;text-wrap:balance}
+.og-hero .copy{max-width:780px;gap:22px}
+.og-hero .sub{font-size:clamp(19px,2vw,26px);line-height:1.4;max-width:30em;font-weight:400;letter-spacing:-.014em;text-wrap:pretty}
+.og-hero .hero-stage{width:100%;align-items:center}
+.og-hero .hero-stage .phone{width:min(330px,70vw)}
+.og-fig{margin:0;display:flex;flex-direction:column;align-items:center;min-width:0}
+.og-fig figcaption{margin-top:20px;font-size:15px;font-weight:500;line-height:1.35;color:var(--muted);text-align:center;text-wrap:balance;max-width:14em}
+.og-fig .device{width:100%}
+.og-fig .phone{width:100%}
+.og-p{margin:0;font-size:clamp(21px,2.3vw,32px);font-weight:400;line-height:1.28;letter-spacing:-.024em;color:var(--ink);text-wrap:pretty}
+/* one paragraph + one or two phones, copy alternating left / right */
+.og-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:72px;width:min(1120px,100%);margin-inline:auto;padding:104px 24px;text-align:left}
+.og-split .copy{align-items:flex-start;max-width:30em;justify-self:center}
+.og-flip .copy{order:2}
+.og-devices{display:flex;justify-content:center;align-items:flex-end;gap:clamp(14px,2.4vw,28px);width:100%;min-width:0}
+.og-devices .og-fig{flex:1 1 0;max-width:300px}
+.og-devices.og-one .og-fig{flex:0 1 320px;max-width:320px}
+.og-close{padding:120px 24px 136px;gap:0}
+.og-close .copy{max-width:760px;gap:30px}
+.og-close .og-p{font-size:clamp(26px,3.4vw,44px);line-height:1.18;letter-spacing:-.032em}
+.og-close .og-note{margin:-6px auto 0;max-width:620px;font-size:clamp(17px,1.5vw,21px);line-height:1.45;color:var(--muted,inherit);opacity:.82;text-wrap:pretty}
+@media(max-width:900px){
+ .og-split{grid-template-columns:minmax(0,1fr);gap:40px;padding:72px 18px;text-align:center}
+ .og-flip .copy{order:0}
+ .og-split .copy{max-width:26em;align-items:center}
+ .og-p{font-size:clamp(19px,5.2vw,24px)}
+ .og-devices .og-fig,.og-devices.og-one .og-fig{max-width:300px}
+ .og-devices.og-one .og-fig{flex-basis:min(300px,76vw)}
+ .og-close{padding:80px 18px 96px}
+}
+@media(max-width:560px){
+ .og-split .og-devices:not(.og-one){gap:12px}
+ .og-fig figcaption{font-size:14px;margin-top:14px}
+}
+/* light / dark screens: one <picture> per theme, the other is display:none (lazy → never fetched) */
+.og-fig picture,.screen picture{display:contents}
+.screen picture.og-dark{display:none}
+html[data-theme=dark] .screen picture.og-light{display:none}
+html[data-theme=dark] .screen picture.og-dark{display:contents}
+@media(prefers-color-scheme:dark){
+ html:not([data-theme=light]) .screen picture.og-light{display:none}
+ html:not([data-theme=light]) .screen picture.og-dark{display:contents}
+}
+@media(prefers-reduced-motion:reduce){.og-fig,.og-fig .device{transform:none!important}}
+
+/* ---- v10 review fixes ---- */
+:root{--og-pw:300px}
+.og-fig .device{width:100%}
+.og-fig figcaption{margin-top:20px}
+/* hero ≥1024: copy on the header container's left edge (1200px, 22px inset), phone on the right, centred vertically */
+@media(min-width:1024px){
+ .scene.og-hero{flex-direction:row;align-items:center;justify-content:space-between;text-align:left;gap:56px;box-sizing:border-box;width:min(1200px,100%);margin-inline:auto;padding:48px 22px 56px;min-height:min(860px,calc(100svh - 52px))}
+ .scene.og-hero .copy{flex:1 1 0;min-width:0;max-width:none;align-items:flex-start;text-align:left}
+ .og-hero h1{font-size:clamp(56px,6.1vw,88px);max-width:none;line-height:1}
+ .og-hero .sub{text-align:left;max-width:26em}
+ .og-hero .cta{justify-content:flex-start}
+ .og-hero .hero-download{text-align:left;align-items:flex-start}
+ .og-hero .hero-stage{width:auto;flex:none}
+ .og-hero .hero-stage .phone{width:330px}
+}
+/* p2 (#schet): the watch and the two phones, each in its own column — nothing overlaps (2026-10-18: the old negative margin
+   put the watch over the confirm phone and pushed its caption 24–29px off its centre). Captions share one row and each is
+   centred under its own device. The watch is ~0.6 of a phone's width (the real 46 mm case next to a 6.9" phone) and sits on
+   the phones' vertical centre. 701–1023px: the whole row scales down; ≤700px: see below. */
+.og-wide{--g:clamp(32px,4.4vw,64px);--pw:min(var(--og-pw),calc((100vw - 48px - 2*var(--g))/2.6));--ww:calc(var(--pw)*.6)}
+.og-wide .og-devices{display:grid;grid-template-columns:var(--ww) var(--pw) var(--pw);grid-template-rows:auto auto;column-gap:var(--g);row-gap:0;justify-content:center;width:auto;max-width:100%}
+.og-wide .og-devices .og-fig{display:grid;grid-template-rows:subgrid;grid-template-columns:minmax(0,1fr);grid-row:1/3;justify-items:center;width:100%;max-width:none;flex:none;min-width:0}
+.og-wide .og-devices .og-fig .device{align-self:center;width:100%}
+.og-wide .og-devices .og-fig figcaption{align-self:start;justify-self:center;max-width:100%}
+/* ≥1024px the watch column is narrow (0.6 phone): its caption may use most of the column gap on each side to stay on one line
+   like the phones' (the fig track is minmax(0,1fr), so a wide caption never widens the watch; it stays centred) */
+@media(min-width:1024px){.og-wide .og-devices .og-w figcaption{width:max-content;max-width:calc(var(--ww) + 2*var(--g) - 16px)}}
+/* p4: two phones at the same size as everywhere else */
+.og-pair{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px}
+.og-pair .og-devices{gap:28px}
+.og-pair .og-devices .og-fig{flex:0 1 var(--og-pw);max-width:var(--og-pw)}
+.og-devices.og-one .og-fig{flex:0 1 var(--og-pw);max-width:var(--og-pw)}
+@media(max-width:900px){
+ .og-pair{grid-template-columns:minmax(0,1fr);gap:40px}
+ .og-wide{padding:72px 18px}
+}
+/* ≤700px (phones, 2026-10-18 Murat: «два маленьких экрана» looked poor): one large «Подтверждение счёта» phone (the size of the
+   single phones of the other sections, min(300px,76vw)), under it the round-timer watch, centred; each with its own caption.
+   The «Таблица» phone is not shown on phones (desktop ≥701px is unchanged). DOM order stays watch · confirm · table. */
+@media(max-width:700px){
+ .og-wide{--pw:min(300px,76vw);--ww:min(200px,54vw)}
+ .og-wide .og-devices{grid-template-columns:var(--pw);grid-template-rows:auto auto auto auto}
+ .og-wide .og-devices .og-w + .og-fig{grid-column:1;grid-row:1/3}
+ .og-wide .og-devices .og-w{grid-column:1;grid-row:3/5;margin-top:48px}
+ .og-wide .og-devices .og-w .device{width:var(--ww)}
+ .og-wide .og-devices .og-w figcaption{max-width:14em}
+ .og-wide .og-devices .og-w + .og-fig + .og-fig{display:none}
+}
+/* ---- section rhythm (gap fix, 2026-10-17) ----
+   One vertical rhythm for every block after the hero, the same as the homepage and /club/: 168px of air between the
+   last caption of a block and the first device or paragraph of the next one (84 + 84), 100px on phones (50 + 50).
+   The p2 row (#schet) used the generic .scene padding (132 / 96) and the split blocks 104 / 104: 200–224px of empty
+   page, and with the old reveal (12% of a 650px phone had to be on screen) the strip under the row read as 400+px. */
+.scene.og-wide{padding:112px 24px 84px}
+.og-split,.og-pair{padding-block:84px}
+.og-close{padding-top:84px}
+@media(max-width:900px){
+ .scene.og-wide{padding:28px 18px 50px}
+ .og-split,.og-pair{padding-block:50px}
+ .og-close{padding-top:50px}
+}
