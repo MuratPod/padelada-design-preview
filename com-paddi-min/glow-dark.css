@@ -1,0 +1,46 @@
+/* Тёмная тема: мягкие медленные пятна свечения по всем краям экрана (Мурат 19.10 23:28).
+   Только радиальные градиенты + transform: без filter: blur и без перерисовки на каждом кадре.
+   Светлая тема не меняется. prefers-reduced-motion — те же пятна, но неподвижные. */
+:root[data-theme="dark"] .page-glow {
+  --dg: clamp(440px, 78vmin, 880px);
+  background:
+    radial-gradient(60vmax 40vmax at 0% 58%, rgba(46, 91, 196, .2), transparent 70%),
+    radial-gradient(70vmax 30vmax at 50% 0%, rgba(58, 107, 208, .10), transparent 70%),
+    radial-gradient(70vmax 30vmax at 50% 100%, rgba(255, 181, 71, .08), transparent 70%);
+}
+:root[data-theme="dark"] .page-glow > :nth-child(1), :root[data-theme="dark"] .page-glow > :nth-child(2), :root[data-theme="dark"] .page-glow > :nth-child(3), :root[data-theme="dark"] .page-glow::before, :root[data-theme="dark"] .page-glow::after {
+  content: ""; display: block; position: absolute; width: var(--dg); height: var(--dg); min-width: 0; min-height: 0;
+  border-radius: 50%; will-change: transform; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate;
+}
+:root[data-theme="dark"] .page-glow > :nth-child(1) { top: calc(var(--dg) * -.42); left: calc(var(--dg) * -.42); opacity: .62; background: radial-gradient(circle closest-side, #3A6BD0 0, transparent 70%); animation-name: dg-a; animation-duration: 34s; animation-delay: 0s; }
+:root[data-theme="dark"] .page-glow > :nth-child(2) { top: 34%; right: calc(var(--dg) * -.52); left: auto; bottom: auto; opacity: .5; background: radial-gradient(circle closest-side, #2E5BC4 0, transparent 70%); animation-name: dg-b; animation-duration: 41s; animation-delay: -9s; }
+:root[data-theme="dark"] .page-glow > :nth-child(3) { bottom: calc(var(--dg) * -.46); left: calc(var(--dg) * -.36); top: auto; right: auto; opacity: .26; background: radial-gradient(circle closest-side, #FFB547 0, transparent 70%); animation-name: dg-c; animation-duration: 37s; animation-delay: -17s; }
+:root[data-theme="dark"] .page-glow::before { top: calc(var(--dg) * -.5); right: calc(var(--dg) * -.3); opacity: .22; background: radial-gradient(circle closest-side, #FF7A59 0, transparent 70%); animation-name: dg-d; animation-duration: 45s; animation-delay: -6s; }
+:root[data-theme="dark"] .page-glow::after { bottom: calc(var(--dg) * -.52); right: calc(var(--dg) * -.24); opacity: .45; background: radial-gradient(circle closest-side, #3557B8 0, transparent 70%); animation-name: dg-e; animation-duration: 39s; animation-delay: -22s; }
+@media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) .page-glow {
+  --dg: clamp(440px, 78vmin, 880px);
+  background:
+    radial-gradient(60vmax 40vmax at 0% 58%, rgba(46, 91, 196, .2), transparent 70%),
+    radial-gradient(70vmax 30vmax at 50% 0%, rgba(58, 107, 208, .10), transparent 70%),
+    radial-gradient(70vmax 30vmax at 50% 100%, rgba(255, 181, 71, .08), transparent 70%);
+}
+:root:not([data-theme="light"]) .page-glow > :nth-child(1), :root:not([data-theme="light"]) .page-glow > :nth-child(2), :root:not([data-theme="light"]) .page-glow > :nth-child(3), :root:not([data-theme="light"]) .page-glow::before, :root:not([data-theme="light"]) .page-glow::after {
+  content: ""; display: block; position: absolute; width: var(--dg); height: var(--dg); min-width: 0; min-height: 0;
+  border-radius: 50%; will-change: transform; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate;
+}
+:root:not([data-theme="light"]) .page-glow > :nth-child(1) { top: calc(var(--dg) * -.42); left: calc(var(--dg) * -.42); opacity: .62; background: radial-gradient(circle closest-side, #3A6BD0 0, transparent 70%); animation-name: dg-a; animation-duration: 34s; animation-delay: 0s; }
+:root:not([data-theme="light"]) .page-glow > :nth-child(2) { top: 34%; right: calc(var(--dg) * -.52); left: auto; bottom: auto; opacity: .5; background: radial-gradient(circle closest-side, #2E5BC4 0, transparent 70%); animation-name: dg-b; animation-duration: 41s; animation-delay: -9s; }
+:root:not([data-theme="light"]) .page-glow > :nth-child(3) { bottom: calc(var(--dg) * -.46); left: calc(var(--dg) * -.36); top: auto; right: auto; opacity: .26; background: radial-gradient(circle closest-side, #FFB547 0, transparent 70%); animation-name: dg-c; animation-duration: 37s; animation-delay: -17s; }
+:root:not([data-theme="light"]) .page-glow::before { top: calc(var(--dg) * -.5); right: calc(var(--dg) * -.3); opacity: .22; background: radial-gradient(circle closest-side, #FF7A59 0, transparent 70%); animation-name: dg-d; animation-duration: 45s; animation-delay: -6s; }
+:root:not([data-theme="light"]) .page-glow::after { bottom: calc(var(--dg) * -.52); right: calc(var(--dg) * -.24); opacity: .45; background: radial-gradient(circle closest-side, #3557B8 0, transparent 70%); animation-name: dg-e; animation-duration: 39s; animation-delay: -22s; }
+}
+
+@keyframes dg-a { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(9vmin, 7vmin, 0) scale(1.12); } }
+@keyframes dg-b { from { transform: translate3d(0, 0, 0) scale(1.05); } to { transform: translate3d(-10vmin, 9vmin, 0) scale(.92); } }
+@keyframes dg-c { from { transform: translate3d(0, 0, 0) scale(.95); } to { transform: translate3d(11vmin, -8vmin, 0) scale(1.1); } }
+@keyframes dg-d { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(-9vmin, 8vmin, 0) scale(1.15); } }
+@keyframes dg-e { from { transform: translate3d(0, 0, 0) scale(1.08); } to { transform: translate3d(-8vmin, -10vmin, 0) scale(.94); } }
+@media (prefers-reduced-motion: reduce) {
+  .page-glow > *, .page-glow::before, .page-glow::after { animation: none !important; will-change: auto; }
+}

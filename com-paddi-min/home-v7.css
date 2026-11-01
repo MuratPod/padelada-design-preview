@@ -1,0 +1,604 @@
+:root{--coral:#FF5E5B;--mango:#FFA62B;--mint:#3DDBB0;--night:#24123A;--bg:#FFF1EA;--surface:#fff;--sunk:#FBE3D8;--ink:#24123A;--muted:#6E5E7A;--accent:#C03237;--ease:cubic-bezier(.25,.1,.25,1)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Golos Text',system-ui,sans-serif;line-height:1.5;overflow-x:clip;-webkit-font-smoothing:antialiased;isolation:isolate}
+img{display:block}
+button,input,select,textarea{font:inherit;letter-spacing:inherit}
+.page-glow{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}.glow{position:absolute;width:min(90vw,840px);height:min(90vw,840px);min-width:400px;min-height:400px;border-radius:50%}
+.g1{background:radial-gradient(circle closest-side,var(--coral) 0,transparent 70%);opacity:.3;top:-240px;left:-240px}.g2{background:radial-gradient(circle closest-side,var(--mango) 0,transparent 70%);opacity:.26;top:22%;right:-260px}.g3{background:radial-gradient(circle closest-side,var(--mint) 0,transparent 70%);opacity:.2;bottom:-260px;left:-100px}
+/* header */
+.langs{display:flex;gap:2px;padding:3px;border-radius:999px;background:var(--sunk)}.langs a{min-width:36px;height:32px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;font-weight:700;font-size:12px;color:var(--ink);text-decoration:none}.langs a.on{background:var(--night);color:var(--bg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:999px;background:var(--coral);color:var(--night);font-weight:700;font-size:16px;text-decoration:none;border:0;cursor:pointer;transition:transform .15s var(--ease),filter .2s}.btn:hover{filter:brightness(1.05)}
+.ghost{display:inline-flex;align-items:center;min-height:48px;padding:0 20px;border-radius:999px;color:var(--ink);font-weight:700;text-decoration:none;box-shadow:inset 0 0 0 1.5px var(--ink);transition:transform .15s var(--ease)}
+button.ghost{border:0;background:transparent;font:inherit;font-weight:700;cursor:pointer;text-align:center;justify-content:center}
+.share{display:flex;flex-direction:column;align-items:center;gap:6px}
+.share-status{max-width:28ch;font-size:14px;text-align:center}
+.share-status:empty{display:none}
+.tap:active,.btn:active,.ghost:active{transform:scale(.96)}
+/* scenes */
+.scene{display:flex;flex-direction:column;align-items:center;text-align:center;gap:48px;padding:132px 24px 96px}
+.copy{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:880px}
+.kicker{font-weight:700;font-size:12px;letter-spacing:1.44px;text-transform:uppercase;color:var(--accent);margin:0}
+h1,h2{font-family:'Golos Text',sans-serif;font-weight:500;letter-spacing:-.025em;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(40px,5.6vw,80px)}:root{--story-h2:clamp(32px,4.2vw,56px)}@media (max-width:359px){:root{--story-h2:28px}}#watch.bag h2{text-wrap:pretty}h2{font-size:clamp(34px,4.6vw,64px)}
+.sub{margin:0;font-size:clamp(19px,1.6vw,24px);line-height:1.3;letter-spacing:-.016em;max-width:26em;color:var(--muted)}
+.free{margin:4px 0 0;font-size:clamp(20px,1.8vw,26px);font-weight:500;letter-spacing:-.02em}
+.note{margin:0;font-size:16px;color:var(--muted);max-width:34em}
+.cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.num{font-family:'Montserrat Alternates';font-weight:800}
+/* devices (repo technique: official bezel over masked screen) */
+.stage{display:flex;justify-content:center;align-items:flex-end;gap:28px;width:min(1040px,100%)}
+.device{position:relative;flex:none;line-height:0;isolation:isolate}
+.device::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none}
+.screen{position:absolute;overflow:hidden;z-index:0}
+.phone .screen{left:5.102%;top:2.2%;width:89.796%;height:95.6%;border-radius:12.6%/5.8%}
+.screen img{display:block;width:100%;height:100%;object-fit:contain;object-position:top center}
+.phone .screen img{object-fit:cover;object-position:top center}
+/* Screens are <picture class="frame"> (AVIF/WebP + PNG fallback): the wrapper takes no box, so img rules apply as before. */
+picture.frame{display:contents}
+.screen .glass{position:absolute;inset:0;background:linear-gradient(180deg,#FFFCF9,#F3E3D8);box-shadow:inset 0 0 0 1px rgba(255,255,255,.85)}
+html[data-theme=dark] .screen .glass{background:linear-gradient(180deg,#2E2F33,#232427);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+.screen:has(.glass),.watch .screen:has(.glass){background:#F3E3D8}
+html[data-theme=dark] .screen:has(.glass),html[data-theme=dark] .watch .screen:has(.glass){background:#232427}
+.bezel{position:relative;z-index:1;width:100%;height:auto;pointer-events:none}
+.phone{width:min(340px,80vw)}
+.phone::before{border-radius:14%/6.6%;box-shadow:0 28px 40px rgba(36,18,58,.18)}
+.hero-stage .phone{width:min(360px,62vw)}.hero-stage{align-items:center}
+/* cards — app card language */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:min(1080px,100%);text-align:left}
+.card{background:color-mix(in srgb,var(--surface) 92%,transparent);border:1px solid rgba(255,255,255,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 8px 30px rgba(255,94,91,.08);border-radius:28px;padding:28px;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+@supports ((backdrop-filter:blur(12px)) or (-webkit-backdrop-filter:blur(12px))){.card{-webkit-backdrop-filter:blur(12px) saturate(180%);backdrop-filter:blur(12px) saturate(180%)}}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(255,94,91,.14)}
+.card h3{font-family:'Golos Text';font-weight:700;font-size:20px;margin:12px 0 6px;letter-spacing:-.01em}.card p{margin:0;color:var(--muted);font-size:16px}
+.dot{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Montserrat Alternates';font-weight:800;font-size:20px;color:var(--night)}
+.c{background:var(--coral)}.m{background:var(--mango)}.t{background:var(--mint)}
+.night{background:var(--night);color:#FFF1EA;border-radius:36px;margin:0 16px}.night .sub,.night .note{color:#CDBFD6}.night .kicker{color:var(--mango)}
+.night .card{background:#352052;border-color:rgba(255,255,255,.08);box-shadow:none}.night .card p{color:#CDBFD6}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:min(880px,100%);text-align:left}
+.vs .card ul{margin:10px 0 0;padding:0;list-style:none;color:var(--muted);display:grid;gap:6px}
+.vs .pa{background:var(--night);color:#FFF1EA}.vs .pa ul{color:#CDBFD6}.vs .card{text-align:left}.vs li{position:relative;padding-left:24px;text-align:left}.vs .pa li:before{position:absolute;left:0;top:0;content:"✓";color:var(--mint);font-weight:700}
+.vs .pa li:first-child{text-wrap:balance}
+.split{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:56px;width:min(1080px,100%);text-align:left}.split .copy{align-items:flex-start}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{padding:8px 16px;border-radius:999px;background:var(--surface);font-weight:500;font-size:15px;cursor:pointer;border:0;font-family:inherit;color:var(--ink);transition:background .25s,color .25s,transform .15s}.chip.on{background:var(--night);color:#FFF1EA}
+.fund{display:flex;align-items:center;justify-content:space-between;gap:20px;width:min(880px,100%);text-align:left}
+.gold{color:#B77700}
+footer{padding:40px 24px 64px;text-align:center;color:var(--muted);font-size:13px}
+/* motion */
+.r{transform:translateY(32px);transition:opacity 1s var(--ease),transform 1s var(--ease)}.r.in{opacity:1;transform:none}.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+@media(prefers-reduced-motion:reduce){.r{opacity:1;transform:none;transition:none}[data-par]{transform:none!important}}
+@media(max-width:900px){.anchors{display:none}.scene{padding:96px 18px 72px;gap:36px}
+.cards,.vs,.split{grid-template-columns:1fr}.split .copy{align-items:center;text-align:center}.split{text-align:center;gap:32px}.chips{justify-content:center}
+.hero-stage .phone{width:58vw}.night{margin:0 8px;border-radius:28px}#watch{margin-inline:0;border-radius:0}.fund{flex-direction:column;text-align:center}.scene.hero{padding-top:48px}}
+.pill{display:inline-block;margin-top:14px!important;padding:6px 12px;border-radius:999px;background:var(--sunk);color:var(--accent)!important;font-size:13px!important;font-weight:700}
+.pa2{background:var(--night)!important;color:#FFF1EA}.pa2 p{color:#CDBFD6!important}
+.fnav{display:flex;gap:6px 18px;flex-wrap:wrap;justify-content:center}.fnav a{color:var(--ink);text-decoration:none;font-weight:500}
+footer{border-top:1px solid rgba(36,18,58,.08);margin-top:40px}
+#club .cards{margin-top:8px}
+#torneo-padelada .chips{justify-content:center}
+@media(max-width:900px){#pronto .cards{grid-template-columns:1fr!important}}
+#fsplit{transition:grid-template-columns .6s var(--ease),gap .6s var(--ease)}#fsplit .copy{transition:all .6s var(--ease)}
+#fsplit.solo{grid-template-columns:1fr 0fr;gap:0}#fsplit.solo .stage{min-width:0;overflow:hidden}#fsplit.solo .copy{align-items:center;text-align:center;margin:0 auto;max-width:760px}#fsplit.solo .chips{justify-content:center}
+@media(max-width:900px){#fsplit.solo{grid-template-columns:1fr}#fsplit.solo .stage{display:none}}
+
+/* Integration: existing language persistence, accessible navigation, and narrow layouts. */
+html{scroll-padding-top:92px}
+body{overflow-x:visible}
+main{overflow:clip}
+:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+
+
+
+.anchors{gap:0}.anchors a{padding:8px;font-size:13px;white-space:nowrap}
+.langs{flex-shrink:0}.langs a[aria-current="page"]{background:var(--night);color:var(--bg)}
+.langs a{min-width:32px;min-height:36px}
+.sub,.card p,.note{text-wrap:pretty}
+.stage{min-width:0;max-width:100%}
+#como .stage .phone{width:min(340px,calc((100% - 28px)/2))}
+.split{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.split .copy{min-width:0}
+.chip:not(button){cursor:default}
+#fsplit{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+#fsplit .stage{overflow:hidden;opacity:1;transition:opacity .35s,visibility .6s;min-width:0}
+#fsplit.solo{grid-template-columns:minmax(0,1fr) minmax(0,0fr)}
+#fsplit.solo .stage{opacity:0;visibility:hidden}
+#format-panel{min-height:3.9em}
+.founders{display:flex;justify-content:center;padding:0 24px 64px}
+.footer-langs{display:inline-flex;margin:20px auto;background:var(--sunk)}
+.legal-nav{margin-top:4px;font-size:12px}
+.r{opacity:1;transform:none}
+.motion-ready .r{opacity:0;transform:translateY(32px)}
+.motion-ready .r.in{opacity:1;transform:translateY(var(--parallax,0px))}
+/* Late reveal (fast scroll, safety net): 0.3s, no stagger. Longhands only, so reduced motion (transition:none) still wins. */
+.motion-ready .r.r-fast{transition-duration:.3s;transition-delay:0s}
+[data-par]{transform:translateY(var(--parallax,0px))}
+
+@media(max-width:900px){
+ .scene{padding:96px 18px 72px}
+ .split,#fsplit{grid-template-columns:minmax(0,1fr)}
+ .phone{width:min(340px,80vw)}
+ .hero-stage .phone{width:min(360px,58vw)}
+
+ #fsplit.solo{grid-template-columns:minmax(0,1fr)}
+ #fsplit .stage{display:flex;max-height:760px;transition:max-height .6s var(--ease),opacity .35s,visibility .6s}
+ #fsplit.solo .stage{display:flex;max-height:0}
+ #fsplit.solo{row-gap:0}
+ .footer-langs{display:inline-flex}
+ .founders{padding:0 18px 32px}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *,*::before,*::after{transition:none!important;animation:none!important}
+ .motion-ready .r,.motion-ready .r.in,[data-par]{opacity:1;transform:none!important}
+}
+
+/* Compact shared navigation, ported from PR #155. */
+.mast {
+  --bar: calc(52px + env(safe-area-inset-top, 0px));
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 12px;
+  min-height: var(--bar);
+  padding: env(safe-area-inset-top, 0px) 22px 0;
+  background: var(--bg);
+}
+.logo { display: inline-flex; min-height: 44px; align-items: center; }
+.logo img { height: 22px; width: auto; }
+.nav-open {
+  width: 44px;
+  height: 44px;
+  margin-left: auto;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+.nav-glyph { position: relative; width: 18px; height: 14px; display: block; }
+.nav-glyph span {
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: currentColor;
+}
+.nav-glyph span:nth-child(1) { top: 1px; }
+.nav-glyph span:nth-child(2) { top: 6px; }
+.nav-glyph span:nth-child(3) { top: 11px; }
+.mast.is-open .nav-glyph span:nth-child(1) { top: 6px; transform: rotate(45deg); }
+.mast.is-open .nav-glyph span:nth-child(2) { opacity: 0; }
+.mast.is-open .nav-glyph span:nth-child(3) { top: 6px; transform: rotate(-45deg); }
+.menu { display: none; }
+.controls { display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; }
+body.nav-lock { overflow: hidden; }
+.launch-nav { display: flex; flex-direction: column; flex-wrap: nowrap; gap: 0; padding: 8px 0 12px; min-width: 0; }
+.launch-nav a { display: flex; align-items: center; min-height: 48px; padding: 0 2px; border: 0; border-radius: 0; background: transparent; text-decoration: none; font-size: 22px; font-weight: 500; letter-spacing: -0.022em; white-space: nowrap; color: var(--ink); }
+.launch-nav a[aria-current=page] { font-weight: 600; }
+@media (max-width: 1199px) {
+  .mast.is-open .menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 50;
+    left: 0;
+    right: 0;
+    top: var(--bar);
+    bottom: 0;
+    overflow: auto;
+    background: var(--bg);
+    padding: 8px 22px calc(28px + env(safe-area-inset-bottom, 0px));
+  }
+  .mast.is-open .launch-nav { padding-top: 4px; }
+  .launch-nav .home-page-link { min-height: 44px; font-size: 16px; font-weight: 400; white-space: normal; }
+  .launch-nav a:not(.home-page-link) + .home-page-link { border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent); margin-top: 12px; padding-top: 12px; min-height: 56px; }
+  .mast.is-open .controls { width: 100%; margin-top: 8px; }
+  .mast.is-open .langs { flex-wrap: nowrap; }
+  .mast.is-open .langs a { min-width: 36px; padding: 0 6px; }
+}
+@media (min-width: 1200px) {
+  .mast {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding-left: max(22px, calc((100% - 1200px) / 2));
+    padding-right: max(22px, calc((100% - 1200px) / 2));
+  }
+  .nav-open { display: none; }
+  .launch-nav .home-page-link { display: none; }
+  .menu { display: flex; flex: 1; align-items: center; min-width: 0; gap: 8px; }
+  .launch-nav { flex-direction: row; align-items: center; justify-content: center; flex: 1; gap: 2px 18px; padding: 0 12px; }
+  .launch-nav a { min-height: 44px; font-size: 12px; font-weight: 400; letter-spacing: -0.01em; color: var(--ink-muted); }
+  .launch-nav a[aria-current=page] { color: var(--ink); font-weight: 600; box-shadow: inset 0 -2px 0 currentColor; }
+  .controls { margin-left: auto; }
+}
+
+
+.mast{background:color-mix(in srgb,var(--bg) 72%,transparent);border-bottom:1px solid rgba(36,18,58,.06)}
+@supports ((backdrop-filter:blur(12px)) or (-webkit-backdrop-filter:blur(12px))){.mast{-webkit-backdrop-filter:blur(12px) saturate(180%);backdrop-filter:blur(12px) saturate(180%)}}
+.mast.scrolled{box-shadow:0 8px 30px rgba(255,94,91,.08)}
+.mast .follow{min-height:44px;padding:0 16px;font-size:14px;white-space:nowrap}
+.langs a[aria-current=page]{background:var(--ink);color:var(--bg)}
+.theme{width:44px;height:44px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:0;border-radius:50%;background:transparent;color:var(--ink);cursor:pointer}
+.only-dark{display:none}html[data-theme=dark] .only-light{display:none}html[data-theme=dark] .only-dark{display:inline-flex}
+html[data-theme=dark]{--bg:#0B0C0E;--surface:#1C1D20;--sunk:#2C2D31;--ink:#F5F5F7;--muted:#A8AAB2;--accent:#FFB547;color-scheme:dark}
+@media(prefers-color-scheme:dark){html:not([data-theme=light]){--bg:#0B0C0E;--surface:#1C1D20;--sunk:#2C2D31;--ink:#F5F5F7;--muted:#A8AAB2;--accent:#FFB547;color-scheme:dark}html:not([data-theme=light]) .only-light{display:none}html:not([data-theme=light]) .only-dark{display:inline-flex}}
+@media(max-width:1199px){.mast .controls{flex-wrap:wrap}.mast .langs a{min-height:44px}.mast .follow{margin-top:8px}.mast.is-open{backdrop-filter:none;-webkit-backdrop-filter:none}}
+@media(prefers-reduced-transparency:reduce){.mast{background:var(--bg);backdrop-filter:none;-webkit-backdrop-filter:none}}
+
+/* Preserve every native capture pixel, including the bottom safe area.
+   The 17e capture is slightly wider than the Pro display: fill the spare height. */
+.phone .screen{background:#fff1ea}
+@media(min-width:1024px){
+ .stage{gap:24px}
+ .stage .phone,.hero-stage .phone,#como .stage .phone{width:min(320px,calc((100% - 48px)/3))}
+ #fsplit{width:min(1200px,100%);grid-template-columns:minmax(0,1fr);gap:40px}
+ #fsplit .copy{align-items:center;text-align:center;margin-inline:auto}
+ #fsplit .chips{justify-content:center}
+ #fsplit .stage{width:100%}
+ #como{padding-top:80px;gap:32px}
+ #como .stage .phone{width:min(250px,calc((100% - 48px)/3))}
+ #fsplit.solo{grid-template-columns:minmax(0,1fr) minmax(0,0fr);gap:0}
+}
+@media(max-width:1023px){
+ .stage .phone + .phone{display:none}
+ #como .stage .phone{width:min(340px,80vw)}
+ .split,#fsplit{grid-template-columns:minmax(0,1fr)}
+ .split .copy{align-items:center;text-align:center}
+ .split .chips{justify-content:center}
+ #fsplit.solo{grid-template-columns:minmax(0,1fr)}
+ #fsplit .stage{display:flex;max-height:760px;transition:max-height .6s var(--ease),opacity .35s,visibility .6s}
+ #fsplit.solo .stage{max-height:0}
+ #fsplit.solo{row-gap:0}
+}
+
+/* apple-watch-s11-46-jet-black-sport-band.webp aperture: 538 × 865 canvas, screen hole at (52,182)-(395,490). */
+.watch{width:280px;max-width:100%}
+.watch .screen{left:9.6654%;top:21.0405%;width:73.4201%;height:56.6474%;border-radius:24.04% / 20.16%;background:#000}
+.watch-stage{width:min(660px,100%);gap:32px;align-items:center}
+.watch-stage .watch{width:calc((100% - 32px)/2);max-width:280px}
+#watch .watch::before{inset:19% 9%;border-radius:42%/30%;box-shadow:0 0 24px rgba(255,241,234,.16),0 20px 28px rgba(0,0,0,.35)}
+@media(min-width:1024px){
+ .hero-stage .phone{width:min(280px,calc((100% - 40px)/2.6))}
+ .hero-stage .watch{width:min(196px,calc((100% - 40px)*.7/2.6))}
+}
+@media(max-width:1023px){
+ .hero-stage{gap:4%;width:min(520px,100%)}
+ .hero-stage .phone{width:60%}
+ .hero-stage .watch{width:36%}
+}
+@media(max-width:480px){
+ .watch-stage{gap:12px}
+ .watch-stage .watch{width:calc((100% - 12px)/2)}
+}
+
+/* Keep the entire device group clear of the hero copy on desktop. */
+@media(min-width:1024px){
+ .scene.hero{padding-top:40px;gap:32px}
+ .hero-stage{align-items:flex-start}
+}
+
+/* Status names stay Spanish; each status has its own card. */
+.club-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+.club-cards .card:last-child{grid-column:1/-1}
+.pronto-watches{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:min(880px,100%);margin:0 auto 28px}
+.pronto-watches img{width:100%;height:auto;display:block}
+@media(max-width:700px){.pronto-watches{grid-template-columns:repeat(2,1fr);max-width:420px}}
+@media(max-width:900px){.club-cards{grid-template-columns:1fr}}
+
+/* Keep each product screen attached to its explanation at every width. */
+.how-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;width:min(1080px,100%);text-align:left}
+.how-item{display:flex;flex-direction:column;gap:24px;min-width:0}
+.how-device{display:flex;align-items:center;justify-content:center;height:540px}
+.how-device .phone{width:min(250px,100%)}
+.how-device .watch{width:min(250px,100%)}
+.how-item .card{flex:1}
+#fsplit{width:min(1200px,100%);grid-template-columns:minmax(0,1fr);gap:40px}
+#fsplit .copy{align-items:center;text-align:center;margin-inline:auto}
+#fsplit .chips{justify-content:center}
+.formats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;width:100%;align-items:start}
+.formats-grid figure,.organizer-board{margin:0;min-width:0;text-align:center}
+.formats-grid .phone{width:100%}
+figcaption{font-size:18px;font-weight:600;line-height:1.35;margin-top:20px;text-wrap:balance}
+@media(max-width:1023px){
+ .how-grid{grid-template-columns:minmax(0,1fr);gap:44px;max-width:520px}
+ .how-device{height:auto}
+ .how-device .phone{width:min(300px,100%)}
+ .how-device .watch{width:min(250px,100%)}
+ .formats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 16px;max-width:660px;margin-inline:auto}
+ #organizadores .stage{flex-wrap:wrap;align-items:flex-start;gap:32px}
+}
+@media(max-width:359px){.formats-grid{gap:24px 10px}}
+/* watch-live-es.webp is a native 416×496 Apple Watch capture (no 2x/3x source exists) — cap the
+   mockup so DPR3 phones never need more pixels than the source has, or the score text blurs. */
+@media(min-resolution:3dppx){.how-device .watch{width:min(176px,100%)}}
+
+.hero-stage{margin-bottom:0}
+#organizadores .stage>.phone,#organizadores .organizer-board{width:min(320px,calc((100% - 24px)/2));box-sizing:border-box}
+#organizadores .organizer-board .phone{width:100%}
+@media(max-width:1023px){#organizadores .stage>.phone,#organizadores .organizer-board{width:min(300px,100%)}}
+
+#como{padding-bottom:32px}
+.home-comparison{display:flex;justify-content:center;padding:0 24px 96px}
+@media(max-width:900px){.home-comparison{padding:0 18px 72px}}
+.club-cards{display:block;width:100%;max-width:1100px;margin:0 auto}.club-cards .club-flow{text-align:left}.club-cards .club-statuses{margin-top:48px}.club-cards .club-status-card{background:var(--surface)}.club-cards .club-subscription{text-align:center}.club-cards h2{font-size:clamp(26px,4vw,40px)}
+
+/* First screen only: thin type, a narrow measure, one quiet button. */
+.scene.hero h1{font-weight:400;letter-spacing:-.04em;line-height:1.02;font-size:46px;max-width:11em}
+.scene.hero .copy{gap:16px;max-width:640px}
+.scene.hero .sub{max-width:28em;font-weight:400;font-size:17px;line-height:1.45;letter-spacing:-.011em}
+.scene.hero .cta{margin-top:4px}
+.scene.hero .hero-download,#pronto .hero-download{flex-direction:column;gap:1px;background:var(--ink);color:var(--bg);font-weight:500;font-size:17px;letter-spacing:-.012em;padding:8px 26px;min-height:48px;max-width:100%;text-align:center;line-height:1.15}
+.scene.hero .hero-label,#pronto .hero-label{font-weight:500}
+.scene.hero .hero-note,#pronto .hero-note{font-size:12px;font-weight:400;letter-spacing:0;opacity:.72}
+.scene.hero .hero-download:hover,#pronto .hero-download:hover{filter:brightness(1.08)}
+.scene.hero .hero-download:disabled,#pronto .hero-download:disabled{cursor:default}
+.scene.hero .hero-download:disabled:hover,#pronto .hero-download:disabled:hover{filter:none}
+.scene.hero .hero-download:disabled:active,#pronto .hero-download:disabled:active{transform:none}
+.motion-ready .scene.hero .r:not(.in){transform:translateY(16px)}
+@media(min-width:768px){
+ .scene.hero h1{font-size:48px}
+}
+@media(max-width:1023px){
+ .scene.hero{padding-top:28px;gap:24px}
+ .hero-stage{align-items:flex-end}
+}
+@media(max-width:430px){
+ .scene.hero .hero-download,#pronto .hero-download{font-size:16px;padding:8px 18px}
+}
+@media(min-width:1024px){
+ .scene.hero h1{font-size:64px;max-width:12em}
+}
+@media(min-width:1024px) and (max-height:800px){
+ .scene.hero{padding-top:40px;gap:32px}
+ .scene.hero .sub{font-size:16px;line-height:1.4}
+ .hero-stage .phone{width:min(220px,26vw)}
+ .hero-stage .watch{width:min(148px,16vw)}
+}
+
+/* Block 2, directly under the hero. The phones show the Falta uno design spec. */
+#cuarto{padding-top:8px;gap:40px}
+#cuarto h2{font-weight:400;letter-spacing:-.035em;line-height:1.08;font-size:var(--story-h2);max-width:16em}
+#cuarto .copy{gap:18px;max-width:740px}
+#cuarto .sub{max-width:38em;font-weight:400;font-size:clamp(17px,1.25vw,20px);line-height:1.5;letter-spacing:-.011em;text-wrap:pretty}
+#cuarto .shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 32px;width:min(1080px,100%);align-items:start}
+#cuarto .shots figure{margin:0;min-width:0;display:flex;flex-direction:column;align-items:center}
+#cuarto .shots .phone{width:min(280px,100%)}
+#cuarto .screen{background:#FFF1EA}
+#cuarto figcaption{font-size:16px;font-weight:500;line-height:1.35;letter-spacing:-.011em;color:var(--muted);margin-top:14px;max-width:18em}
+#cuarto .shot-dots{display:none}
+@media(max-width:768px){
+ #cuarto{padding-top:0;gap:28px}
+ #cuarto .shots{display:flex;grid-template-columns:none;gap:14px;width:100%;max-width:none;margin:0;padding:0 18px 2px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:18px;overscroll-behavior-x:contain;scrollbar-width:none}
+ #cuarto .shots::-webkit-scrollbar{display:none}
+ #cuarto .shots figure{flex:0 0 84%;scroll-snap-align:start;max-width:none}
+ #cuarto .shots .phone{width:100%}
+ #cuarto .shot-dots{display:flex;justify-content:center;gap:8px;margin-top:16px}
+ #cuarto .shot-dots button{width:8px;height:8px;padding:0;border:0;border-radius:999px;background:color-mix(in srgb,var(--ink) 28%,transparent);cursor:pointer}
+ #cuarto .shot-dots button.on{width:22px;background:var(--ink)}
+}
+
+/* Block 4 replaces the old format switcher: the tournament draws itself. */
+#formatos{padding-top:64px;gap:40px}
+#formatos h2{font-weight:400;letter-spacing:-.035em;line-height:1.08;font-size:var(--story-h2);max-width:16em}
+#formatos .copy{gap:18px;max-width:760px}
+#formatos .sub{max-width:40em;font-weight:400;font-size:clamp(17px,1.25vw,20px);line-height:1.5;letter-spacing:-.011em;text-wrap:pretty}
+#formatos .shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 40px;width:min(760px,100%);align-items:start}
+#formatos .shots figure{margin:0;min-width:0;display:flex;flex-direction:column;align-items:center}
+#formatos .shots .phone{width:min(300px,100%)}
+#formatos .screen{background:#FFF1EA}
+#formatos figcaption{font-size:15px;font-weight:500;line-height:1.35;letter-spacing:-.011em;color:var(--muted);margin-top:14px;max-width:16em;text-align:center}
+@media(max-width:860px){
+ #formatos{padding-top:28px;gap:32px}
+ #formatos .shots{grid-template-columns:minmax(0,1fr);max-width:320px;margin-inline:auto;gap:36px}
+}
+
+/* Block 5 replaces the priced club overview. Membership is earned on court. */
+#club{padding-top:64px;gap:36px}
+#club h2{font-weight:400;letter-spacing:-.035em;line-height:1.08;font-size:var(--story-h2);max-width:14em}
+#club .copy{gap:16px;max-width:760px}
+#club .sub{max-width:40em;font-weight:400;font-size:clamp(17px,1.25vw,20px);line-height:1.5;letter-spacing:-.011em;text-wrap:pretty}
+#club .note{max-width:40em;font-size:15px;line-height:1.45;letter-spacing:-.011em;color:var(--muted);text-wrap:pretty}
+#club .shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 40px;width:min(760px,100%);align-items:start}
+#club .shots figure{margin:0;min-width:0;display:flex;flex-direction:column;align-items:center}
+#club .shots .phone{width:min(300px,100%)}
+#club .screen{background:#FFF1EA}
+#club figcaption{font-size:16px;font-weight:500;line-height:1.35;letter-spacing:-.011em;color:var(--muted);margin-top:14px;max-width:18em;text-align:center}
+@media(max-width:860px){
+ #club{padding-top:28px;gap:28px}
+ #club .shots{grid-template-columns:minmax(0,1fr);max-width:320px;margin-inline:auto;gap:36px}
+}
+
+/* Block 6 is the series itself: four paragraphs and a night tray, distinct from the open Americano block. */
+#torneo-padelada.season{padding-top:72px;gap:36px}
+#torneo-padelada.season h2{font-weight:400;letter-spacing:-.035em;line-height:1.08;font-size:var(--story-h2);max-width:14em}
+#torneo-padelada.season .copy{gap:14px;max-width:720px}
+#torneo-padelada.season .sub{max-width:38em;font-weight:400;font-size:clamp(17px,1.25vw,20px);line-height:1.5;letter-spacing:-.011em}
+#torneo-padelada.season .shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 32px;width:min(820px,100%);align-items:start}
+#torneo-padelada.season .shots figure{margin:0;min-width:0;display:flex;flex-direction:column;align-items:center}
+#torneo-padelada.season .shots .phone{width:min(280px,100%)}
+#torneo-padelada.season .screen{background:#FFF1EA}
+#torneo-padelada.season figcaption{font-size:16px;font-weight:500;line-height:1.35;color:var(--muted);margin-top:14px;text-align:center}
+@media(max-width:860px){
+ #torneo-padelada.season{padding-top:28px;gap:28px}
+ #torneo-padelada.season .shots{grid-template-columns:minmax(0,1fr);max-width:320px;margin-inline:auto}
+}
+
+/* Block 7 is the level itself: three paragraphs on the open page, distinct from the night Temporada tray. */
+#nivel{padding-top:72px;gap:36px}
+#nivel h2{font-weight:400;letter-spacing:-.035em;line-height:1.08;font-size:var(--story-h2);max-width:14em}
+#nivel .copy{gap:14px;max-width:720px}
+#nivel .sub{max-width:40em;font-weight:400;font-size:clamp(17px,1.25vw,20px);line-height:1.5;letter-spacing:-.011em}
+#nivel .shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 40px;width:min(760px,100%);align-items:start}
+#nivel .shots figure{margin:0;min-width:0;display:flex;flex-direction:column;align-items:center}
+#nivel .shots .phone{width:min(300px,100%)}
+#nivel .screen{background:#FFF1EA}
+#nivel figcaption{font-size:16px;font-weight:500;line-height:1.35;color:var(--muted);margin-top:14px;text-align:center}
+@media(max-width:860px){
+ #nivel{padding-top:28px;gap:28px}
+ #nivel .shots{grid-template-columns:minmax(0,1fr);max-width:320px;margin-inline:auto;gap:36px}
+}
+
+html[lang=ru] #organizadores h2{font-size:clamp(26px,4.6vw,64px)}
+html[lang=uk] #organizadores h2{font-size:clamp(30px,4.6vw,64px)}
+#organizadores .shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 40px;width:min(760px,100%);align-items:start}
+#organizadores .shots figure{margin:0;min-width:0;display:flex;flex-direction:column;align-items:center}
+#organizadores .shots .phone{width:min(300px,100%)}
+#organizadores .screen{background:#FFF1EA}
+#organizadores figcaption{font-size:16px;font-weight:500;line-height:1.35;color:var(--muted);margin-top:14px;text-align:center}
+@media(max-width:860px){
+ #organizadores .shots{grid-template-columns:minmax(0,1fr);max-width:320px;margin-inline:auto;gap:36px}
+}
+
+.clubs-strip{display:flex;justify-content:center;text-align:center;padding:8px 24px 4px}
+.clubs-strip .copy{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:34em}
+.clubs-strip h2{font-weight:400;font-size:var(--story-h2);letter-spacing:-.035em;line-height:1.08;max-width:14em}
+.clubs-strip .sub{font-size:17px;line-height:1.45;max-width:34em;color:var(--muted)}
+.clubs-strip .more{color:var(--ink);font-weight:600;font-size:16px;letter-spacing:-.011em;text-decoration:none;white-space:nowrap}
+.clubs-strip .more:hover{text-decoration:underline;text-underline-offset:3px}
+#pronto.closing{padding-top:56px;gap:36px}
+#pronto.closing h2{font-weight:400;letter-spacing:-.035em;line-height:1.05;font-size:var(--story-h2);max-width:12em}
+#pronto.closing .copy{gap:16px;max-width:640px}
+#pronto.closing .sub{max-width:34em;font-weight:400;font-size:clamp(17px,1.3vw,20px);line-height:1.5;letter-spacing:-.011em}
+#pronto.closing .cta{margin-top:6px}
+#pronto .closing-stage{display:flex;justify-content:center;align-items:flex-end;gap:20px;width:min(640px,100%)}
+#pronto .closing-stage .phone{width:min(360px,62%);margin-inline:auto}
+#pronto .screen{background:#FFF1EA}
+@media(max-width:1023px){
+ #pronto.closing{padding-top:28px;gap:28px}
+ #pronto .closing-stage{gap:4%;width:min(520px,100%)}
+ #pronto .closing-stage .phone{width:min(300px,72%)}
+}
+
+/* Block 3 replaces the old watch band: the phone stays in the bag. */
+#watch.bag{padding-top:64px;gap:40px;margin:0;border-radius:0;background:transparent;color:var(--ink)}
+#watch.bag h2{font-weight:400;letter-spacing:-.035em;line-height:1.08;font-size:var(--story-h2);max-width:18em}
+#watch.bag .copy{gap:18px;max-width:760px}
+#watch.bag .sub{max-width:38em;font-weight:400;font-size:clamp(17px,1.25vw,20px);line-height:1.5;letter-spacing:-.011em;color:var(--muted);text-wrap:pretty}
+#watch .bag-stage{display:flex;justify-content:center;align-items:flex-end;gap:40px;width:min(920px,100%)}
+#watch .bag-stage .watch{width:min(240px,34%)}
+#watch .bag-stage .phone{width:min(300px,42%)}
+@media(max-width:860px){
+ #watch.bag{padding-top:28px;gap:32px}
+ #watch .bag-stage{flex-direction:column;align-items:center;gap:28px}
+ #watch .bag-stage .watch{width:min(200px,56%)}
+ #watch .bag-stage .phone{width:min(280px,100%)}
+}
+
+/* 1440×900: the phone sits beside the copy so a 360px iPhone stays inside the first screen. */
+@media(min-width:1440px){
+ .scene.hero{flex-direction:row;align-items:center;justify-content:center;text-align:left;padding:40px 48px 28px;gap:40px}
+ .scene.hero .copy{align-items:flex-start;text-align:left;flex:0 1 560px;max-width:560px}
+ .scene.hero h1{font-size:80px;line-height:.98;max-width:9em}
+ .scene.hero .sub{text-align:left}
+ .scene.hero .cta{justify-content:flex-start}
+ .scene.hero .hero-download{text-align:left;align-items:flex-start}
+ .hero-stage{width:auto;align-items:flex-end;gap:20px}
+ .hero-stage .phone{width:360px}
+ .hero-stage .watch{width:210px}
+}
+
+/* Homepage v10: one phone in the hero, two buttons, messenger block, people bands, compact watch. */
+.cta .btn{min-height:56px}
+.scene.hero .hero-browser,#pronto .hero-browser{flex-direction:column;gap:1px;background:color-mix(in srgb,var(--ink) 9%,transparent);color:var(--ink);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--ink) 38%,transparent);font-weight:500;font-size:17px;letter-spacing:-.012em;padding:8px 26px;max-width:100%;text-align:center;line-height:1.15}
+.scene.hero .hero-browser .hero-label,#pronto .hero-browser .hero-label{font-weight:500}
+.scene.hero .hero-browser .hero-note,#pronto .hero-browser .hero-note{font-size:12px;font-weight:400;letter-spacing:0;opacity:.72}
+.scene.hero .hero-browser:hover,#pronto .hero-browser:hover{filter:none;background:color-mix(in srgb,var(--ink) 14%,transparent)}
+@media(max-width:520px){
+ .scene.hero .cta,#pronto .cta{flex-direction:column;align-items:stretch;width:100%;max-width:340px}
+ .scene.hero .cta .btn,#pronto .cta .btn{width:100%}
+}
+.scene.hero .sub{text-wrap:balance}
+@media(min-width:1024px){.scene.hero .sub{font-size:20px;max-width:26em}}
+@media(min-width:1024px) and (max-height:800px){.scene.hero .sub{font-size:18px}}
+.hero-stage .phone{width:min(300px,62vw)}
+@media(min-width:1024px){.hero-stage .phone{width:min(320px,34vw)}.hero-stage{justify-content:center}}
+@media(min-width:1440px){.hero-stage .phone{width:360px}.hero-stage{width:auto}}
+@media(min-width:1024px) and (max-height:800px){.hero-stage .phone{width:min(240px,28vw)}}
+
+/* Block 3: messenger. Four phones, staggered on desktop, swipe carousel on mobile. */
+#chats{padding-top:72px;gap:44px}
+#chats h2{font-weight:400;letter-spacing:-.035em;line-height:1.08;font-size:var(--story-h2);max-width:14em}
+#chats .copy{gap:14px;max-width:720px}
+#chats .sub{max-width:40em;font-weight:400;font-size:clamp(17px,1.25vw,20px);line-height:1.5;letter-spacing:-.011em;text-wrap:pretty}
+#chats .shots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;width:min(1180px,100%);align-items:start}
+#chats .shots figure{margin:0;min-width:0;display:flex;flex-direction:column;align-items:center}
+#chats .shots figure:nth-child(1),#chats .shots figure:nth-child(4){margin-top:56px}
+#chats .shots figure:nth-child(1) .phone,#chats .shots figure:nth-child(4) .phone{width:92%}
+#chats .shots .phone{width:100%}
+#chats .screen{background:#FFF1EA}
+#chats figcaption{text-wrap:pretty;font-size:16px;font-weight:500;line-height:1.35;letter-spacing:-.011em;color:var(--muted);margin-top:14px;max-width:14em;text-align:center}
+#chats .shot-dots{display:none}
+@media(max-width:899px){
+ #chats{padding-top:28px;gap:28px}
+ #chats .shots{display:flex;gap:14px;width:100%;margin:0;padding:0 18px 2px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:18px;overscroll-behavior-x:contain;scrollbar-width:none}
+ #chats .shots::-webkit-scrollbar{display:none}
+ #chats .shots figure,#chats .shots figure:nth-child(1),#chats .shots figure:nth-child(4){flex:0 0 min(72%,300px);scroll-snap-align:start;margin-top:0}
+ #chats .shots figure .phone,#chats .shots figure:nth-child(1) .phone,#chats .shots figure:nth-child(4) .phone{width:100%}
+ #chats .shot-dots{display:flex;justify-content:center;gap:8px;margin-top:16px}
+ #chats .shot-dots button{width:8px;height:8px;padding:0;border:0;border-radius:999px;background:color-mix(in srgb,var(--ink) 28%,transparent);cursor:pointer}
+ #chats .shot-dots button.on{width:22px;background:var(--ink)}
+}
+
+
+/* Block 7: Apple Watch, compact. Copy on the left, watch and phone on the right on desktop. */
+#watch.bag{padding-top:56px;padding-bottom:56px;gap:0}
+#watch .bag-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:center;gap:56px;width:min(1120px,100%);text-align:left}
+#watch .bag-grid .copy{align-items:flex-start;gap:14px;max-width:none}
+#watch.bag h2{max-width:14em}
+#watch .bag-stage{display:flex;flex-direction:row;justify-content:center;align-items:flex-end;gap:20px;width:100%}
+#watch .bag-stage .watch{width:min(150px,34%)}
+#watch .bag-stage .phone{width:min(200px,50%)}
+@media(max-width:899px){
+ #watch.bag{padding-top:40px;padding-bottom:40px}
+ #watch .bag-grid{grid-template-columns:minmax(0,1fr);gap:28px;text-align:center}
+ #watch .bag-grid .copy{align-items:center}
+ #watch .bag-stage{flex-direction:row;gap:14px;max-width:420px;margin-inline:auto}
+ #watch .bag-stage .watch{width:34%}
+ #watch .bag-stage .phone{width:52%}
+}
+@media(max-width:359px){#chats h2{font-size:24px}}
+@media(max-width:359px){#chats .shots figure,#chats .shots figure:nth-child(1),#chats .shots figure:nth-child(4){flex-basis:82%}#chats figcaption{font-size:15px;max-width:none}}
+
+/* No people photos (Murat 18:46): the bands are gone, so the blocks that followed them keep the same breathing room on their own. */
+.hero + #cuarto{padding-top:96px}
+.clubs-strip + #pronto{padding-top:112px}
+@media(max-width:768px){
+ .hero + #cuarto{padding-top:56px}
+ .clubs-strip + #pronto{padding-top:72px}
+}
+
+/* Тёмная тема D4 «нейтральный графит» (Мурат, 19.10.2026) */
+html[data-theme=dark] .g1,html[data-theme=dark] .g2{display:none}html[data-theme=dark] .g3{opacity:.06;background:radial-gradient(circle closest-side,#3DDBB0 0,transparent 70%)}html[data-theme=dark] .ghost{background:#2C2D31;box-shadow:inset 0 0 0 1px #8E9098;color:#F5F5F7}html[data-theme=dark] .night,html[data-theme=dark] .vs .pa,html[data-theme=dark] .pa2{background:#1C1D20!important;color:#F5F5F7}html[data-theme=dark] .langs a.on,html[data-theme=dark] .chip.on{background:#3F4046;color:#F5F5F7}html[data-theme=dark] .card,html[data-theme=dark] .mast.scrolled{box-shadow:none}html[data-theme=dark] .card{border-color:#3A3B40}
+@media(prefers-color-scheme:dark){html:not([data-theme=light]) .g1,html:not([data-theme=light]) .g2{display:none}html:not([data-theme=light]) .g3{opacity:.06;background:radial-gradient(circle closest-side,#3DDBB0 0,transparent 70%)}html:not([data-theme=light]) .ghost{background:#2C2D31;box-shadow:inset 0 0 0 1px #8E9098;color:#F5F5F7}html:not([data-theme=light]) .night,html:not([data-theme=light]) .vs .pa,html:not([data-theme=light]) .pa2{background:#1C1D20!important;color:#F5F5F7}html:not([data-theme=light]) .langs a.on,html:not([data-theme=light]) .chip.on{background:#3F4046;color:#F5F5F7}html:not([data-theme=light]) .card,html:not([data-theme=light]) .mast.scrolled{box-shadow:none}html:not([data-theme=light]) .card{border-color:#3A3B40}}
+
+/* Тёмная тема D4: остатки сливового (#352052/#CDBFD6/--night/#FFF1EA) -> графит */
+html[data-theme=dark] .night .card{background:#2C2D31;border-color:#3A3B40}html[data-theme=dark] .night .sub,html[data-theme=dark] .night .note,html[data-theme=dark] .night .card p,html[data-theme=dark] .vs .pa ul{color:#A8AAB2}html[data-theme=dark] .pa2 p{color:#A8AAB2!important}html[data-theme=dark] .langs a[aria-current="page"]{background:#3F4046;color:#F5F5F7}html[data-theme=dark] #cuarto .screen,html[data-theme=dark] #formatos .screen,html[data-theme=dark] #club .screen,html[data-theme=dark] #torneo-padelada.season .screen,html[data-theme=dark] #nivel .screen,html[data-theme=dark] #organizadores .screen,html[data-theme=dark] #pronto .screen,html[data-theme=dark] #chats .screen{background:#0B0C0E}
+@media(prefers-color-scheme:dark){html:not([data-theme=light]) .night .card{background:#2C2D31;border-color:#3A3B40}html:not([data-theme=light]) .night .sub,html:not([data-theme=light]) .night .note,html:not([data-theme=light]) .night .card p,html:not([data-theme=light]) .vs .pa ul{color:#A8AAB2}html:not([data-theme=light]) .pa2 p{color:#A8AAB2!important}html:not([data-theme=light]) .langs a[aria-current="page"]{background:#3F4046;color:#F5F5F7}html:not([data-theme=light]) #cuarto .screen,html:not([data-theme=light]) #formatos .screen,html:not([data-theme=light]) #club .screen,html:not([data-theme=light]) #torneo-padelada.season .screen,html:not([data-theme=light]) #nivel .screen,html:not([data-theme=light]) #organizadores .screen,html:not([data-theme=light]) #pronto .screen,html:not([data-theme=light]) #chats .screen{background:#0B0C0E}}
+
+/* Тёмная тема D4: холодные синие пятна на месте коралловых (размер, позиция, размытие как у .g1/.g2 светлой темы).
+   Насыщенность .6 (вариант 2, выбор Мурата 19.10.2026). */
+html{--blob-a:.6}
+html[data-theme=dark] .g1{display:block;opacity:var(--blob-a);background:radial-gradient(circle closest-side,#3A5BA0 0,transparent 70%)}html[data-theme=dark] .g2{display:block;opacity:calc(var(--blob-a)*.85);background:radial-gradient(circle closest-side,#2B4C8C 0,transparent 70%)}
+@media(prefers-color-scheme:dark){html:not([data-theme=light]) .g1{display:block;opacity:var(--blob-a);background:radial-gradient(circle closest-side,#3A5BA0 0,transparent 70%)}html:not([data-theme=light]) .g2{display:block;opacity:calc(var(--blob-a)*.85);background:radial-gradient(circle closest-side,#2B4C8C 0,transparent 70%)}}
+
+/* Аккуратность, не защита: заголовки, подписи, кнопки, навигация, картинки и макеты телефонов не выделяются.
+   Абзацы основного текста, цены, адреса, e-mail и поля форм выделяются как обычно. */
+h1,h2,h3,h4,h5,h6,header,nav,.mast,.menu,.langs,.logo,button,.btn,.ghost,.theme,.cta,.controls,[role=button],label,legend,summary,figcaption,.kicker,img,svg,picture,video,canvas,figure,.device,.bezel,.screen,.og-devices,.shots,.stage{-webkit-user-select:none;user-select:none}
+img,svg,picture{-webkit-user-drag:none;user-drag:none}
+@media (hover:none) and (pointer:coarse){h1,h2,h3,h4,h5,h6,header,nav,button,.btn,.ghost,img,svg,picture,figure,.device,.bezel,.screen{-webkit-touch-callout:none}}
+input,textarea,select,[contenteditable],address,a[href^="mailto:"],a[href^="tel:"],.price{-webkit-user-select:text;user-select:text}
+
+/* Подпись под языками: «Hecho en la Costa Brava, entre partido y partido · © 2026 Padelada». Фразы не рвутся, точка только в одну строку. */
+#foot .foot-credit{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;column-gap:.3em;row-gap:2px;margin:0;font-size:12px;color:var(--muted)}
+#foot .foot-made,#foot .foot-copy{white-space:nowrap}
+#foot .foot-tag{display:inline-flex;flex-wrap:wrap;justify-content:center;column-gap:.3em;flex-basis:100%}
+#foot .foot-sep{display:none}
+@media (min-width:640px){#foot .foot-sep{display:inline}#foot .foot-tag{flex-basis:auto}}
+
+#foot .foot-age{margin:6px 0 0;font-size:11px;line-height:1.3;text-align:center;color:var(--muted)}

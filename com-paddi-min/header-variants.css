@@ -1,0 +1,590 @@
+/* Header C (approved). Applied after header-variants.js adds .hv-ready. No patterns — color, light, hairline. */
+
+html.hv-ready[data-header] { scroll-padding-top: 72px; }
+
+html.hv-ready[data-header] .mast {
+  --hv-line: color-mix(in srgb, var(--ink) 12%, transparent);
+  --hv-ink: var(--ink);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  border-bottom: 1px solid var(--hv-line);
+  box-shadow: none;
+}
+html.hv-ready[data-theme="dark"][data-header] {
+  --hv-ink: color-mix(in srgb, var(--ink) 82%, transparent);
+}
+@media (prefers-color-scheme: dark) {
+  html.hv-ready[data-header]:not([data-theme="light"]) {
+    --hv-ink: color-mix(in srgb, var(--ink) 82%, transparent);
+  }
+}
+@supports ((backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))) {
+  html.hv-ready[data-header] .mast {
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+}
+html.hv-ready[data-header] .mast.scrolled { box-shadow: none; }
+html.hv-ready[data-header="c"] .logo img { height: 28px; width: auto; }
+
+html.hv-ready[data-header] .mast :focus { outline: none; }
+html.hv-ready[data-header] .mast :focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ink) 50%, transparent);
+  outline-offset: 2px;
+}
+
+html.hv-ready[data-header] .nav-glyph span {
+  transition: top .28s cubic-bezier(.25, .1, .25, 1), transform .28s cubic-bezier(.25, .1, .25, 1), opacity .18s linear;
+}
+html.hv-ready[data-header] .follow { display: none; }
+
+html.hv-ready[data-header] header .langs {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+}
+html.hv-ready[data-header] .hv-lang-btn,
+html.hv-ready[data-header] .hv-tools-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 44px;
+  height: 36px;
+  margin: 0;
+  padding: 0 8px 0 10px;
+  border: 0;
+  border-radius: 980px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  cursor: pointer;
+}
+html.hv-ready[data-header] .hv-lang-btn:hover,
+html.hv-ready[data-header] .hv-tools-btn:hover,
+html.hv-ready[data-header] .hv-more-btn:hover,
+html.hv-ready[data-header] .theme:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+html.hv-ready[data-header] .hv-chevron { display: block; transition: transform .2s cubic-bezier(.25, .1, .25, 1); }
+html.hv-ready[data-header] [aria-expanded="true"] .hv-chevron { transform: rotate(180deg); }
+
+/* Dropdowns («Padelada», language/theme): absolutely positioned under their own button, out of the flow, so opening
+   never moves the page; opaque surface in both themes; soft shadow; above all page content (mast z-index 1000). */
+html.hv-ready[data-header] .mast { z-index: 1000; }
+html.hv-ready[data-header] .hv-pop {
+  position: absolute;
+  z-index: 1000;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  margin: 0;
+  padding: 8px;
+  border: 1px solid var(--hv-line);
+  border-radius: 14px;
+  background: var(--surface, #fff);
+  box-shadow: 0 1px 2px rgba(20, 8, 40, .06), 0 12px 32px -6px rgba(20, 8, 40, .18);
+  transform-origin: top right;
+}
+@media (min-width: 900px) {
+  html[data-theme="dark"].hv-ready[data-header] .hv-pop { box-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 16px 40px -8px rgba(0, 0, 0, .55); }
+}
+@media (min-width: 900px) and (prefers-color-scheme: dark) {
+  html.hv-ready[data-header]:not([data-theme="light"]) .hv-pop { box-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 16px 40px -8px rgba(0, 0, 0, .55); }
+}
+html.hv-ready[data-header] .hv-pop.is-open { animation: hv-pop-in .24s cubic-bezier(.32, .72, 0, 1) both; }
+html.hv-ready[data-header] header .hv-lang-menu a {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 10px;
+  min-height: 36px;
+  margin: 0;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.014em;
+  text-align: left;
+  text-decoration: none;
+  white-space: nowrap;
+}
+html.hv-ready[data-header] header .hv-lang-menu .hv-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+}
+html.hv-ready[data-header] header .hv-lang-menu a[aria-current="page"] { font-weight: 600; }
+html.hv-ready[data-header] header .hv-lang-menu a:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+
+html.hv-ready[data-header] .theme {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: 0;
+  border-radius: 980px;
+  background: transparent;
+  color: var(--ink);
+  box-shadow: none;
+}
+html.hv-ready[data-header] .theme svg { width: 20px; height: 20px; }
+html.hv-ready[data-header] .hv-theme-label { display: none; }
+
+html.hv-ready[data-header="c"] .hv-more { position: relative; display: flex; align-items: center; }
+html.hv-ready[data-header="c"] .hv-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0 2px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--hv-ink);
+  font: inherit;
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+}
+html.hv-ready[data-header="c"] .hv-more-btn.is-here {
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: inset 0 -1px 0 currentColor;
+}
+html.hv-ready[data-header="c"] .hv-more-menu { left: -12px; right: auto; min-width: 220px; transform-origin: top left; }
+html.hv-ready[data-header="c"] .hv-group-label { display: none; }
+html.hv-ready[data-header="c"] .hv-more-menu a {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.014em;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: none;
+}
+html.hv-ready[data-header="c"] .hv-more-menu a:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); color: var(--ink); }
+html.hv-ready[data-header="c"] .hv-more-menu a[aria-current="page"],
+html.hv-ready[data-header="c"] .hv-more-menu a.is-here { font-weight: 600; }
+
+/* C keeps language and theme in one menu */
+html.hv-ready[data-header="c"] .hv-lang-btn { display: none; }
+html.hv-ready[data-header="c"] .hv-tools { position: relative; display: flex; align-items: center; }
+/* Panel is as wide as its longest row (+ equal 8px padding each side); rows and the active highlight fill it edge to edge. */
+html.hv-ready[data-header="c"] .hv-tools-menu { width: max-content; min-width: 0; }
+html.hv-ready[data-header="c"] .hv-tools-menu .langs {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+html.hv-ready[data-header="c"] .hv-tools-menu .hv-lang-menu {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+/* Divider before the theme row spans the full inner width. */
+html.hv-ready[data-header="c"] .hv-tools-menu .hv-lang-menu::after {
+  content: "";
+  display: block;
+  height: 1px;
+  margin: 6px 0;
+  background: var(--hv-line);
+}
+html.hv-ready[data-header="c"] .hv-tools-menu .theme {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 10px;
+  width: 100%;
+  height: auto;
+  min-height: 36px;
+  justify-content: stretch;
+  margin: 0;
+  padding: 0 12px;
+  border-radius: 8px;
+  box-shadow: none;
+}
+html.hv-ready[data-header="c"] .hv-tools-menu .theme svg { width: 14px; height: 14px; }
+html.hv-ready[data-header="c"] .hv-tools-menu .hv-theme-label {
+  display: inline;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.014em;
+  text-align: left;
+}
+
+@keyframes hv-pop-in {
+  from { opacity: 0; transform: translateY(-4px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes hv-menu-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Phone and small tablet: burger */
+@media (max-width: 899px) {
+  html.hv-ready[data-header] .mast {
+    min-height: calc(52px + env(safe-area-inset-top, 0px));
+    padding: env(safe-area-inset-top, 0px) 16px 0;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+  }
+  html.hv-ready[data-header="a"] .logo,
+  html.hv-ready[data-header="c"] .logo { width: max-content; justify-self: start; }
+  html.hv-ready[data-header] .mast.is-open {
+    background: var(--bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  html.hv-ready[data-header] .mast.is-open .menu { animation: hv-menu-in .34s cubic-bezier(.25, .1, .25, 1); }
+  html.hv-ready[data-header] .launch-nav a {
+    min-height: 48px;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.022em;
+    white-space: normal;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  html.hv-ready[data-header] .mast.is-open .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--hv-line);
+  }
+  html.hv-ready[data-header] header .hv-lang-btn { display: none; }
+  html.hv-ready[data-header] header .langs,
+  html.hv-ready[data-header] header .hv-lang-menu {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  html.hv-ready[data-header] header .hv-lang-menu a {
+    display: flex;
+    grid-template-columns: none;
+    justify-content: flex-start;
+    min-height: 44px;
+    padding: 0 2px;
+    border-radius: 0;
+    font-size: 17px;
+    text-align: left;
+  }
+  html.hv-ready[data-header] header .hv-lang-menu .hv-name { order: 1; }
+  html.hv-ready[data-header] header .hv-lang-menu .hv-check { order: 2; margin-left: auto; }
+  html.hv-ready[data-header] header .hv-lang-menu .hv-check:empty { display: none; }
+  html.hv-ready[data-header] .mast.is-open .theme {
+    display: flex;
+    width: auto;
+    min-height: 48px;
+    justify-content: flex-start;
+    margin-top: 12px;
+    padding: 12px 2px 0;
+    border: 0;
+    border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    border-radius: 0;
+    gap: 10px;
+    box-shadow: none;
+  }
+  html.hv-ready[data-header] .mast.is-open .hv-theme-label {
+    display: inline;
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: -0.014em;
+  }
+  /* Burger: «Padelada» is a small caption over its two links, no button */
+  html.hv-ready[data-header="c"] .hv-more { display: block; width: 100%; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--hv-line); }
+  html.hv-ready[data-header="c"] .hv-more-menu {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    animation: none;
+  }
+  html.hv-ready[data-header="c"] .hv-more-btn { display: none; }
+  html.hv-ready[data-header="c"] .hv-group-label {
+    display: block;
+    padding: 4px 2px 2px;
+    color: var(--muted, color-mix(in srgb, var(--ink) 60%, transparent));
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  html.hv-ready[data-header="c"] .hv-more-menu a {
+    min-height: 48px;
+    padding: 0 2px;
+    border-radius: 0;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.022em;
+    white-space: normal;
+  }
+  html.hv-ready[data-header="c"] .hv-tools-btn { display: none; }
+  html.hv-ready[data-header="c"] .hv-tools,
+  html.hv-ready[data-header="c"] .hv-tools-menu {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  html.hv-ready[data-header="c"] .hv-tools-menu .hv-lang-menu::after { display: none; }
+  html.hv-ready[data-header="c"] .hv-tools-menu .theme {
+    display: flex;
+    margin-top: 12px;
+    padding: 12px 2px 0;
+    border-radius: 0;
+    box-shadow: none;
+    border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  }
+  html.hv-ready[data-header="c"] .hv-tools-menu .theme svg { width: 20px; height: 20px; }
+  html.hv-ready[data-header="c"] .hv-tools-menu .hv-theme-label { font-size: 17px; }
+}
+@media (min-width: 720px) and (max-width: 899px) {
+  html.hv-ready[data-header] .mast.is-open .menu {
+    padding-left: max(28px, calc((100% - 560px) / 2));
+    padding-right: max(28px, calc((100% - 560px) / 2));
+  }
+}
+
+/* From ~900 px the five links stay in the bar, on the same column as the page */
+@media (min-width: 900px) {
+  html.hv-ready[data-header="a"] .nav-open,
+  html.hv-ready[data-header="c"] .nav-open { display: none; }
+  html.hv-ready[data-header="a"] .mast,
+  html.hv-ready[data-header="c"] .mast {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 24px;
+    min-height: 52px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: max(24px, calc((100% - 1080px) / 2));
+    padding-right: max(24px, calc((100% - 1080px) / 2));
+  }
+  html.hv-ready[data-header="a"] .menu,
+  html.hv-ready[data-header="c"] .menu { display: contents; }
+  html.hv-ready[data-header="a"] .logo,
+  html.hv-ready[data-header="c"] .logo { grid-column: 1; justify-self: start; }
+  html.hv-ready[data-header="a"] .launch-nav,
+  html.hv-ready[data-header="c"] .launch-nav {
+    grid-column: 2;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 0;
+  }
+  html.hv-ready[data-header="a"] .controls,
+  html.hv-ready[data-header="c"] .controls { grid-column: 3; justify-self: end; gap: 2px; }
+  html.hv-ready[data-header="a"] .launch-nav a,
+  html.hv-ready[data-header="c"] .launch-nav > a,
+  html.hv-ready[data-header="c"] .hv-more-btn {
+    min-height: 52px;
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: -0.018em;
+    white-space: nowrap;
+    color: var(--hv-ink);
+  }
+  html.hv-ready[data-header="a"] .launch-nav a:hover,
+  html.hv-ready[data-header="c"] .launch-nav > a:hover,
+  html.hv-ready[data-header="c"] .hv-more-btn:hover { color: var(--ink); background: transparent; }
+  html.hv-ready[data-header="a"] .launch-nav a[aria-current="page"],
+  html.hv-ready[data-header="a"] .launch-nav a.is-here,
+  html.hv-ready[data-header="c"] .launch-nav > a[aria-current="page"],
+  html.hv-ready[data-header="c"] .launch-nav > a.is-here,
+  html.hv-ready[data-header="c"] .hv-more-btn.is-here {
+    color: var(--ink);
+    font-weight: 600;
+    box-shadow: inset 0 -1px 0 currentColor;
+  }
+  html.hv-ready[data-header="c"] .hv-more-btn { border-radius: 0; }
+  html.hv-tight[data-header="a"] .launch-nav,
+  html.hv-tight[data-header="c"] .launch-nav { gap: 16px; }
+  html.hv-tight[data-header="a"] .launch-nav a,
+  html.hv-tight[data-header="c"] .launch-nav > a,
+  html.hv-tight[data-header="c"] .hv-more-btn { font-size: 17px; }
+  html.hv-tighter[data-header="a"] .launch-nav,
+  html.hv-tighter[data-header="c"] .launch-nav { gap: 12px; }
+  html.hv-tighter[data-header="a"] .launch-nav a,
+  html.hv-tighter[data-header="c"] .launch-nav > a,
+  html.hv-tighter[data-header="c"] .hv-more-btn { font-size: 16px; }
+  /* Last resort: the links take whatever lies between the logo and the controls, never closer than the column gap */
+  html.hv-flow[data-header="a"] .mast,
+  html.hv-flow[data-header="c"] .mast { grid-template-columns: auto minmax(0, 1fr) auto; }
+}
+@media (min-width: 1024px) {
+  html.hv-ready[data-header="c"] .logo img { height: 30px; }
+  html.hv-logo-sm[data-header="c"] .logo img { height: 28px; }
+  html.hv-ready[data-header="a"] .launch-nav,
+  html.hv-ready[data-header="c"] .launch-nav { gap: 26px; }
+  html.hv-ready[data-header="a"] .launch-nav a,
+  html.hv-ready[data-header="c"] .launch-nav > a,
+  html.hv-ready[data-header="c"] .hv-more-btn { font-size: 18px; }
+  html.hv-tight[data-header="a"] .launch-nav a,
+  html.hv-tight[data-header="c"] .launch-nav > a,
+  html.hv-tight[data-header="c"] .hv-more-btn { font-size: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.hv-ready[data-header] .mast.is-open .menu,
+  html.hv-ready[data-header] .nav-glyph span,
+  html.hv-ready[data-header] .hv-chevron,
+  html.hv-ready[data-header] .hv-pop.is-open {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  html.hv-ready[data-header] .mast {
+    background: var(--bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* Footer directory (apple.com-style): headed columns, each link once. Shared by every page template. */
+.fdir {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px 32px;
+  width: min(1080px, 100%);
+  margin: 8px auto 4px;
+  padding: 20px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  text-align: left;
+  font-size: 12px;
+  line-height: 1.35;
+}
+.foot .fdir { width: 100%; }
+.fdir-col { min-width: 0; }
+.fdir-h {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.fdir ul { margin: 0; padding: 0; list-style: none; }
+.fdir li { margin: 0 0 8px; }
+.fdir a {
+  color: color-mix(in srgb, var(--ink) 72%, transparent);
+  font-weight: 400;
+  text-decoration: none;
+}
+.fdir a:hover { color: var(--ink); text-decoration: underline; }
+@media (max-width: 899px) {
+  .fdir { grid-template-columns: 1fr; gap: 0; padding: 4px 0; }
+  .fdir-col { padding: 12px 0; border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); }
+  .fdir-col:first-child { border-top: 0; }
+  .fdir ul { display: flex; flex-wrap: wrap; gap: 0 20px; }
+  .fdir li { margin: 0; }
+  .fdir a { display: inline-flex; align-items: center; min-height: 36px; font-size: 14px; }
+}
+
+/* Language: thin globe + code in the closed bar; full names (each in its own language) in the open list. */
+html.hv-ready[data-header] .hv-tools-btn .hv-globe { display: block; flex: none; margin-right: 2px; opacity: .9; }
+html.hv-ready[data-header] .hv-tools-btn { gap: 5px; }
+
+/* Footer language switcher: full names as quiet text links (apple.com footer), current one in ink. */
+footer .footer-langs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px 18px;
+  width: min(1080px, 100%);
+  margin: 16px auto 4px;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+}
+footer .footer-langs a {
+  min-width: 0;
+  height: auto;
+  min-height: 32px;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: color-mix(in srgb, var(--ink) 72%, transparent);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-decoration: none;
+}
+footer .footer-langs a:hover { color: var(--ink); text-decoration: underline; }
+/* Current language: plain ink text at 500 (a real Golos face). The dark-theme `.langs a[aria-current]` pill rules in
+   home-v7.css are more specific than a plain footer selector, so the theme selectors are repeated here to win. */
+footer .footer-langs a[aria-current="page"],
+html[data-theme=dark] footer .footer-langs a[aria-current="page"],
+html:not([data-theme=light]) footer .footer-langs a[aria-current="page"] { background: none; color: var(--ink); font-weight: 500; }
+@media (max-width: 899px) {
+  footer .footer-langs { gap: 0 20px; }
+  footer .footer-langs a { min-height: 40px; font-size: 14px; }
+}
+/* Phones (320–479px): all five languages on one centred line, never 4+1 (Murat 22.10.2026). The row borrows 12px of the
+   footer's 24px side padding, and the font (12→14px) and gaps (9→20px) scale with the viewport so «Українська» fits at 320px. */
+@media (max-width: 479px) {
+  footer .footer-langs { flex-wrap: nowrap; width: auto; margin: 16px -12px 4px; gap: 0 clamp(9px, 5.5vw - 9px, 20px); }
+  footer .footer-langs a { flex: none; white-space: nowrap; font-size: clamp(12px, 3.4vw, 14px); }
+}
+
+/* Footer logo: light/dark pair (only-light/only-dark). Block + centred so both variants sit where the single logo did. */
+footer img.foot-logo{height:26px;width:auto;margin:0 auto 14px}
+footer img.foot-logo.only-light{display:block}
+footer img.foot-logo.only-dark{display:none}
+html[data-theme=dark] footer img.foot-logo.only-light{display:none}
+html[data-theme=dark] footer img.foot-logo.only-dark{display:block}
+@media (prefers-color-scheme:dark){html:not([data-theme=light]) footer img.foot-logo.only-light{display:none}html:not([data-theme=light]) footer img.foot-logo.only-dark{display:block}}

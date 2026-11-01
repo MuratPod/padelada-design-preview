@@ -1,0 +1,57 @@
+/* /<lang>/clubs/ — «Клубам» v10. Sits on home-v7.css (header, tokens, phone bezel, reveal, hero buttons). Phones stand directly on the page background. */
+.scene.cl-hero h1{font-size:clamp(40px,5.4vw,78px);font-weight:400;letter-spacing:-.045em;line-height:1.02;max-width:11em}
+.scene.cl-hero .copy{max-width:760px;gap:20px}
+.scene.cl-hero .sub{font-size:clamp(19px,2vw,26px);line-height:1.4;max-width:30em;font-weight:400;letter-spacing:-.014em}
+.cl-fig{margin:0;display:flex;flex-direction:column;align-items:center;min-width:0}
+.cl-fig .phone{width:min(320px,72vw)}
+.cl-fig figcaption{margin-top:22px;font-size:15px;font-weight:500;line-height:1.35;color:var(--muted);text-align:center;text-wrap:balance}
+.scene.cl-hero .hero-stage{width:100%;align-items:center}
+.scene.cl-hero .hero-stage .phone{width:min(330px,70vw)}
+.screen picture{display:contents}
+.cl-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:72px;width:min(1120px,100%);margin-inline:auto;padding:104px 24px;text-align:left}
+.cl-split .copy{align-items:flex-start;max-width:30em;justify-self:center}
+.cl-flip .copy{order:2}
+.cl-p{margin:0;font-size:clamp(21px,2.3vw,32px);font-weight:400;line-height:1.28;letter-spacing:-.024em;color:var(--ink);text-wrap:pretty}
+.cl-pair{display:flex;justify-content:center;gap:28px;min-width:0}
+.cl-pair .cl-fig{flex:1 1 0}
+.cl-two .cl-pair .phone{width:100%}
+.cl-close{padding:120px 24px 140px;gap:0}
+.cl-close .copy{max-width:760px;gap:36px;align-items:center}
+.cl-p6{text-align:center;font-size:clamp(24px,3vw,40px);max-width:20em}
+.cl-close .cta{margin-top:0}
+.scene.cl-close .hero-download,.scene.cl-hero .hero-download{flex-direction:column;gap:1px;background:var(--ink);color:var(--bg);font-weight:500;font-size:17px;letter-spacing:-.012em;padding:8px 26px;min-height:48px;max-width:100%;text-align:center;line-height:1.15}
+.cl-close .hero-label{font-weight:500}
+.cl-close .hero-note{font-size:12px;font-weight:400;letter-spacing:0;opacity:.72}
+.cl-close .hero-download:disabled{cursor:default}
+.cl-close .hero-browser{flex-direction:column;gap:1px;background:color-mix(in srgb,var(--ink) 9%,transparent);color:var(--ink);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--ink) 38%,transparent);font-weight:500;font-size:17px;letter-spacing:-.012em;padding:8px 26px;max-width:100%;text-align:center;line-height:1.15}
+.cl-close .hero-browser .hero-label{font-weight:500}
+.cl-close .hero-browser .hero-note{font-size:12px;font-weight:400;letter-spacing:0;opacity:.72}
+@media(max-width:520px){.cl-close .cta{flex-direction:column;align-items:stretch;width:100%;max-width:340px}.cl-close .cta .btn{width:100%}}
+@media(max-width:900px){
+ .cl-split{grid-template-columns:minmax(0,1fr);gap:40px;padding:72px 18px}
+ .cl-flip .copy{order:0}
+ .cl-split .copy{max-width:26em}
+ .cl-p{font-size:clamp(19px,5.2vw,24px)}
+ .cl-p6{font-size:clamp(22px,6vw,28px)}
+ .cl-pair{gap:14px}
+ .cl-close{padding:80px 18px 96px}
+}
+@media(prefers-reduced-motion:reduce){.cl-fig,.cl-fig .phone{transform:none!important}}
+/* light/dark screens: one <picture> per theme, the other is display:none (lazy → never fetched) */
+.screen picture.rt-dark{display:none}
+html[data-theme=dark] .screen picture.rt-light{display:none}
+html[data-theme=dark] .screen picture.rt-dark{display:contents}
+@media(prefers-color-scheme:dark){
+ html:not([data-theme=light]) .screen picture.rt-light{display:none}
+ html:not([data-theme=light]) .screen picture.rt-dark{display:contents}
+}
+
+/* ≥1100px: copy and phone side by side inside the same 1120px container as the sections below; copy column keeps a readable width (was squeezed to ~330px by .hero-stage width:100%). */
+@media(min-width:1100px){
+.scene.cl-hero{flex-direction:row;align-items:center;justify-content:space-between;text-align:left;width:min(1120px,100%);margin-inline:auto;padding:40px 24px 28px;gap:48px}
+.scene.cl-hero .copy{align-items:flex-start;text-align:left;flex:1 1 0;min-width:0;max-width:640px}
+.scene.cl-hero .sub{text-align:left;max-width:26em}
+.scene.cl-hero .cta{justify-content:flex-start}
+.scene.cl-hero .hero-download{text-align:left;align-items:flex-start}
+.scene.cl-hero .hero-stage{width:auto;flex:0 0 auto}
+}

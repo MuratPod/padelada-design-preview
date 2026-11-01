@@ -1,0 +1,2 @@
+- msg1-ru.png / msg1-es.png — Chats list: segmented «Группы | Личные», sections Зона / Турниры / Матчи, one match row mid-swipe with red delete action.
+- msg2-ru.png / msg2-es.png — Zone chat «Baix Empordà»: translated messages with «Оригинал» labels, Miembro chips, Capitán · 1 gold chip, «Ищем четвёртого» card with «Я играю», input field.
