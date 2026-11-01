@@ -1,0 +1,26 @@
+/* public mock pages on club-prod tokens — D4 only, no green */
+.pub{padding-top:56px}
+.pub .isec{padding:48px 0}
+.pub__h{margin:10px 0 16px;font-size:clamp(48px,8vw,96px);line-height:.96;letter-spacing:-.045em;font-weight:800}
+.pub__split{display:grid;gap:36px;align-items:center}
+@media(min-width:960px){.pub__split{grid-template-columns:1fr 1fr;gap:64px}}
+.pub__cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.pub__cta svg,.pub__oauth svg{width:18px;height:18px}
+.pub__art img,.pub__phone img{width:100%;border-radius:28px;display:block;object-fit:cover}
+.pub__art img{aspect-ratio:4/3;filter:brightness(.7)}
+.pub__phone{max-width:320px;justify-self:center}
+.pub__oauth{display:grid;gap:10px;margin-top:28px;max-width:420px}
+.pub__oauth a{display:flex;align-items:center;gap:12px;padding:16px 18px;border-radius:999px;color:var(--text);text-decoration:none;font-weight:600}
+.pub__oauth a svg{margin-left:auto}.pub__oauth b{width:24px;text-align:center}.pub__oauth .g{color:var(--accent)}
+.pub__form{display:grid;gap:14px;padding:22px}
+.pub__form label{display:grid;gap:6px;font-size:13px;font-weight:600;color:var(--muted)}
+.pub__form input{height:48px;border-radius:14px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);padding:0 14px;font:inherit;font-size:16px}
+.pub__form .btn{justify-self:start}
+.pub__map{display:grid;gap:28px;margin-top:28px;align-items:center}
+@media(min-width:1000px){.pub__map{grid-template-columns:1.6fr 1fr}}
+.spain{width:100%;height:auto;display:block}
+.spain .sea{fill:none}.spain path.ctx{fill:none;stroke:#3A3B40;stroke-width:.8;opacity:.6}
+.spain path.land{fill:#2C2D31;stroke:#3A3B40;stroke-width:1;stroke-linejoin:round}
+.spain .canarias path.inset{fill:none;stroke:#3A3B40}.spain .canarias text{fill:#A8AAB2;font-size:12px;font-weight:600}
+.spain .pin circle.c{fill:#FFB547}.spain .pin circle.r{fill:none;stroke:#FFB547;opacity:.45}
+.spain .pin text{fill:#F5F5F7;font-size:13px;font-weight:600;opacity:0;transition:opacity .2s}.spain .pin:hover text,.spain .pin:focus text{opacity:1}
