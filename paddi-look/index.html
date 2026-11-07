@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paddi — новый облик · демо-прототип</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#0A1124;--top:#101B38;--surface:#141C30;--ink:#F5F5F7;--muted:#A8AAB2;--coral:#FF5E5B;--mango:#FFA62B;--mint:#4BE3BA;--line:#2a3555}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+a,button,input,label{font:inherit}
+.banner{background:#2a1f0a;color:#ffd58a;padding:10px 16px;font-size:14px;text-align:center;border-bottom:1px solid #5a4210}
+header.top{padding:20px 16px 8px;max-width:1100px;margin:0 auto}
+h1{font-size:22px;margin:0 0 4px}
+h2{font-size:17px;margin:0 0 10px}
+p.lead{color:var(--muted);margin:0;font-size:14px}
+main{max-width:1100px;margin:0 auto;padding:8px 16px 48px;display:grid;gap:24px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:900px){main{grid-template-columns:minmax(0,470px) minmax(0,1fr)}}
+.phone-col{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
+.stage-wrap{width:100%;display:flex;justify-content:center}
+.stage{position:relative;width:100%;background:#000;border-radius:0;overflow:hidden;outline:1px solid var(--line)}
+.stage.se{max-width:375px;aspect-ratio:375/667}
+.stage.promax{max-width:430px;aspect-ratio:430/932}
+.stage img.shot{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
+.hs{position:absolute;margin:0;padding:0;border:0;background:transparent;cursor:pointer;border-radius:10px;-webkit-tap-highlight-color:transparent}
+.hs:hover{background:rgba(255,255,255,.07)}
+.hs:focus-visible,.ctl:focus-visible,.seg button:focus-visible,.gal button:focus-visible,summary:focus-visible{outline:3px solid var(--mint);outline-offset:2px}
+.cover{position:absolute;background:#0B1428;border-radius:22px;pointer-events:none}
+.typing{position:absolute;pointer-events:none;background-image:url(assets/typing_dots_sprite_4frames@3x.png);background-repeat:no-repeat}
+.toast{position:absolute;left:50%;bottom:9%;transform:translateX(-50%);background:#f5f5f7;color:#0A1124;padding:10px 14px;border-radius:14px;font-size:14px;max-width:88%;text-align:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+.newtag{position:absolute;top:8px;left:50%;transform:translateX(-50%);background:var(--mango);color:#1a1200;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;pointer-events:none;white-space:nowrap;z-index:2}
+.seg{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.seg button,.ctl,.gal button{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-height:44px;cursor:pointer}
+.seg button[aria-pressed=true],.gal button[aria-pressed=true]{background:var(--coral);border-color:var(--coral);color:#fff}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:16px;min-width:0}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.check{display:flex;gap:10px;align-items:center;min-height:44px;cursor:pointer}
+.check input{width:22px;height:22px;accent-color:var(--coral)}
+.note{color:var(--muted);font-size:14px;margin:8px 0 0}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0;padding:0;list-style:none}
+.gal{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.emo{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.emo .big{width:min(100%,240px);aspect-ratio:1;border-radius:16px;background:var(--bg);position:relative;overflow:hidden;border:1px solid var(--line)}
+.emo .big img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .2s}
+.emo .big img.out{opacity:0}
+.rm .emo .big img{transition:none}
+.avs{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-end}
+.avs figure{margin:0;text-align:center;color:var(--muted);font-size:13px}
+.avs img{display:block;margin:0 auto 6px;border-radius:50%}
+.tv{display:inline-block;width:72px;height:40px;background:url(assets/typing_dots_sprite_4frames@3x.png) 0 0/288px 40px no-repeat}
+.alt{white-space:pre-line;font-size:14px;color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+ul.files{margin:6px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<div class="banner" role="note"><strong>ДЕМО-ПРОТОТИП.</strong> Только симуляция: ничего не отправляется, не загружается и не оплачивается. Любые тарифы («Plus и Max»), лимиты и сообщения — <strong>DEMO CONCEPT</strong>, не реальное предложение.</div>
+<header class="top">
+<h1>Paddi — новый облик</h1>
+<p class="lead">Кликабельный макет из 7 состояний (iPhone SE 375×667 и Pro Max 430×932). Только дизайн, приложение не реализовано.</p>
+</header>
+<main id="app">
+<section class="phone-col" aria-label="Телефон">
+<div class="seg" role="group" aria-label="Размер экрана">
+<button type="button" data-size="se" aria-pressed="true">SE 375×667</button>
+<button type="button" data-size="promax" aria-pressed="false">Pro Max 430×932</button>
+</div>
+<div class="stage-wrap"><div class="stage se" id="stage" role="group" aria-label="Экран прототипа"></div></div>
+<div class="seg" role="group" aria-label="Состояния" id="states"></div>
+</section>
+<section aria-label="Управление">
+<div class="panel">
+<h2>Переключатели</h2>
+<label class="check"><input type="checkbox" id="t-chip" checked> Показывать чип «Из чата «Падел Ситжес»»</label>
+<label class="check"><input type="checkbox" id="t-limit"> Состояние «лимит исчерпан» (демо)</label>
+<label class="check"><input type="checkbox" id="t-rm"> Reduce Motion (статичные точки набора, без плавных смен)</label>
+<p class="note" id="statelabel" aria-live="polite"></p>
+</div>
+<div class="panel">
+<h2>Действия на экране (текстовая альтернатива)</h2>
+<p class="alt" id="alt"></p>
+<ul class="acts" id="acts"></ul>
+</div>
+<div class="panel">
+<h2>Эмоции Paddi</h2>
+<div class="gal" id="emos" role="group" aria-label="Эмоция"></div>
+<div class="emo"><div class="big" id="big"></div>
+<label class="check"><input type="checkbox" id="t-navy"> Вариант на тёмно-синем (без альфы)</label></div>
+<p class="note">Нейтральная — новая генерация по эталону, не сам эталон.</p>
+</div>
+<div class="panel">
+<h2>Аватар 24 / 32 / 40 / 64 pt</h2>
+<div class="avs" id="avs"></div>
+<p class="note">Круг с альфой, подложка #232C45. В шапке 32 pt, в сообщениях 24 pt.</p>
+</div>
+<div class="panel">
+<h2>Индикатор набора</h2>
+<span class="tv" id="tv" role="img" aria-label="Индикатор набора"></span>
+<p class="note">4 кадра × 150 мс, цикл 600 мс. При Reduce Motion — статичный кадр 1.</p>
+</div>
+<div class="panel">
+<h2>О прототипе</h2>
+<p class="note" style="margin-top:0">Экраны 01, 02, 03 повторяют реальные экраны Paddi (r27/r30, тёмная тема RU). Экран 04 «Отправить» — <strong>NEW adaptation</strong>: тёмного эталона нет, структура взята со светлого групчата. Иллюстрации — ИИ-генерация по эталону маскота. Шрифты в макетах: Golos Text (SIL OFL 1.1), см. FONTS_LICENSES.txt.</p>
+</div>
+</section>
+</main>
+<script>
+const CFG={"sizes": {"se": [375, 667], "promax": [430, 932]}, "hits": {"01_paddi-hello": {"promax": {"back": [12, 65, 44, 44], "saved": [320, 65, 44, 44], "more": [374, 65, 44, 44], "suggest-partner": [50, 465, 330, 44], "suggest-game": [50, 517, 330, 44], "suggest-summary": [50, 569, 330, 44], "open-whatcan": [168, 621, 93, 44], "chip-context": [12, 775, 242, 44], "attach": [12, 846, 44, 44], "mic": [374, 846, 44, 44]}, "se": {"back": [12, 26, 44, 44], "saved": [265, 26, 44, 44], "more": [319, 26, 44, 44], "suggest-partner": [23, 332, 330, 44], "suggest-game": [23, 384, 330, 44], "suggest-summary": [23, 436, 330, 44], "open-whatcan": [141, 488, 93, 44], "chip-context": [12, 544, 242, 44], "attach": [12, 615, 44, 44], "mic": [319, 615, 44, 44]}}, "02_paddi-whatcan": {"promax": {"back": [12, 65, 44, 44], "saved": [320, 65, 44, 44], "more": [374, 65, 44, 44], "suggest-partner": [50, 465, 330, 44], "suggest-game": [50, 517, 330, 44], "suggest-summary": [50, 569, 330, 44], "open-whatcan": [168, 621, 93, 44], "chip-context": [12, 775, 242, 44], "attach": [12, 846, 44, 44], "mic": [374, 846, 44, 44], "close-whatcan": [370, 431, 44, 44], "cap-0": [16, 533, 195, 88], "cap-1": [219, 533, 195, 88], "cap-2": [16, 629, 195, 88], "cap-3": [219, 629, 195, 88], "cap-4": [16, 725, 195, 88], "cap-5": [219, 725, 195, 88]}, "se": {"back": [12, 26, 44, 44], "saved": [265, 26, 44, 44], "more": [319, 26, 44, 44], "suggest-partner": [23, 332, 330, 44], "suggest-game": [23, 384, 330, 44], "suggest-summary": [23, 436, 330, 44], "open-whatcan": [141, 488, 93, 44], "chip-context": [12, 544, 242, 44], "attach": [12, 615, 44, 44], "mic": [319, 615, 44, 44], "close-whatcan": [315, 183, 44, 44], "cap-0": [16, 285, 168, 87], "cap-1": [192, 285, 168, 87], "cap-2": [16, 380, 168, 87], "cap-3": [192, 380, 168, 87], "cap-4": [16, 475, 168, 87], "cap-5": [192, 475, 168, 87]}}, "03_paddi-draft": {"promax": {"back": [12, 65, 44, 44], "saved": [320, 65, 44, 44], "more": [374, 65, 44, 44], "draft-create": [27, 658, 183, 44], "draft-edit": [218, 658, 185, 44], "draft-cancel": [27, 702, 376, 44], "chip-context": [12, 775, 242, 44], "attach": [12, 846, 44, 44], "mic": [374, 846, 44, 44]}, "se": {"back": [12, 26, 44, 44], "saved": [265, 26, 44, 44], "more": [319, 26, 44, 44], "draft-create": [27, 427, 156, 44], "draft-edit": [191, 427, 158, 44], "draft-cancel": [27, 471, 321, 44], "chip-context": [12, 544, 242, 44], "attach": [12, 615, 44, 44], "mic": [319, 615, 44, 44]}}, "04_paddi-attach": {"promax": {"back": [12, 65, 44, 44], "saved": [320, 65, 44, 44], "more": [374, 65, 44, 44], "draft-create": [27, 658, 183, 44], "draft-edit": [218, 658, 185, 44], "draft-cancel": [27, 702, 376, 44], "close-attach": [370, 602, 44, 44], "attach-0": [16, 654, 127, 96], "attach-1": [151, 654, 127, 96], "attach-2": [287, 654, 127, 96], "attach-3": [16, 758, 127, 96], "chip-context": [12, 775, 242, 44], "attach": [12, 846, 44, 44], "mic": [374, 846, 44, 44]}, "se": {"back": [12, 26, 44, 44], "saved": [265, 26, 44, 44], "more": [319, 26, 44, 44], "draft-create": [27, 427, 156, 44], "draft-edit": [191, 427, 158, 44], "draft-cancel": [27, 471, 321, 44], "close-attach": [315, 371, 44, 44], "attach-0": [16, 423, 109, 96], "attach-1": [133, 423, 109, 96], "attach-2": [250, 423, 109, 96], "attach-3": [16, 527, 109, 96], "chip-context": [12, 544, 242, 44], "attach": [12, 615, 44, 44], "mic": [319, 615, 44, 44]}}, "05_typing": {"promax": {"back": [12, 65, 44, 44], "saved": [320, 65, 44, 44], "more": [374, 65, 44, 44], "chip-context": [12, 775, 242, 44], "attach": [12, 846, 44, 44], "mic": [374, 846, 44, 44]}, "se": {"back": [12, 26, 44, 44], "saved": [265, 26, 44, 44], "more": [319, 26, 44, 44], "chip-context": [12, 544, 242, 44], "attach": [12, 615, 44, 44], "mic": [319, 615, 44, 44]}}, "06_empty-saved": {"promax": {"back": [12, 65, 44, 44], "saved": [320, 65, 44, 44], "more": [374, 65, 44, 44], "back-to-chat": [50, 472, 330, 44]}, "se": {"back": [12, 26, 44, 44], "saved": [265, 26, 44, 44], "more": [319, 26, 44, 44], "back-to-chat": [23, 339, 330, 44]}}, "07_limit": {"promax": {"back": [12, 65, 44, 44], "saved": [320, 65, 44, 44], "more": [374, 65, 44, 44], "limit-create-manual": [28, 647, 374, 44], "limit-ok": [28, 699, 374, 44], "chip-context": [12, 775, 242, 44], "attach": [12, 846, 44, 44], "mic": [374, 846, 44, 44]}, "se": {"back": [12, 26, 44, 44], "saved": [265, 26, 44, 44], "more": [319, 26, 44, 44], "limit-create-manual": [28, 416, 319, 44], "limit-ok": [28, 468, 319, 44], "chip-context": [12, 544, 242, 44], "attach": [12, 615, 44, 44], "mic": [319, 615, 44, 44]}}}};
+const ORDER=[
+ ['01_paddi-hello','Приветствие'],['02_paddi-whatcan','Что умею'],['03_paddi-draft','Черновик'],
+ ['04_paddi-attach','Отправить (NEW)'],['05_typing','Набор'],['06_empty-saved','Сохранённые'],['07_limit','Лимит']];
+const NAMES=Object.fromEntries(ORDER);
+const LBL={back:'Назад',saved:'Сохранённые',more:'Ещё','suggest-partner':'Найти партнёра в этот чат','suggest-game':'Создай игру завтра в 19:00','suggest-summary':'Кратко: что обсуждали в чате','open-whatcan':'Что умею','chip-context':'Чип контекста «Из чата»',attach:'Отправить',mic:'Микрофон','close-whatcan':'Закрыть «Что умею»','close-attach':'Закрыть «Отправить»','draft-create':'Создать','draft-edit':'Изменить','draft-cancel':'Отменить','back-to-chat':'Вернуться в чат','limit-create-manual':'Создать вручную','limit-ok':'Понятно'};
+for(let i=0;i<6;i++)LBL['cap-'+i]='Возможность '+(i+1)+(i==4?' (создать игру)':'');
+for(let i=0;i<4;i++)LBL['attach-'+i]='Вариант «Отправить» '+(i+1);
+const ACTIVE={
+ '01_paddi-hello':null,
+ '02_paddi-whatcan':['close-whatcan','cap-0','cap-1','cap-2','cap-3','cap-4','cap-5'],
+ '03_paddi-draft':null,
+ '04_paddi-attach':['close-attach','attach-0','attach-1','attach-2','attach-3'],
+ '05_typing':null,'06_empty-saved':null,'07_limit':null};
+const DESC={
+ '01_paddi-hello':'Приветствие: Paddi (эмоция «рад») говорит «Привет, я Paddi». Три подсказки, ссылка «Что умею», чип контекста, строка лимита «Free · осталось 3 из 5 сегодня (демо)», поле ввода.',
+ '02_paddi-whatcan':'Лист «Что умею» поверх приветствия: 6 плиток возможностей и инфоблок. Подпись «в Plus и Max» — DEMO CONCEPT, не реальный тариф.',
+ '03_paddi-draft':'Чат: запрос пользователя, ответ Paddi и карточка черновика игры с кнопками «Создать», «Изменить», «Отменить». Ничего не создаётся.',
+ '04_paddi-attach':'NEW adaptation: тёмный лист «Отправить» с 4 вариантами. Ничего не загружается.',
+ '05_typing':'Paddi думает: индикатор набора и иллюстрация «думает». Через 1,2 с после подсказки «Создай игру» — переход к черновику.',
+ '06_empty-saved':'Пустые «Сохранённые» с кнопкой возврата в чат.',
+ '07_limit':'Лимит исчерпан (эмоция «извиняется»), числа — пример для демо, без апсейла.'};
+const S={st:'01_paddi-hello',size:'se',chip:true,rm:matchMedia('(prefers-reduced-motion: reduce)').matches,timer:null,emo:'happy',navy:false};
+const $=id=>document.getElementById(id);
+const stage=$('stage');
+let toastT;
+function toast(m){let t=stage.querySelector('.toast');if(!t)return;t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),1800)}
+function go(st){clearTimeout(S.timer);S.st=st;render();if(st==='05_typing'&&S.pendingAuto){S.timer=setTimeout(()=>{S.pendingAuto=false;go('03_paddi-draft')},1200)}}
+function typing(auto){S.pendingAuto=auto;go('05_typing')}
+const ACT={
+ '01_paddi-hello':{'open-whatcan':()=>go('02_paddi-whatcan'),'suggest-game':()=>typing(true),'suggest-partner':()=>{typing(false);},'suggest-summary':()=>{typing(false)},attach:()=>go('04_paddi-attach'),saved:()=>go('06_empty-saved'),back:()=>toast('Демо: выход из прототипа вне объёма')},
+ '02_paddi-whatcan':{'close-whatcan':()=>go('01_paddi-hello'),'cap-4':()=>typing(true)},
+ '03_paddi-draft':{'draft-create':()=>toast('Демо: игра не создаётся'),'draft-edit':()=>toast('Демо: редактирование вне объёма'),'draft-cancel':()=>go('01_paddi-hello'),attach:()=>go('04_paddi-attach'),saved:()=>go('06_empty-saved'),back:()=>go('01_paddi-hello')},
+ '04_paddi-attach':{'close-attach':()=>go('03_paddi-draft')},
+ '05_typing':{back:()=>go('01_paddi-hello'),saved:()=>go('06_empty-saved'),attach:()=>go('04_paddi-attach')},
+ '06_empty-saved':{'back-to-chat':()=>go('01_paddi-hello'),back:()=>go('01_paddi-hello'),saved:()=>toast('Вы уже в «Сохранённых»')},
+ '07_limit':{'limit-ok':()=>{go('01_paddi-hello')},'limit-create-manual':()=>toast('Демо: создание вручную вне объёма'),back:()=>go('01_paddi-hello'),saved:()=>go('06_empty-saved'),attach:()=>go('04_paddi-attach')}};
+function act(id){
+ if(id==='chip-context'){S.chip=!S.chip;$('t-chip').checked=S.chip;render();return}
+ const st=S.st;let f=ACT[st][id];
+ if(!f&&st==='02_paddi-whatcan'&&id.startsWith('cap-'))f=()=>go('01_paddi-hello');
+ if(!f&&st==='04_paddi-attach'&&id.startsWith('attach-'))f=()=>{go('03_paddi-draft');setTimeout(()=>toast('Демо: ничего не загружается'),50)};
+ if(!f&&id==='more')f=()=>toast('Демо: меню вне объёма');
+ if(!f&&id==='mic')f=()=>toast('Демо: микрофон вне объёма');
+ if(!f&&id==='saved')f=()=>go('06_empty-saved');
+ if(!f)f=()=>toast('Демо: действие вне объёма');
+ f();
+ if(S.st!=='07_limit'&&$('t-limit').checked&&st==='07_limit')$('t-limit').checked=false;
+}
+function ids(st){const all=Object.keys(CFG.hits[st][S.size]);const a=ACTIVE[st];return a?all.filter(i=>a.includes(i)):all}
+const TYP={se:[41,405.7],promax:[41,636.7]};
+function render(){
+ const st=S.st,[W,H]=CFG.sizes[S.size],hits=CFG.hits[st][S.size];
+ stage.className='stage '+S.size;
+ stage.innerHTML='';
+ const img=new Image();img.className='shot';img.src='png/'+st+'__'+S.size+'.png';img.alt=DESC[st];img.width=W;img.height=H;stage.appendChild(img);
+ const pc=(x,y,w,h)=>`left:${x/W*100}%;top:${y/H*100}%;width:${w/W*100}%;height:${h/H*100}%`;
+ if(!S.chip&&hits['chip-context']&&['01_paddi-hello','03_paddi-draft','05_typing','07_limit'].includes(st)){const c=document.createElement('div');c.className='cover';c.style.cssText=pc(...hits['chip-context']);stage.appendChild(c)}
+ if(st==='05_typing'){const p=TYP[S.size];if(p){const t=document.createElement('div');t.className='typing';t.id='tpy';t.dataset.x=p[0];t.style.cssText=pc(p[0],p[1],72,40)+';background-size:400% 100%;background-position:0% 0';stage.appendChild(t)}}
+ if(st==='04_paddi-attach'){const n=document.createElement('div');n.className='newtag';n.textContent='NEW adaptation · тёмного эталона нет';stage.appendChild(n)}
+ ids(st).forEach(id=>{
+  const b=document.createElement('button');b.type='button';b.className='hs';b.dataset.id=id;
+  b.setAttribute('aria-label',id==='chip-context'?(S.chip?'Убрать чип контекста':'Показать чип контекста'):LBL[id]||id);
+  b.style.cssText=pc(...hits[id]);b.addEventListener('click',()=>act(id));stage.appendChild(b)});
+ const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');stage.appendChild(t);
+ document.querySelectorAll('#states button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.st===st));
+ $('statelabel').textContent='Состояние: '+st.slice(0,2)+' · '+NAMES[st]+(st==='04_paddi-attach'?' (NEW adaptation)':'');
+ $('alt').textContent=DESC[st];
+ const ul=$('acts');ul.innerHTML='';
+ ids(st).forEach(id=>{const li=document.createElement('li');const b=document.createElement('button');b.type='button';b.className='ctl';b.textContent=id==='chip-context'?(S.chip?'Убрать чип контекста':'Показать чип контекста'):LBL[id]||id;b.addEventListener('click',()=>act(id));li.appendChild(b);ul.appendChild(li)});
+ document.body.classList.toggle('rm',S.rm);
+ $('t-limit').checked=st==='07_limit';
+}
+// frame animation
+let fr=0;
+setInterval(()=>{fr=S.rm?0:(fr+1)%4;const a=$('tpy'),v=$('tv');if(a)a.style.backgroundPosition=(fr*100/3)+'% 0';if(v)v.style.backgroundPosition=`-${fr*72}px 0`},150);
+// controls
+$('states').append(...ORDER.map(([k,n])=>{const b=document.createElement('button');b.type='button';b.dataset.st=k;b.textContent=k.slice(0,2)+' '+n;b.addEventListener('click',()=>{S.pendingAuto=false;go(k)});return b}));
+document.querySelectorAll('[data-size]').forEach(b=>b.addEventListener('click',()=>{S.size=b.dataset.size;document.querySelectorAll('[data-size]').forEach(x=>x.setAttribute('aria-pressed',x===b));render()}));
+$('t-chip').addEventListener('change',e=>{S.chip=e.target.checked;render()});
+$('t-limit').addEventListener('change',e=>{S.pendingAuto=false;go(e.target.checked?'07_limit':'01_paddi-hello')});
+$('t-rm').checked=S.rm;$('t-rm').addEventListener('change',e=>{S.rm=e.target.checked;render()});
+// emotions
+const EMO=[['happy','Рад'],['neutral','Нейтральный'],['thinking','Думает'],['apologetic','Извиняется']];
+function emo(k){S.emo=k;const big=$('big'),old=big.querySelector('img'),n=new Image();n.src='assets/illustrations/paddi_'+k+'_1024'+(S.navy?'_on-navy':'')+'.png';n.alt='Paddi: '+EMO.find(e=>e[0]===k)[1];
+ if(old&&!S.rm){n.className='out';big.appendChild(n);requestAnimationFrame(()=>requestAnimationFrame(()=>{n.className='';old.className='out';setTimeout(()=>old.remove(),220)}))}else{big.innerHTML='';big.appendChild(n)}
+ document.querySelectorAll('#emos button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k))}
+$('emos').append(...EMO.map(([k,n])=>{const b=document.createElement('button');b.type='button';b.dataset.k=k;b.textContent=n;b.addEventListener('click',()=>emo(k));return b}));
+$('t-navy').addEventListener('change',e=>{S.navy=e.target.checked;emo(S.emo)});
+// avatars
+$('avs').append(...[24,32,40,64].map(p=>{const f=document.createElement('figure');const i=new Image();i.width=p;i.height=p;i.alt='Аватар Paddi '+p+' pt';const b='assets/avatar/paddi_avatar_'+p+'pt';i.src=b+'@1x.png';i.srcset=`${b}@1x.png 1x, ${b}@2x.png 2x, ${b}@3x.png 3x`;f.append(i,p+' pt');return f}));
+emo('happy');render();
+</script>
+</body>
+</html>

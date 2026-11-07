@@ -1,0 +1,1237 @@
+{
+ "title": "Paddi — новый облик, макеты для кликабельного прототипа",
+ "date": "2026-11-07",
+ "status": "только дизайн; приложение не реализовано",
+ "demo": "Все сообщения, чаты, лимиты — демо-примеры",
+ "sizes": {
+  "se": {
+   "pt": [
+    375,
+    667
+   ],
+   "png_px": [
+    1125,
+    2001
+   ],
+   "scale": 3,
+   "safe_top": 20,
+   "safe_bottom": 0
+  },
+  "promax": {
+   "pt": [
+    430,
+    932
+   ],
+   "png_px": [
+    1290,
+    2796
+   ],
+   "scale": 3,
+   "safe_top": 59,
+   "safe_bottom": 34,
+   "label": "iPhone 15 Pro Max / 16 Plus"
+  }
+ },
+ "flow": [
+  "01_paddi-hello",
+  "02_paddi-whatcan",
+  "03_paddi-draft",
+  "04_paddi-attach"
+ ],
+ "transitions": {
+  "01_paddi-hello": {
+   "open-whatcan": "02_paddi-whatcan",
+   "suggest-game": "05_typing → (через 1.2 с) 03_paddi-draft",
+   "suggest-partner": "05_typing (демо, остаётся)",
+   "suggest-summary": "05_typing (демо, остаётся)",
+   "attach": "04_paddi-attach",
+   "saved": "06_empty-saved",
+   "back": "выход из прототипа (вне объёма)",
+   "more": "нет действия (вне объёма)",
+   "mic": "нет действия (вне объёма)",
+   "chip-context": "убрать чип (переключатель состояния)"
+  },
+  "02_paddi-whatcan": {
+   "close-whatcan": "01_paddi-hello",
+   "cap-4": "05_typing → 03_paddi-draft",
+   "cap-0|cap-1|cap-2|cap-3|cap-5": "01_paddi-hello (демо: закрыть лист)"
+  },
+  "03_paddi-draft": {
+   "draft-create": "тост «Демо: игра не создаётся» и остаться",
+   "draft-edit": "остаться (вне объёма)",
+   "draft-cancel": "01_paddi-hello",
+   "attach": "04_paddi-attach",
+   "saved": "06_empty-saved",
+   "back": "01_paddi-hello"
+  },
+  "04_paddi-attach": {
+   "close-attach": "03_paddi-draft",
+   "attach-0|attach-1|attach-2|attach-3": "03_paddi-draft (демо: ничего не загружается)"
+  },
+  "05_typing": {
+   "back": "01_paddi-hello"
+  },
+  "06_empty-saved": {
+   "back-to-chat": "01_paddi-hello",
+   "back": "01_paddi-hello"
+  },
+  "07_limit": {
+   "limit-ok": "01_paddi-hello",
+   "limit-create-manual": "остаться (вне объёма)",
+   "back": "01_paddi-hello"
+  }
+ },
+ "state_toggles": {
+  "limit": "переключатель в панели прототипа → 07_limit",
+  "context_chip": "показать/скрыть чип «Из чата…»",
+  "reduce_motion": "индикатор набора статичен (кадр 1), без покачивания иллюстраций",
+  "emotion": "happy (приветствие), thinking (набор), apologetic (лимит)"
+ },
+ "typing_animation": {
+  "sprite": "assets/typing_dots_sprite_4frames@3x.png",
+  "frames": 4,
+  "frame_ms": 150,
+  "loop_ms": 600,
+  "reduce_motion": "кадр 1 статично"
+ },
+ "assets": {
+  "illustrations": [
+   "assets/illustrations/paddi_apologetic_1024.png",
+   "assets/illustrations/paddi_happy_1024.png",
+   "assets/illustrations/paddi_neutral_1024.png",
+   "assets/illustrations/paddi_thinking_1024.png"
+  ],
+  "avatar": [
+   "assets/avatar/paddi_avatar_24pt@1x.png",
+   "assets/avatar/paddi_avatar_24pt@2x.png",
+   "assets/avatar/paddi_avatar_24pt@3x.png",
+   "assets/avatar/paddi_avatar_32pt@1x.png",
+   "assets/avatar/paddi_avatar_32pt@2x.png",
+   "assets/avatar/paddi_avatar_32pt@3x.png",
+   "assets/avatar/paddi_avatar_40pt@1x.png",
+   "assets/avatar/paddi_avatar_40pt@2x.png",
+   "assets/avatar/paddi_avatar_40pt@3x.png",
+   "assets/avatar/paddi_avatar_64pt@1x.png",
+   "assets/avatar/paddi_avatar_64pt@2x.png",
+   "assets/avatar/paddi_avatar_64pt@3x.png"
+  ],
+  "illustrations_on_navy": [
+   "assets/illustrations/paddi_apologetic_1024_on-navy.png",
+   "assets/illustrations/paddi_happy_1024_on-navy.png",
+   "assets/illustrations/paddi_neutral_1024_on-navy.png",
+   "assets/illustrations/paddi_thinking_1024_on-navy.png"
+  ]
+ },
+ "fonts": {
+  "Golos Text": "SIL Open Font License 1.1 (Google Fonts)",
+  "Montserrat Alternates": "SIL OFL 1.1 — в макетах Paddi не используется"
+ },
+ "colors": {
+  "bg": "#0A1124",
+  "top": "#101B38",
+  "surface": "#141C30",
+  "ink": "#F5F5F7",
+  "muted": "#A8AAB2",
+  "coral": "#FF5E5B",
+  "mango": "#FFA62B",
+  "mint": "#4BE3BA"
+ },
+ "screens": [
+  {
+   "file": "png/01_paddi-hello__promax.png",
+   "sha256": "465e77cc9ee7056e1a950b087527d66f6081d6cb3b91231cfc6041bd23558567",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 320,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 374,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "suggest-partner",
+     "x": 50,
+     "y": 465,
+     "w": 330,
+     "h": 44
+    },
+    {
+     "id": "suggest-game",
+     "x": 50,
+     "y": 517,
+     "w": 330,
+     "h": 44
+    },
+    {
+     "id": "suggest-summary",
+     "x": 50,
+     "y": 569,
+     "w": 330,
+     "h": 44
+    },
+    {
+     "id": "open-whatcan",
+     "x": 168,
+     "y": 621,
+     "w": 93,
+     "h": 44
+    },
+    {
+     "id": "chip-context",
+     "x": 12,
+     "y": 775,
+     "w": 242,
+     "h": 44
+    },
+    {
+     "id": "attach",
+     "x": 12,
+     "y": 846,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "mic",
+     "x": 374,
+     "y": 846,
+     "w": 44,
+     "h": 44
+    }
+   ]
+  },
+  {
+   "file": "png/01_paddi-hello__se.png",
+   "sha256": "2edaffce5a13bd25289baaaf47b32857af1020a3965e686f64a98f1768baaf97",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 265,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 319,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "suggest-partner",
+     "x": 23,
+     "y": 332,
+     "w": 330,
+     "h": 44
+    },
+    {
+     "id": "suggest-game",
+     "x": 23,
+     "y": 384,
+     "w": 330,
+     "h": 44
+    },
+    {
+     "id": "suggest-summary",
+     "x": 23,
+     "y": 436,
+     "w": 330,
+     "h": 44
+    },
+    {
+     "id": "open-whatcan",
+     "x": 141,
+     "y": 488,
+     "w": 93,
+     "h": 44
+    },
+    {
+     "id": "chip-context",
+     "x": 12,
+     "y": 544,
+     "w": 242,
+     "h": 44
+    },
+    {
+     "id": "attach",
+     "x": 12,
+     "y": 615,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "mic",
+     "x": 319,
+     "y": 615,
+     "w": 44,
+     "h": 44
+    }
+   ]
+  },
+  {
+   "file": "png/02_paddi-whatcan__promax.png",
+   "sha256": "7263112b5c66ac5ba87c2215c84d03bd030f1251fe98e1396837c08661694416",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 320,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 374,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "suggest-partner",
+     "x": 50,
+     "y": 465,
+     "w": 330,
+     "h": 44
+    },
+    {
+     "id": "suggest-game",
+     "x": 50,
+     "y": 517,
+     "w": 330,
+     "h": 44
+    },
+    {
+     "id": "suggest-summary",
+     "x": 50,
+     "y": 569,
+     "w": 330,
+     "h": 44
+    },
+    {
+     "id": "open-whatcan",
+     "x": 168,
+     "y": 621,
+     "w": 93,
+     "h": 44
+    },
+    {
+     "id": "chip-context",
+     "x": 12,
+     "y": 775,
+     "w": 242,
+     "h": 44
+    },
+    {
+     "id": "attach",
+     "x": 12,
+     "y": 846,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "mic",
+     "x": 374,
+     "y": 846,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "close-whatcan",
+     "x": 370,
+     "y": 431,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "cap-0",
+     "x": 16,
+     "y": 533,
+     "w": 195,
+     "h": 88
+    },
+    {
+     "id": "cap-1",
+     "x": 219,
+     "y": 533,
+     "w": 195,
+     "h": 88
+    },
+    {
+     "id": "cap-2",
+     "x": 16,
+     "y": 629,
+     "w": 195,
+     "h": 88
+    },
+    {
+     "id": "cap-3",
+     "x": 219,
+     "y": 629,
+     "w": 195,
+     "h": 88
+    },
+    {
+     "id": "cap-4",
+     "x": 16,
+     "y": 725,
+     "w": 195,
+     "h": 88
+    },
+    {
+     "id": "cap-5",
+     "x": 219,
+     "y": 725,
+     "w": 195,
+     "h": 88
+    }
+   ]
+  },
+  {
+   "file": "png/02_paddi-whatcan__se.png",
+   "sha256": "6dced3a5d977c6108bfe01cf6a6653723a39ed4f92bd802bd18fe4a0b55cd818",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 265,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 319,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "suggest-partner",
+     "x": 23,
+     "y": 332,
+     "w": 330,
+     "h": 44
+    },
+    {
+     "id": "suggest-game",
+     "x": 23,
+     "y": 384,
+     "w": 330,
+     "h": 44
+    },
+    {
+     "id": "suggest-summary",
+     "x": 23,
+     "y": 436,
+     "w": 330,
+     "h": 44
+    },
+    {
+     "id": "open-whatcan",
+     "x": 141,
+     "y": 488,
+     "w": 93,
+     "h": 44
+    },
+    {
+     "id": "chip-context",
+     "x": 12,
+     "y": 544,
+     "w": 242,
+     "h": 44
+    },
+    {
+     "id": "attach",
+     "x": 12,
+     "y": 615,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "mic",
+     "x": 319,
+     "y": 615,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "close-whatcan",
+     "x": 315,
+     "y": 183,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "cap-0",
+     "x": 16,
+     "y": 285,
+     "w": 168,
+     "h": 87
+    },
+    {
+     "id": "cap-1",
+     "x": 192,
+     "y": 285,
+     "w": 168,
+     "h": 87
+    },
+    {
+     "id": "cap-2",
+     "x": 16,
+     "y": 380,
+     "w": 168,
+     "h": 87
+    },
+    {
+     "id": "cap-3",
+     "x": 192,
+     "y": 380,
+     "w": 168,
+     "h": 87
+    },
+    {
+     "id": "cap-4",
+     "x": 16,
+     "y": 475,
+     "w": 168,
+     "h": 87
+    },
+    {
+     "id": "cap-5",
+     "x": 192,
+     "y": 475,
+     "w": 168,
+     "h": 87
+    }
+   ]
+  },
+  {
+   "file": "png/03_paddi-draft__promax.png",
+   "sha256": "d78efa0fcd3fee6dbfe8f1b5a996fa77c2a3e2bae676a3302b7c83718760db53",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 320,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 374,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "draft-create",
+     "x": 27,
+     "y": 658,
+     "w": 183,
+     "h": 44
+    },
+    {
+     "id": "draft-edit",
+     "x": 218,
+     "y": 658,
+     "w": 185,
+     "h": 44
+    },
+    {
+     "id": "draft-cancel",
+     "x": 27,
+     "y": 702,
+     "w": 376,
+     "h": 44
+    },
+    {
+     "id": "chip-context",
+     "x": 12,
+     "y": 775,
+     "w": 242,
+     "h": 44
+    },
+    {
+     "id": "attach",
+     "x": 12,
+     "y": 846,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "mic",
+     "x": 374,
+     "y": 846,
+     "w": 44,
+     "h": 44
+    }
+   ]
+  },
+  {
+   "file": "png/03_paddi-draft__se.png",
+   "sha256": "02e5b3743649541ea36c5074082a6e024fecc010d766916670d8a28b607f1e3b",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 265,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 319,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "draft-create",
+     "x": 27,
+     "y": 427,
+     "w": 156,
+     "h": 44
+    },
+    {
+     "id": "draft-edit",
+     "x": 191,
+     "y": 427,
+     "w": 158,
+     "h": 44
+    },
+    {
+     "id": "draft-cancel",
+     "x": 27,
+     "y": 471,
+     "w": 321,
+     "h": 44
+    },
+    {
+     "id": "chip-context",
+     "x": 12,
+     "y": 544,
+     "w": 242,
+     "h": 44
+    },
+    {
+     "id": "attach",
+     "x": 12,
+     "y": 615,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "mic",
+     "x": 319,
+     "y": 615,
+     "w": 44,
+     "h": 44
+    }
+   ]
+  },
+  {
+   "file": "png/04_paddi-attach__promax.png",
+   "sha256": "a52f31f4098445b4d1d43bd29d60761b9c0acaea37f18ebdf5ee2a0939d9db2d",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 320,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 374,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "draft-create",
+     "x": 27,
+     "y": 658,
+     "w": 183,
+     "h": 44
+    },
+    {
+     "id": "draft-edit",
+     "x": 218,
+     "y": 658,
+     "w": 185,
+     "h": 44
+    },
+    {
+     "id": "draft-cancel",
+     "x": 27,
+     "y": 702,
+     "w": 376,
+     "h": 44
+    },
+    {
+     "id": "close-attach",
+     "x": 370,
+     "y": 602,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "attach-0",
+     "x": 16,
+     "y": 654,
+     "w": 127,
+     "h": 96
+    },
+    {
+     "id": "attach-1",
+     "x": 151,
+     "y": 654,
+     "w": 127,
+     "h": 96
+    },
+    {
+     "id": "attach-2",
+     "x": 287,
+     "y": 654,
+     "w": 127,
+     "h": 96
+    },
+    {
+     "id": "attach-3",
+     "x": 16,
+     "y": 758,
+     "w": 127,
+     "h": 96
+    },
+    {
+     "id": "chip-context",
+     "x": 12,
+     "y": 775,
+     "w": 242,
+     "h": 44
+    },
+    {
+     "id": "attach",
+     "x": 12,
+     "y": 846,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "mic",
+     "x": 374,
+     "y": 846,
+     "w": 44,
+     "h": 44
+    }
+   ]
+  },
+  {
+   "file": "png/04_paddi-attach__se.png",
+   "sha256": "d604b42563c075214cb088d8ae2b1c81b4123cf9a1ca0ed9cd07663413ec1785",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 265,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 319,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "draft-create",
+     "x": 27,
+     "y": 427,
+     "w": 156,
+     "h": 44
+    },
+    {
+     "id": "draft-edit",
+     "x": 191,
+     "y": 427,
+     "w": 158,
+     "h": 44
+    },
+    {
+     "id": "draft-cancel",
+     "x": 27,
+     "y": 471,
+     "w": 321,
+     "h": 44
+    },
+    {
+     "id": "close-attach",
+     "x": 315,
+     "y": 371,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "attach-0",
+     "x": 16,
+     "y": 423,
+     "w": 109,
+     "h": 96
+    },
+    {
+     "id": "attach-1",
+     "x": 133,
+     "y": 423,
+     "w": 109,
+     "h": 96
+    },
+    {
+     "id": "attach-2",
+     "x": 250,
+     "y": 423,
+     "w": 109,
+     "h": 96
+    },
+    {
+     "id": "attach-3",
+     "x": 16,
+     "y": 527,
+     "w": 109,
+     "h": 96
+    },
+    {
+     "id": "chip-context",
+     "x": 12,
+     "y": 544,
+     "w": 242,
+     "h": 44
+    },
+    {
+     "id": "attach",
+     "x": 12,
+     "y": 615,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "mic",
+     "x": 319,
+     "y": 615,
+     "w": 44,
+     "h": 44
+    }
+   ]
+  },
+  {
+   "file": "png/05_typing__promax.png",
+   "sha256": "252bf02a7523ee05d4b92c7d4304ac100f470efbd04ef718fc1c21f3df8548e5",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 320,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 374,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "chip-context",
+     "x": 12,
+     "y": 775,
+     "w": 242,
+     "h": 44
+    },
+    {
+     "id": "attach",
+     "x": 12,
+     "y": 846,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "mic",
+     "x": 374,
+     "y": 846,
+     "w": 44,
+     "h": 44
+    }
+   ]
+  },
+  {
+   "file": "png/05_typing__se.png",
+   "sha256": "949387b611c535930f1270919f0fabbdde00029130330149402fb246973faca8",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 265,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 319,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "chip-context",
+     "x": 12,
+     "y": 544,
+     "w": 242,
+     "h": 44
+    },
+    {
+     "id": "attach",
+     "x": 12,
+     "y": 615,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "mic",
+     "x": 319,
+     "y": 615,
+     "w": 44,
+     "h": 44
+    }
+   ]
+  },
+  {
+   "file": "png/06_empty-saved__promax.png",
+   "sha256": "e928a5f1fdc6f90e1c360cd277b704cad85ff269f24e4a45766808c6ad8bf094",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 320,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 374,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "back-to-chat",
+     "x": 50,
+     "y": 472,
+     "w": 330,
+     "h": 44
+    }
+   ]
+  },
+  {
+   "file": "png/06_empty-saved__se.png",
+   "sha256": "d2800c2781423c6f6e1003d6fc9b86057c300cbdf69d250d8dd195f659dc8cbd",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 265,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 319,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "back-to-chat",
+     "x": 23,
+     "y": 339,
+     "w": 330,
+     "h": 44
+    }
+   ]
+  },
+  {
+   "file": "png/07_limit__promax.png",
+   "sha256": "c5eb4b076d37b0db83a75ae702c26a7c484d7e34531a90406e4f54da91865934",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 320,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 374,
+     "y": 65,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "limit-create-manual",
+     "x": 28,
+     "y": 647,
+     "w": 374,
+     "h": 44
+    },
+    {
+     "id": "limit-ok",
+     "x": 28,
+     "y": 699,
+     "w": 374,
+     "h": 44
+    },
+    {
+     "id": "chip-context",
+     "x": 12,
+     "y": 775,
+     "w": 242,
+     "h": 44
+    },
+    {
+     "id": "attach",
+     "x": 12,
+     "y": 846,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "mic",
+     "x": 374,
+     "y": 846,
+     "w": 44,
+     "h": 44
+    }
+   ]
+  },
+  {
+   "file": "png/07_limit__se.png",
+   "sha256": "ac9b6d2f7b6071cd93df181700dad6c049532c4444074d1ab5e8705d169ac7d5",
+   "min_font_pt": 14,
+   "qa_issues": [],
+   "hit_rects_pt": [
+    {
+     "id": "back",
+     "x": 12,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "saved",
+     "x": 265,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "more",
+     "x": 319,
+     "y": 26,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "limit-create-manual",
+     "x": 28,
+     "y": 416,
+     "w": 319,
+     "h": 44
+    },
+    {
+     "id": "limit-ok",
+     "x": 28,
+     "y": 468,
+     "w": 319,
+     "h": 44
+    },
+    {
+     "id": "chip-context",
+     "x": 12,
+     "y": 544,
+     "w": 242,
+     "h": 44
+    },
+    {
+     "id": "attach",
+     "x": 12,
+     "y": 615,
+     "w": 44,
+     "h": 44
+    },
+    {
+     "id": "mic",
+     "x": 319,
+     "y": 615,
+     "w": 44,
+     "h": 44
+    }
+   ]
+  }
+ ],
+ "labels": {
+  "04_paddi-attach": "NEW adaptation: тёмного листа «Отправить» для Paddi в репозитории нет; структура взята со светлого эталона групчата",
+  "02_paddi-whatcan.tile_msg": "«в Plus и Max» — текст с референс-скриншота, демо-концепт, не реальное предложение/тариф"
+ },
+ "asset_sha256": {
+  "assets/illustrations/paddi_apologetic_1024.png": "41a08e1722c841dc469dfa71bb81e80491b5363adfb5fe8409a92cb77e94a8b8",
+  "assets/illustrations/paddi_happy_1024.png": "946dd7195bfea3f7b6f668f7984b964ea98402f4116d88a44982237dcb632b7f",
+  "assets/illustrations/paddi_neutral_1024.png": "da48143dfd19b1e9de94a4d59ed0078cce7eae4f67527e58b7c498c1341fa15d",
+  "assets/illustrations/paddi_thinking_1024.png": "294173cd220eec39c9cb2eee71adaa18c034e20ed9f1b4b86668d81d51cbcc5e",
+  "assets/illustrations/paddi_apologetic_1024_on-navy.png": "d4509ce050a7a5f0178b708bbe5d200b4e99a91dfc790be9f2c62fce593624a6",
+  "assets/illustrations/paddi_happy_1024_on-navy.png": "a32983fcca74a260a25a746ddff7160c7d87d98a57a612366ad86d869bbbd2b4",
+  "assets/illustrations/paddi_neutral_1024_on-navy.png": "de1771d9d84c6723578f731c9b6e970d84486f21a4e9e1dcdefc268f6de0d778",
+  "assets/illustrations/paddi_thinking_1024_on-navy.png": "4753199e171c6621b8c35128a6ee9c7d03197542ac0e0b7672c7eacfd3dc07c5",
+  "assets/avatar/paddi_avatar_24pt@1x.png": "5914e792877b46369cc69654d0b4b7be9ab07037d8a0c117e1f4a97b3aa03871",
+  "assets/avatar/paddi_avatar_24pt@2x.png": "663874f271721f0e5245b4b4583b5700c3cc76deb78f11634fe7281f5eec1fff",
+  "assets/avatar/paddi_avatar_24pt@3x.png": "9888e789eef3130e6d741006bda4af7cb307ed006f3bb393b77bb300bed0201a",
+  "assets/avatar/paddi_avatar_32pt@1x.png": "bde67f45c1e5d6c3d4e7a050b471037964cfdefaf2710f01467415a12316bf3e",
+  "assets/avatar/paddi_avatar_32pt@2x.png": "19504b0357bd9b7807243cab65c1fc82c6b20a0d4be6fd171fbde5e4abc35bdb",
+  "assets/avatar/paddi_avatar_32pt@3x.png": "36b44c06f8c0b5dae0940afb46533f164dcbf8beeec8c26a2a17be912a53b7a6",
+  "assets/avatar/paddi_avatar_40pt@1x.png": "ef5df2faa6911566cbd7407caf0fbafe6702fe4f99b4e06901ac2abbf56d89cb",
+  "assets/avatar/paddi_avatar_40pt@2x.png": "d22bdc636c565ac9e9c442553d268be00cee8ce29070cacc79a72eb32bd982c6",
+  "assets/avatar/paddi_avatar_40pt@3x.png": "e8fbcf29dcd6b163f5b7f9e389ae9751c9e74a7af7a0b018fc7944d8c3524865",
+  "assets/avatar/paddi_avatar_64pt@1x.png": "19504b0357bd9b7807243cab65c1fc82c6b20a0d4be6fd171fbde5e4abc35bdb",
+  "assets/avatar/paddi_avatar_64pt@2x.png": "d01ef0ecfecf7e889086daddf62f340f2e40dd7d02258cf99d9c2907595945ad",
+  "assets/avatar/paddi_avatar_64pt@3x.png": "66ed2284dde69293f8b6e271156ee2fae817f6f775e978784d5fde7e6c43d3b9"
+ },
+ "qa_fix_20261107": [
+  "Иллюстрации v3: 4 позы перегенерированы по эталону на ровном #0A1124 без пола/отражений; альфа — цельный силуэт + сглаженный край, нижний контур и мяч целые",
+  "thinking: простые тёмные овалы без бликов",
+  "*_on-navy.png — те же позы, скомпозированные на #0A1124 (без альфы) как запасной вариант",
+  "аватар внутри круга, 0 px за кругом"
+ ]
+}
