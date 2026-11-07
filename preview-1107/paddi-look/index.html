@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Paddi — interfaz viva (prototipo)</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#0A1124;--top:#101B38;--surface:#141C30;--s2:#1b2542;--ink:#F5F5F7;--mu:#A8AAB2;--coral:#FF5E5B;--mango:#FFA62B;--mint:#4BE3BA;--line:#2a3555;--fh:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box}
+html,body{height:100%}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#05080f;color:var(--ink);font:16px/1.4 var(--fh);overflow-x:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent;background:none;border:0;padding:0}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--mint);outline-offset:2px}
+[hidden]{display:none!important}
+.stage{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px}
+.cap{color:var(--mu);font-size:14px;text-align:center;margin:0}
+.phone{position:relative;width:390px;height:844px;background:var(--bg);border-radius:54px;box-shadow:0 0 0 10px #1c1c22,0 0 0 12px #333;display:flex;flex-direction:column;overflow:hidden}
+.sb{flex:none;height:47px;padding:14px 28px 0;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;background:var(--top)}
+.sb i{font-style:normal;font-size:11px;font-weight:400;color:var(--mu)}
+.sb .ic{display:flex;gap:6px;align-items:center}
+.bat{width:24px;height:12px;border:1.5px solid var(--ink);border-radius:4px;position:relative}.bat:after{content:"";position:absolute;inset:1.5px 4px 1.5px 1.5px;background:var(--ink);border-radius:1px}
+.sig{display:flex;gap:2px;align-items:flex-end;height:12px}.sig b{width:3px;background:var(--ink);border-radius:1px}
+.screen{position:relative;flex:1;min-height:0;overflow:hidden}
+.home{flex:none;height:34px;display:flex;justify-content:center;align-items:flex-end;padding-bottom:8px;background:var(--bg)}.home:after{content:"";width:134px;height:5px;border-radius:3px;background:#f5f5f7aa}
+@media(max-width:430px){
+ .stage{padding:0;gap:0;display:block;min-height:100%}
+ .cap{display:none}
+ .phone{width:100%;height:100vh;height:100dvh;border-radius:0;box-shadow:none}
+ .sb{height:calc(max(env(safe-area-inset-top),20px) + 27px);padding:calc(max(env(safe-area-inset-top),20px) - 6px) 20px 0}
+ .home{height:max(env(safe-area-inset-bottom),12px);padding:0}.home:after{display:none}
+}
+.view{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg)}
+.bar{flex:none;display:flex;align-items:center;gap:4px;padding:6px 8px;background:var(--top);border-bottom:1px solid var(--line);min-height:56px}
+.bar h1{font-size:17px;margin:0;line-height:1.15;font-weight:700}
+.bar small{display:block;font-size:14px;color:var(--mu);font-weight:400}
+.ib{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;flex:none;color:var(--ink)}
+.ib:hover{background:#ffffff10}
+.sp{flex:1}
+.body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:12px 16px;-webkit-overflow-scrolling:touch}
+.tabs{flex:none;display:flex;background:var(--top);border-top:1px solid var(--line)}
+.tabs button{flex:1;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:14px;color:var(--mu)}
+.tabs button[aria-current=page]{color:var(--coral);font-weight:700}
+.tabs svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2}
+.search{width:100%;min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);padding:0 14px;margin-bottom:8px}
+.search::placeholder{color:var(--mu)}
+.row{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:8px 4px;text-align:left;border-bottom:1px solid #1d2745}
+.row .tx{flex:1;min-width:0}.row b{display:block;font-size:16px}.row span.l{display:block;font-size:14px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row time{font-size:14px;color:var(--mu);align-self:flex-start;padding-top:6px}
+.ini{width:40px;height:40px;border-radius:50%;background:#3b4468;display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
+.av40{width:40px;height:40px;border-radius:50%;flex:none}
+.pin{color:var(--mango);font-size:14px}
+.demo{display:inline-block;background:var(--mango);color:#1a1200;font-size:14px;font-weight:700;padding:2px 10px;border-radius:999px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;margin:8px 0}
+.card h2{font-size:17px;margin:0 0 6px}
+.btn{min-height:44px;border-radius:12px;padding:0 16px;font-weight:700;background:var(--s2);border:1px solid var(--line)}
+.btn.p{background:var(--coral);border-color:var(--coral);color:#fff}
+.btn.m{background:var(--mint);border-color:var(--mint);color:#04241b}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+/* conversation */
+.hello{text-align:center;padding-top:8px}
+.hello img{width:130px;height:130px;display:block;margin:0 auto}
+@media(min-height:760px){.hello img{width:200px;height:200px}}
+.hello h2{font-size:22px;margin:6px 0 4px}.hello p{color:var(--mu);margin:0 0 12px;font-size:15px}
+.sug{display:block;width:100%;min-height:48px;margin:0 0 8px;border-radius:14px;background:var(--surface);border:1px solid var(--line);padding:10px 14px;text-align:left;font-size:15px}
+.msg{display:flex;align-items:flex-end;gap:6px;margin:8px 0}
+.msg.me{justify-content:flex-end}
+.msg .av{width:24px;height:24px;border-radius:50%;flex:none}
+.bub{max-width:76%;padding:9px 13px;border-radius:18px;font-size:16px;position:relative;word-wrap:break-word;overflow-wrap:anywhere}
+.me .bub{background:var(--coral);color:#fff;border-bottom-right-radius:6px}
+.pd .bub{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:6px}
+.bub time{display:block;font-size:14px;opacity:.7;margin-top:2px;text-align:right}
+.mm{width:32px;min-height:44px;font-size:20px;color:var(--mu);flex:none;display:grid;place-items:center}
+.me .mm{order:-1}
+.sv{color:var(--mango);font-size:14px}
+.typ{display:flex;align-items:center;gap:8px}
+.typ img{width:36px;height:36px}
+.dots{width:72px;height:40px;background:url("assets/typing_dots_sprite_4frames@3x.png") 0 0/288px 40px no-repeat;animation:dots .6s steps(4) infinite}
+@keyframes dots{to{background-position:-288px 0}}
+@media(prefers-reduced-motion:reduce){.dots{animation:none}.fade{animation:none!important}}
+.draft dl{margin:6px 0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:15px}.draft dt{color:var(--mu)}.draft dd{margin:0}
+.draft input{width:100%;min-height:44px;border-radius:10px;border:1px solid var(--line);background:var(--bg);padding:0 10px}
+.status{font-weight:700;color:var(--mint);margin-top:6px;font-size:15px}.status.x{color:var(--mu)}
+.lim{text-align:center}.lim img{width:96px;height:96px;display:block;margin:0 auto 4px}
+.chipw{flex:none;display:flex;align-items:center;gap:0;padding:4px 12px 0}
+.chip{flex:0 1 auto;min-width:0;min-height:44px;display:flex;align-items:center;padding:0 14px;border-radius:22px;background:var(--s2);border:1px solid var(--line);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chipx{width:44px;height:44px;display:grid;place-items:center;font-size:18px;color:var(--mu)}
+.counter{flex:none;font-size:14px;color:var(--mu);padding:2px 16px 0}
+.inbar{flex:none;display:flex;align-items:center;gap:6px;padding:6px 8px 8px;background:var(--top);border-top:1px solid var(--line)}
+.inbar input{flex:1;min-width:0;min-height:44px;border-radius:22px;border:1px solid var(--line);background:var(--surface);padding:0 16px}
+.inbar input:disabled{opacity:.5}
+.send{background:var(--coral);border-radius:50%;width:44px;height:44px;font-size:20px;color:#fff;flex:none}
+.inbar .ib{background:var(--surface);border-radius:50%}
+/* sheets */
+.ov{position:absolute;inset:0;background:#000a;display:flex;align-items:flex-end;z-index:20}
+.sheet{width:100%;max-height:85%;overflow-y:auto;background:var(--top);border-radius:22px 22px 0 0;padding:8px 16px 20px;border-top:1px solid var(--line)}
+.sheet .grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:4px auto 10px}
+.sheet h2{font-size:18px;margin:0 0 10px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{min-height:76px;border-radius:14px;background:var(--surface);border:1px solid var(--line);padding:10px;text-align:left;font-size:15px}
+.tile small{display:block;color:var(--mu);font-size:14px;margin-top:2px}
+.mi{display:flex;align-items:center;gap:12px;width:100%;min-height:48px;text-align:left;font-size:16px;border-bottom:1px solid #1d2745}
+.empty{text-align:center;padding:12px 0}.empty img{width:120px;height:120px}
+.toast{position:absolute;left:50%;bottom:88px;transform:translateX(-50%);background:#f5f5f7;color:#0A1124;padding:10px 14px;border-radius:14px;font-size:14px;max-width:88%;text-align:center;opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+.toast.on{opacity:1}
+.fade{animation:fade .2s}@keyframes fade{from{opacity:0}}
+.gal{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.gal figure{margin:0;text-align:center;font-size:14px;color:var(--mu)}.gal img{width:100%;max-width:150px}
+.avs{display:flex;gap:16px;align-items:center;justify-content:center;margin:12px 0}
+</style></head><body>
+<div class="stage">
+<p class="cap">Prototipo de diseño · la barra de estado es una simulación</p>
+<div class="phone" id="phone">
+ <div class="sb" aria-hidden="true"><span>9:41</span><i>simulación de la app</i><span class="ic"><span class="sig"><b style="height:4px"></b><b style="height:6px"></b><b style="height:9px"></b><b style="height:12px"></b></span><span class="bat"></span></span></div>
+ <div class="screen" id="screen">
+
+  <!-- CHATS -->
+  <section class="view" id="v-chats" data-tab="chats">
+   <div class="bar"><h1>Chats</h1></div>
+   <div class="body"><input class="search" id="q" type="search" placeholder="Buscar" aria-label="Buscar chats">
+    <div id="chatlist"></div></div>
+  </section>
+
+  <!-- GROUP -->
+  <section class="view" id="v-group" hidden>
+   <div class="bar"><button class="ib" data-go="chats" aria-label="Atrás">‹</button><div><h1 id="gname"></h1><small>Grupo · demo</small></div></div>
+   <div class="body"><div class="card"><span class="demo">Demo</span><h2 style="margin-top:8px">Conversación del grupo</h2><p class="cap" style="text-align:left">Aquí irían los mensajes del grupo. No hay personas reales en este prototipo.</p>
+    <div class="btns"><button class="btn p" id="askpaddi">Preguntar a Paddi sobre este chat</button></div></div></div>
+  </section>
+
+  <!-- PADDI -->
+  <section class="view" id="v-paddi" hidden>
+   <div class="bar"><button class="ib" data-go="chats" aria-label="Atrás">‹</button>
+    <img class="av40" style="width:32px;height:32px" src="assets/avatar/paddi_avatar_32pt@3x.png" alt="">
+    <div><h1>Paddi</h1><small>Asistente IA</small></div><span class="sp"></span>
+    <button class="ib" id="bm" aria-label="Guardados">🔖</button><button class="ib" id="hm" aria-label="Más opciones">⋯</button></div>
+   <div class="body" id="conv"></div>
+   <div id="chipslot"></div>
+   <div class="counter" id="counter"></div>
+   <form class="inbar" id="form" autocomplete="off">
+    <button type="button" class="ib" id="plus" aria-label="Adjuntar">+</button>
+    <input id="inp" type="text" aria-label="Mensaje" placeholder="Escribe a Paddi">
+    <button type="button" class="ib" id="mic" aria-label="Micrófono">🎤</button>
+    <button type="submit" class="send" id="sendb" aria-label="Enviar" hidden>↑</button>
+   </form>
+  </section>
+
+  <!-- DEMO TABS -->
+  <section class="view" id="v-matches" hidden data-tab="matches"><div class="bar"><h1>Partidos</h1></div><div class="body"><div class="card"><span class="demo">Demo</span><h2 style="margin-top:8px">Jueves 19:00 · Pista 3</h2><p class="cap" style="text-align:left">Tarjeta de ejemplo. Aquí iría la lista de partidos.</p><div class="btns"><button class="btn m" data-go="chats">Ir a chats</button></div></div></div></section>
+  <section class="view" id="v-people" hidden data-tab="people"><div class="bar"><h1>Personas</h1></div><div class="body"><div class="card"><span class="demo">Demo</span><h2 style="margin-top:8px">Jugadores</h2><p class="cap" style="text-align:left">Tarjeta de ejemplo. Aquí irían tus compañeros de pista.</p><div class="btns"><button class="btn m" data-go="chats">Ir a chats</button></div></div></div></section>
+  <section class="view" id="v-profile" hidden data-tab="profile"><div class="bar"><h1>Perfil</h1></div><div class="body"><div class="card"><span class="demo">Demo</span><h2 style="margin-top:8px">Tu perfil</h2><p class="cap" style="text-align:left">Tarjeta de ejemplo. Aquí iría tu perfil y ajustes.</p><div class="btns"><button class="btn m" data-go="chats">Ir a chats</button></div></div></div></section>
+
+  <!-- GALLERY -->
+  <section class="view" id="v-gallery" hidden>
+   <div class="bar"><button class="ib" data-go="paddi" aria-label="Atrás">‹</button><h1>Galería Paddi (diseño)</h1></div>
+   <div class="body"><div class="gal">
+    <figure><img src="assets/illustrations/paddi_happy.png" alt="Contento">Contento</figure><figure><img src="assets/illustrations/paddi_neutral.png" alt="Neutral">Neutral</figure>
+    <figure><img src="assets/illustrations/paddi_thinking.png" alt="Pensando">Pensando</figure><figure><img src="assets/illustrations/paddi_apologetic.png" alt="Disculpas">Disculpas</figure></div>
+    <div class="avs"><figure style="margin:0;text-align:center;font-size:14px;color:var(--mu)"><img src="assets/avatar/paddi_avatar_24pt@3x.png" width="24" height="24" alt=""><br>24</figure><figure style="margin:0;text-align:center;font-size:14px;color:var(--mu)"><img src="assets/avatar/paddi_avatar_32pt@3x.png" width="32" height="32" alt=""><br>32</figure><figure style="margin:0;text-align:center;font-size:14px;color:var(--mu)"><img src="assets/avatar/paddi_avatar_40pt@3x.png" width="40" height="40" alt=""><br>40</figure></div></div>
+  </section>
+
+  <div class="ov" id="ov" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+ </div>
+ <nav class="tabs" id="tabs" aria-label="Navegación">
+  <button data-tab="matches"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4v16"/></svg>Partidos</button>
+  <button data-tab="people"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-4 3-6 6-6s6 2 6 6M17 11a3 3 0 100-6"/></svg>Personas</button>
+  <button data-tab="chats" aria-current="page"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Chats</button>
+  <button data-tab="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 4-7 8-7s8 2 8 7"/></svg>Perfil</button>
+ </nav>
+ <div class="home" aria-hidden="true"></div>
+</div>
+</div>
+<script>
+(function(){
+var KEY='paddi-demo',MAX=5;
+var $=function(s){return document.querySelector(s)};
+var GROUPS=[{id:'g1',n:'Pádel Sitges',l:'¿Alguien para el jueves?',t:'18:20',i:'PS'},{id:'g2',n:'Americana del club',l:'Sorteo de parejas listo',t:'Ayer',i:'AC'},{id:'g3',n:'Jueves en Vilanova',l:'Pista 2 reservada',t:'Lun',i:'JV'}];
+var DEF={left:MAX,msgs:[],saved:[]};
+var S=load(),ctx=null,view='chats',busy=false,nid=1;
+function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(d&&d.msgs)return d}catch(e){}return JSON.parse(JSON.stringify(DEF))}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+S.msgs.forEach(function(m){nid=Math.max(nid,m.id+1)});
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function now(){var d=new Date();return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
+var tt;function toast(t){var e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){e.classList.remove('on')},2200)}
+
+/* ---- navigation ---- */
+function show(v){
+ view=v;document.querySelectorAll('.view').forEach(function(e){e.hidden=e.id!=='v-'+v});
+ var inConv=v==='paddi'||v==='group'||v==='gallery';
+ $('#tabs').hidden=inConv;
+ document.querySelectorAll('#tabs button').forEach(function(b){var cur=b.dataset.tab===v||(v==='chats'&&b.dataset.tab==='chats');if(cur)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+ closeSheet();
+ if(v==='paddi'){renderConv();renderChip();renderInput()}
+}
+document.addEventListener('click',function(e){
+ var g=e.target.closest('[data-go]');if(g){var t=g.dataset.go;if(t==='chats')ctx=ctx&&view==='paddi'?null:ctx;show(t);return}
+ var tb=e.target.closest('#tabs button');if(tb){show(tb.dataset.tab)}
+});
+
+/* ---- chats ---- */
+function renderChats(){
+ var q=$('#q').value.trim().toLowerCase();
+ var h='';
+ if(!q||'paddi asistente ia'.indexOf(q)>-1){
+  var last=S.msgs.length?S.msgs[S.msgs.length-1]:null;
+  h+='<button class="row" data-open="paddi"><img class="av40" src="assets/avatar/paddi_avatar_40pt@3x.png" alt=""><span class="tx"><b>Paddi <span class="pin" aria-label="fijado">📌</span></b><span class="l">'+esc(last?(last.card?'Borrador de partido':last.text):'Asistente IA · pregúntame lo que quieras')+'</span></span><time>'+(last?last.time:'9:41')+'</time></button>'}
+ GROUPS.forEach(function(g){if(q&&g.n.toLowerCase().indexOf(q)<0)return;
+  h+='<button class="row" data-group="'+g.id+'"><span class="ini" aria-hidden="true">'+g.i+'</span><span class="tx"><b>'+g.n+'</b><span class="l">'+g.l+'</span></span><time>'+g.t+'</time></button>'});
+ if(!h)h='<p class="cap" style="padding:24px 0">Nada encontrado</p>';
+ $('#chatlist').innerHTML=h}
+$('#q').addEventListener('input',renderChats);
+$('#chatlist').addEventListener('click',function(e){
+ var o=e.target.closest('[data-open]');if(o){ctx=null;show('paddi');return}
+ var g=e.target.closest('[data-group]');if(g){var gr=GROUPS.filter(function(x){return x.id===g.dataset.group})[0];ctx=gr;$('#gname').textContent=gr.n;show('group')}});
+$('#askpaddi').onclick=function(){show('paddi')};
+
+/* ---- conversation ---- */
+var SUG=['Crea un partido mañana a las 19:00','¿Quién juega esta semana?','Resume el chat del grupo'];
+function helloHtml(){return '<div class="hello fade"><img src="assets/illustrations/paddi_happy.png" alt="Paddi contento"><h2>¡Hola! Soy Paddi</h2><p>Te ayudo con partidos, parejas y recordatorios.</p>'+
+ SUG.map(function(s){return '<button class="sug" data-say="'+esc(s)+'">'+esc(s)+'</button>'}).join('')+'<button class="btn" data-sheet="whatcan" style="width:100%">Qué sé hacer</button></div>'}
+function msgHtml(m){
+ var me=m.who==='me';
+ var mm='<button class="mm" data-menu="'+m.id+'" aria-label="Opciones del mensaje">⋯</button>';
+ var inner=m.card?cardHtml(m):m.limit?limHtml():esc(m.text);
+ var b='<div class="bub" data-id="'+m.id+'">'+inner+(m.card||m.limit?'':'<time>'+m.time+(m.saved?' · <span class="sv">guardado</span>':'')+'</time>')+'</div>';
+ return me?'<div class="msg me">'+mm+b+'</div>':'<div class="msg pd"><img class="av" src="assets/avatar/paddi_avatar_24pt@3x.png" alt="">'+b+mm+'</div>'}
+function cardHtml(m){var c=m.card,h='<div class="draft">'+esc(m.text)+'<h2 style="margin-top:6px">Borrador de partido</h2>';
+ if(c.edit){h+='<dl><dt>Día</dt><dd><input data-f="d" value="'+esc(c.d)+'" aria-label="Día"></dd><dt>Hora</dt><dd><input data-f="h" value="'+esc(c.h)+'" aria-label="Hora"></dd><dt>Pista</dt><dd><input data-f="p" value="'+esc(c.p)+'" aria-label="Pista"></dd></dl><div class="btns"><button class="btn m" data-card="'+m.id+'" data-act="saveedit">Guardar</button></div>'}
+ else{h+='<dl><dt>Día</dt><dd>'+esc(c.d)+'</dd><dt>Hora</dt><dd>'+esc(c.h)+'</dd><dt>Pista</dt><dd>'+esc(c.p)+'</dd></dl>';
+  if(c.st==='ok')h+='<div class="status">Creado (demo)</div>';else if(c.st==='no')h+='<div class="status x">Borrador cancelado</div>';
+  else h+='<div class="btns"><button class="btn p" data-card="'+m.id+'" data-act="create">Crear</button><button class="btn" data-card="'+m.id+'" data-act="edit">Editar</button><button class="btn" data-card="'+m.id+'" data-act="cancel">Cancelar</button></div>'}
+ return h+'<time style="display:block;font-size:14px;opacity:.7;margin-top:6px;text-align:right">'+m.time+'</time></div>'}
+function limHtml(){return '<div class="lim"><img src="assets/illustrations/paddi_apologetic.png" alt="Paddi se disculpa"><b>Has llegado al límite de hoy</b><p style="color:var(--mu);margin:4px 0 0;font-size:15px">Vuelve mañana o crea el partido a mano.</p><div class="btns" style="justify-content:center"><button class="btn m" data-sheet="manual">Crear partido a mano</button><button class="btn" data-act="ok">Entendido</button></div></div>'}
+function renderConv(scroll){
+ var c=$('#conv');
+ var h=S.msgs.length?S.msgs.map(msgHtml).join(''):helloHtml();
+ if(busy)h+='<div class="msg pd"><img class="av" src="assets/avatar/paddi_avatar_24pt@3x.png" alt=""><div class="bub typ" aria-label="Paddi está escribiendo"><img src="assets/illustrations/paddi_thinking.png" alt=""><span class="dots"></span></div></div>';
+ c.innerHTML=h;c.scrollTop=c.scrollHeight}
+function renderChip(){
+ var s=$('#chipslot');s.innerHTML='';
+ if(!ctx)return;
+ var w=document.createElement('div');w.className='chipw';w.id='chipw';
+ w.innerHTML='<button class="chip" id="chipb">Del chat «'+esc(ctx.n)+'»</button><button class="chipx" id="chipx" aria-label="Quitar contexto">✕</button>';
+ s.appendChild(w);
+ $('#chipb').onclick=function(){openSheet('ctx')};
+ $('#chipx').onclick=function(){var el=$('#chipw');if(el)el.remove();ctx=null}}
+function renderInput(){
+ var out=S.left<=0&&S.msgs.length&&S.msgs[S.msgs.length-1].limit;
+ var inp=$('#inp'),has=inp.value.trim().length>0;
+ inp.disabled=!!out;inp.placeholder=out?'Límite alcanzado hoy':'Escribe a Paddi';
+ $('#sendb').hidden=!has||out;$('#mic').hidden=has||out;$('#plus').disabled=!!out;
+ $('#counter').textContent=out?'Has usado 5 de 5 mensajes hoy':'Quedan '+S.left+' de '+MAX}
+$('#inp').addEventListener('input',renderInput);
+$('#form').addEventListener('submit',function(e){e.preventDefault();var v=$('#inp').value.trim();if(v)say(v)});
+$('#mic').onclick=function(){toast('Demo: el micrófono no está activo')};
+$('#conv').addEventListener('click',function(e){
+ var s=e.target.closest('.sug');if(s){say(s.dataset.say);return}
+ var sh=e.target.closest('[data-sheet]');if(sh){openSheet(sh.dataset.sheet);return}
+ var ok=e.target.closest('[data-act="ok"]');if(ok){toast('Vuelve mañana o reinicia la demo desde ⋯');return}
+ var mm=e.target.closest('.mm');if(mm){openSheet('msg',+mm.dataset.menu);return}
+ var cb=e.target.closest('[data-card]');if(cb){cardAct(+cb.dataset.card,cb.dataset.act)}});
+var lp;$('#conv').addEventListener('pointerdown',function(e){var b=e.target.closest('.bub[data-id]');if(!b||e.target.closest('input,button'))return;lp=setTimeout(function(){openSheet('msg',+b.dataset.id)},550)});
+['pointerup','pointerleave','pointercancel','scroll'].forEach(function(ev){$('#conv').addEventListener(ev,function(){clearTimeout(lp)},true)});
+
+function push(m){m.id=nid++;m.time=now();S.msgs.push(m);save();return m}
+function say(text){
+ if(busy)return;
+ $('#inp').value='';
+ var out=S.left<=0;
+ push({who:'me',text:text});
+ if(out){push({who:'pd',limit:1});renderConv();renderInput();return}
+ S.left--;save();busy=true;renderConv();renderInput();
+ setTimeout(function(){busy=false;reply(text);renderConv();renderInput()},600+Math.random()*600)}
+function reply(t){
+ var l=t.toLowerCase();
+ if(/crea|partido|19:00|игр/.test(l)){push({who:'pd',text:'Listo, preparo un borrador.',card:{d:'Mañana',h:'19:00',p:'Pista 3',st:''}})}
+ else if(/qui[eé]n juega|semana/.test(l))push({who:'pd',text:'Esta semana hay 3 partidos con plazas libres: martes, jueves y sábado (demo).'});
+ else if(/resum|chat/.test(l))push({who:'pd',text:ctx?'Resumen de «'+ctx.n+'»: se busca pareja para el jueves y la pista 2 está reservada (demo).':'Dime de qué chat quieres el resumen: ábreme desde un grupo.'});
+ else if(/hac|puedo|ayuda/.test(l))push({who:'pd',text:'Puedo crear partidos, buscar pareja, resumir chats y poner recordatorios.'});
+ else push({who:'pd',text:'Entendido (respuesta de demostración). Prueba: «Crea un partido mañana a las 19:00».'})}
+function cardAct(id,a){var m=S.msgs.filter(function(x){return x.id===id})[0];if(!m)return;var c=m.card;
+ if(a==='create'){c.st='ok';toast('Demo: no se crea ningún partido')}
+ else if(a==='cancel')c.st='no';
+ else if(a==='edit')c.edit=true;
+ else if(a==='saveedit'){document.querySelectorAll('#conv input[data-f]').forEach(function(i){c[i.dataset.f]=i.value||c[i.dataset.f]});c.edit=false}
+ save();var y=$('#conv').scrollTop;renderConv();$('#conv').scrollTop=y}
+
+/* ---- sheets ---- */
+function openSheet(k,arg){
+ var h='',s=$('#sheet');
+ if(k==='whatcan'){h='<h2>Qué sé hacer</h2><div class="tiles">'+
+  [['Crear un partido','Crea un partido mañana a las 19:00'],['Buscar pareja','Busca pareja para el jueves'],['Resumir un chat','Resume el chat del grupo'],['Recordatorios','Recuérdame el partido de mañana']].map(function(t){return '<button class="tile" data-say="'+esc(t[1])+'">'+t[0]+'</button>'}).join('')+
+  '<button class="tile" data-say="¿Quién juega esta semana?">Ver quién juega</button><button class="tile" data-toast="Demo-concepto, no es una tarifa">Escribir en el chat<small>en Plus y Max · demo-concepto</small></button></div>'}
+ else if(k==='attach'){h='<h2>Enviar</h2>'+['📷 Foto','📸 Cámara','📍 Ubicación','📊 Encuesta'].map(function(t){return '<button class="mi" data-toast="Demo: no se sube nada">'+t+'</button>'}).join('')}
+ else if(k==='menu'){h='<h2>Opciones</h2><button class="mi" data-sheet="saved">🔖 Guardados</button><button class="mi" data-act="clear">🗑 Borrar conversación</button><button class="mi" data-act="reset">↺ Reiniciar demo</button><button class="mi" data-act="gallery">🎨 Galería Paddi (diseño)</button>'}
+ else if(k==='saved'){var sv=S.msgs.filter(function(m){return m.saved});
+  h='<h2>Guardados</h2>'+(sv.length?sv.map(function(m){return '<div class="card">'+esc(m.text||'Borrador de partido')+'<div class="cap" style="text-align:left">'+m.time+'</div></div>'}).join(''):'<div class="empty"><img src="assets/illustrations/paddi_neutral.png" alt=""><p class="cap">Aún no has guardado nada</p></div>')+'<button class="btn" data-act="close" style="width:100%">Volver a la conversación</button>'}
+ else if(k==='msg'){var m=S.msgs.filter(function(x){return x.id===arg})[0];if(!m)return;h='<h2>Mensaje</h2><button class="mi" data-save="'+arg+'">'+(m.saved?'Quitar de guardados':'Guardar')+'</button><button class="mi" data-act="close">Cancelar</button>'}
+ else if(k==='ctx'){h='<h2>Contexto</h2><p>Últimos 20 mensajes del grupo «'+esc(ctx?ctx.n:'')+'» (demo). No se envía nada.</p><button class="btn" data-act="close" style="width:100%">Cerrar</button>'}
+ else if(k==='manual'){h='<h2>Crear partido a mano</h2><div class="card draft"><dl><dt>Día</dt><dd><input aria-label="Día" value="Mañana"></dd><dt>Hora</dt><dd><input aria-label="Hora" value="19:00"></dd></dl></div><button class="btn m" data-toast="Demo: no se crea ningún partido" data-act="close" style="width:100%">Crear</button>'}
+ s.innerHTML='<div class="grab"></div>'+h;$('#ov').hidden=false;
+ var f=s.querySelector('button,input');if(f)f.focus({preventScroll:true})}
+function closeSheet(){$('#ov').hidden=true}
+$('#ov').addEventListener('click',function(e){
+ if(e.target.id==='ov'){closeSheet();return}
+ var t=e.target.closest('[data-toast]');if(t){toast(t.dataset.toast);if(t.dataset.act==='close')closeSheet();return}
+ var sy=e.target.closest('[data-say]');if(sy){closeSheet();say(sy.dataset.say);return}
+ var sh=e.target.closest('[data-sheet]');if(sh){openSheet(sh.dataset.sheet);return}
+ var sv=e.target.closest('[data-save]');if(sv){var m=S.msgs.filter(function(x){return x.id===+sv.dataset.save})[0];if(m){m.saved=!m.saved;save();toast(m.saved?'Guardado':'Quitado de guardados')}closeSheet();renderConv();return}
+ var a=e.target.closest('[data-act]');if(a){var k=a.dataset.act;
+  if(k==='close')closeSheet();
+  else if(k==='clear'){S.msgs=[];save();closeSheet();renderConv();renderInput();toast('Conversación borrada')}
+  else if(k==='reset'){S=JSON.parse(JSON.stringify(DEF));save();$('#inp').value='';closeSheet();renderConv();renderInput();renderChats();toast('Demo reiniciada: 5 de 5')}
+  else if(k==='gallery'){show('gallery')}}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet()});
+$('#plus').onclick=function(){openSheet('attach')};
+$('#bm').onclick=function(){openSheet('saved')};
+$('#hm').onclick=function(){openSheet('menu')};
+var _show=show;show=function(v){_show(v);if(v==='chats')renderChats()};
+$('#tabs').addEventListener('click',function(e){if(e.target.closest('button[data-tab="chats"]'))renderChats()});
+renderChats();show('chats');
+})();
+</script></body></html>
