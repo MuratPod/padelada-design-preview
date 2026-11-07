@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Padelada Watch — карточка v3 (демо)</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#0e0e10;--fg:#fff;--mu:#cdbfd6;--chip:#2a2a2e;--mango:#ffa62b;--mint:#4be3ba}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:980px;margin:0 auto;padding:16px;display:grid;gap:20px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:800px){main{grid-template-columns:260px minmax(0,1fr);align-items:start}}
+h1{font-size:20px;margin:0 0 4px}p.n{color:var(--mu);font-size:14px;margin:0 0 12px}
+fieldset{border:1px solid #3a3a40;border-radius:12px;margin:0 0 10px;padding:8px 12px}legend{color:var(--mu);font-size:13px;padding:0 6px}
+label{display:block;padding:6px 0;min-height:36px}select,button.c{font:inherit;color:inherit;background:var(--chip);border:1px solid #444;border-radius:10px;padding:8px 10px;min-height:44px;width:100%}
+button.c{cursor:pointer;margin-bottom:8px}
+.stagewrap{display:flex;flex-direction:column;align-items:center;gap:10px}
+#stage{position:relative;background:#000;border-radius:14%/11%;overflow:hidden;box-shadow:0 0 0 3px #333}
+#stage img{display:block;width:100%;height:100%}
+#stage button.h{position:absolute;background:transparent;border:0;padding:0;margin:0;cursor:pointer;border-radius:18px}
+#stage button.h:hover{outline:2px solid rgba(255,255,255,.35)}
+#stage button.h:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 6px var(--mango)}
+#info{color:var(--mu);font-size:14px;text-align:center;max-width:460px}
+#alt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.sr{position:absolute;left:-9999px}
+#fb{color:var(--mango);min-height:20px;font-size:13px}
+footer{grid-column:1/-1;color:var(--mu);font-size:13px;border-top:1px solid #333;padding-top:12px}
+:focus-visible{outline:3px solid var(--mango);outline-offset:2px}
+</style></head><body><main>
+<section aria-label="Настройки демо"><h1>Padelada Watch — карточка v3</h1>
+<p class="n">Симуляция дизайна: одно касание плитки счёта завершает гейм. Это не подсчёт очков и не движок игры.</p>
+<fieldset><legend>Игроки</legend>
+<label>Аватары<select id="av"><option value="photo">Фото (иллюстрации)</option><option value="initials">Инициалы</option></select></label>
+<label>Имена<select id="nm"><option value="names">Обычные</option><option value="longnames">Длинные</option></select></label></fieldset>
+<fieldset><legend>Экран и размер</legend>
+<label>Размер Watch<select id="sz"><option value="41mm">41 мм · 352×430</option><option value="45mm">45 мм · 396×484</option><option value="49mm-ultra2">Ultra 1–2 · 410×502</option><option value="49mm-ultra3" selected>Ultra 3 · 422×514</option></select></label>
+<label>Счёт на экране «Игра»<select id="sc"><option value="30-15">30:15</option><option value="40-40">40:40</option><option value="AD-40">AD:40</option><option value="40-AD">40:AD</option></select></label>
+<label>Перейти к экрану<select id="go"></select></label>
+<label>Масштаб<select id="zm"><option value="1">1× (pt)</option><option value="1.5" selected>1,5×</option><option value="2">2×</option></select></label></fieldset>
+<button class="c" id="back">← Назад</button><button class="c" id="rs">Начать заново</button>
+</section>
+<section class="stagewrap" aria-label="Экран часов"><div id="stage"><img id="im" alt=""></div>
+<div id="fb" role="status" aria-live="polite"></div><div id="info" aria-live="polite"></div></section>
+<footer>Только дизайн-демо, без реальных часов и устройств. Четыре аватара — сгенерированные ИИ вымышленные взрослые, не реальные игроки. Рендер — готовые PNG; шрифты Montserrat Alternates и Golos Text (SIL OFL 1.1) вшиты в картинки, отдельно не загружаются.</footer>
+</main>
+<script src="data.js"></script>
+<script>
+(function(){
+var D=window.WC3,$=function(i){return document.getElementById(i)};
+var SC={s1_position:{t:"1. Ваше место",d:"Выберите своё место — касание строки ведёт к экрану «Старт».",h:{"seat-1":"Игрок 1","seat-2":"Игрок 2","seat-3":"Игрок 3","seat-4":"Игрок 4"}},
+s2_start:{t:"2. Старт",d:"Начать жеребьёвку?",h:{primary:"Начать",secondary:"Позже"}},
+s3_result:{t:"3. Результат жребия",d:"Подаёт первым игрок 3, ваша пара.",h:{primary:"Играем"}},
+s4_pick:{t:"4. Кто подаёт у соперников",d:"Выберите подающего среди соперников.",h:{"pick-1":"Игрок 1","pick-2":"Игрок 2"}},
+s5_game:{t:"5. Игра",d:"Гейм идёт. Плитки счёта — демо: одно касание завершает гейм.",h:{"point-us":"Очко нашей паре (демо: конец гейма)","point-them":"Очко соперникам (демо: конец гейма)"}},
+s6_between:{t:"6. Между геймами",d:"Следующий подаёт игрок 2, соперники.",h:{primary:"Тот же состав",secondary:"Сменить состав"}},
+s7_tiebreak:{t:"7. Тай-брейк",d:"Тай-брейк, подача 1 из 2. Демо: касание плитки завершает сет.",h:{"point-us":"Очко нашей паре (демо: конец сета)","point-them":"Очко соперникам (демо: конец сета)"}}};
+var ORDER=Object.keys(SC),st={scr:"s1_position",hist:[],pick:0};
+var go=$("go");ORDER.forEach(function(k){var o=document.createElement("option");o.value=k;o.textContent=SC[k].t;go.appendChild(o)});
+function nextOf(scr,id){
+ if(scr=="s1_position")return"s2_start";
+ if(scr=="s2_start")return id=="primary"?"s3_result":"s1_position";
+ if(scr=="s3_result")return"s5_game";
+ if(scr=="s4_pick"){st.pick++;return st.pick%2==1?"s5_game":"s7_tiebreak"}
+ if(scr=="s5_game")return"s6_between";
+ if(scr=="s6_between")return id=="primary"?"s4_pick":"s1_position";
+ if(scr=="s7_tiebreak")return"s6_between"}
+function file(forceInit){
+ var av=forceInit?"initials":$("av").value,nm=$("nm").value,s=st.scr,sz=$("sz").value;
+ var base=s;
+ if(s=="s5_game"&&nm=="names")base="s5_state-"+$("sc").value;
+ return base+"__card-"+av+"-"+nm+"__"+sz+".png"}
+function render(){
+ var f=file(false),im=$("im");$("fb").textContent="";
+ var sz=D.sizes[$("sz").value],z=parseFloat($("zm").value),st_=$("stage");
+ st_.style.width=sz[2]*z+"px";st_.style.height=sz[3]*z+"px";st_.style.maxWidth="100%";
+ var meta=SC[st.scr];
+ im.onerror=function(){if(im.dataset.fb!=="1"){im.dataset.fb="1";$("fb").textContent="Фото не загрузилось — показаны инициалы.";var f2=file(true);im.src="png/"+f2;buildHits(f2,meta)}};
+ im.dataset.fb="0";im.alt=meta.t+". "+meta.d;im.src="png/"+f;buildHits(f,meta);
+ $("sc").disabled=!(st.scr=="s5_game"&&$("nm").value=="names");
+ $("info").textContent=meta.t+" — "+meta.d+(st.scr=="s5_game"&&$("nm").value=="longnames"?" (для длинных имён доступен счёт 30:15)":"");
+ go.value=st.scr;$("back").disabled=!st.hist.length}
+function buildHits(f,meta){
+ var old=document.querySelectorAll("#stage button.h");for(var i=0;i<old.length;i++)old[i].remove();
+ var sz=D.sizes[$("sz").value],W=sz[0],H=sz[1],rects=D.files[f]||[];
+ rects.forEach(function(r){var b=document.createElement("button");b.type="button";b.className="h";
+  b.style.left=r.x/W*100+"%";b.style.top=r.y/H*100+"%";b.style.width=r.w/W*100+"%";b.style.height=r.h/H*100+"%";
+  b.setAttribute("aria-label",meta.h[r.id]||r.id);b.dataset.id=r.id;
+  b.onclick=function(e){var kb=e.detail===0;var n=nextOf(st.scr,r.id);st.hist.push(st.scr);st.scr=n;render();if(kb)focusFirst()};
+  $("stage").appendChild(b)})}
+function focusFirst(){var b=document.querySelector("#stage button.h");if(b)b.focus()}
+["av","nm","sz","sc","zm"].forEach(function(i){$(i).onchange=render});
+go.onchange=function(){st.hist.push(st.scr);st.scr=go.value;render()};
+$("back").onclick=function(){if(st.hist.length){st.scr=st.hist.pop();render()}};
+$("rs").onclick=function(){st={scr:"s1_position",hist:[],pick:0};render()};
+window.addEventListener("resize",function(){});
+render();
+})();
+</script></body></html>
