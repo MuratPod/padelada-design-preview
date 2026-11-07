@@ -74,7 +74,7 @@
     function cancelSolo() { if (S.scr === 'confirm') S.scr = 'match'; }
     function confirmSolo() {
       if (S.scr !== 'confirm') return;
-      S.mode = 'score'; S.order = null; S.st[S.st.length - 1] = newSt(false); hist = []; S.scr = 'match';
+      S.mode = 'score'; S.order = null; curSt().partial = true; hist = []; S.scr = 'match';
     }
 
     function point(t) {

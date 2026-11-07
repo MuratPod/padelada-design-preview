@@ -83,7 +83,7 @@ function vPick(team){return '<h2 class="t">¿Quién saca?</h2><p class="sub">Par
 function vFirst(){return '<h2 class="t">¿Qué pareja empieza?</h2><p class="sub">Primer game del set</p><div class="grow"></div><div class="col">'+
  ['A','B'].map(function(t){return '<button class="wb" data-a="first" data-t="'+t+'">'+P[t][0].n+' · '+P[t][1].n+'</button>'}).join('')+'</div><div class="grow"></div><button class="wb g" data-a="back">Atrás</button>'}
 function vDrawn(){return '<h2 class="t">Sorteo</h2><p class="sub">Saca primero</p><div class="grow"></div><p class="t" style="font-size:20px">'+pn(S.drawn[0])+'</p><p class="sub">'+ordTxt(S.drawn)+'</p><div class="grow"></div><div class="col"><button class="wb p" data-a="accept">Empezar</button><button class="wb g" data-a="change">Cambiar</button></div>'}
-function vConfirm(){return '<h2 class="t">¿Solo marcador?</h2><p class="sub">Se pierden el saque y las estadísticas. Solo se vuelve en un set nuevo.</p><div class="grow"></div><div class="col"><button class="wb s" data-a="solook">Sí, solo marcador</button><button class="wb g" data-a="solono">Cancelar</button></div>'}
+function vConfirm(){return '<h2 class="t">¿Solo marcador?</h2><p class="sub">Dejamos de seguir el saque y las estadísticas. Lo ya registrado se conserva. Solo se vuelve en un set nuevo.</p><div class="grow"></div><div class="col"><button class="wb s" data-a="solook">Sí, solo marcador</button><button class="wb g" data-a="solono">Cancelar</button></div>'}
 function vMatch(){
  var tr=S.mode==='track',sv=E.srvTeam(),sp=E.srvPl();
  var sets=S.sets.map(function(s){return s.a+'-'+s.b}).join('  ');
@@ -102,7 +102,7 @@ function vBetween(){var done=E.matchWinner();
 function vStats(){
  var h='<h2 class="t">Estadísticas</h2><div class="grow" style="overflow:auto;flex:1 1 0">';
  S.st.forEach(function(s,i){if(i>S.sets.length)return;
-  h+='<p class="sub" style="text-align:left;margin-top:4px">Set '+(i+1)+(s.tracked?'':' · sin seguimiento')+'</p>';
+  h+='<p class="sub" style="text-align:left;margin-top:4px">Set '+(i+1)+(s.tracked?(s.partial?' · parcial':''):' · sin seguimiento')+'</p>';
   if(s.tracked){h+='<div class="stat"><span></span><span class="h">AN·LU</span><span class="h">MA·PA</span><span>Puntos</span><b>'+s.pa+'</b><b>'+s.pb+'</b><span>Al saque</span><b>'+s.spa+'</b><b>'+s.spb+'</b></div>'}
   else h+='<p class="sub" style="text-align:left">—</p>'});
  return h+'</div><button class="wb g" data-a="closestats">Cerrar</button>'}

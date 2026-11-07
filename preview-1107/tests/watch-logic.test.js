@@ -106,8 +106,20 @@ test('Solo marcador: pide confirmación y no cambia nada hasta confirmar', () =>
   e.askSolo(); e.confirmSolo();
   assert.equal(e.state().mode, 'score'); assert.equal(e.state().order, null);
   assert.equal(e.state().p.a, 2);               // el marcador se conserva
-  assert.equal(e.curSt().tracked, false);
-  assert.equal(e.curSt().pa, 0);
+  assert.equal(e.curSt().tracked, true);        // lo registrado se conserva
+  assert.equal(e.curSt().partial, true);
+  assert.equal(e.curSt().pa, 2);
+});
+
+test('Solo marcador: tracked → score conserva las estadísticas ya registradas y los puntos nuevos no las amplían', () => {
+  const e = started(); pts(e, 'a', 2); pts(e, 'b', 1);
+  const antes = JSON.stringify([e.curSt().pa, e.curSt().pb, e.curSt().spa, e.curSt().spb]);
+  e.askSolo(); e.confirmSolo();
+  pts(e, 'a', 3); pts(e, 'b', 2);
+  const st = e.curSt();
+  assert.equal(JSON.stringify([st.pa, st.pb, st.spa, st.spb]), antes);
+  assert.equal(st.partial, true);
+  assert.equal(e.state().mode, 'score');
 });
 
 test('Solo marcador: no hay vuelta al seguimiento a mitad de set ni deshacer hacia él', () => {
