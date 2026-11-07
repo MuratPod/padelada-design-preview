@@ -56,129 +56,93 @@ ol{margin:0;padding-left:20px;font-size:14px;color:var(--mu)}
 <aside>
 <div class="panel"><h2>Demo</h2>
 <label for="sz" class="lead" style="display:block">Tamaño del reloj</label>
-<select id="sz" class="ctl"><option value="41">41 mm · 176×215</option><option value="45" selected>45 mm · 198×242</option><option value="49">Ultra · 205×251</option></select>
+<select id="sz" class="ctl"><option value="41">41 mm · 176×215</option><option value="45" selected>45 mm · 198×242</option><option value="49">Ultra · 205×251</option><option value="u3">Ultra 3 · 211×257</option></select>
 <button class="ctl" id="reset">Reiniciar demo</button>
 <button class="ctl" id="skip">Ir al final del set (6-0)</button>
 <button class="ctl" id="tbbtn">Ir al tie-break (6-6)</button>
 <button class="ctl" id="shot">Ir a pantalla de sorteo</button>
-<ol><li>«Empezar»: el reloj sigue el saque y las estadísticas.</li><li>«Sorteo»: elige quién saca primero en la pareja A y en la B.</li><li>«Solo marcador»: solo puntos, sin saque ni estadísticas.</li></ol></div>
+<ol><li>«Empezar»: eliges quién saca; el reloj sigue el saque y las estadísticas.</li><li>«Sorteo»: el reloj elige al azar; puedes cambiarlo.</li><li>«Solo marcador»: solo puntos. Desde el seguimiento (···) se pide confirmación y no se vuelve hasta un set nuevo.</li></ol></div>
 </aside>
+<script src="logic.js"></script>
 <script>
 (function(){
+var L=WatchLogic,E=L.createEngine(),S;
 var P={A:[{n:'Ana',i:'AN',p:'assets/avatar_player1_illustrative.jpg'},{n:'Luis',i:'LU',p:'assets/avatar_player2_illustrative.jpg'}],
        B:[{n:'Marta',i:'MA',p:'assets/avatar_player3_illustrative.jpg'},{n:'Pablo',i:'PA',p:'assets/avatar_player4_illustrative.jpg'}]};
-var PT=['0','15','30','40'];
-var S,hist;
 var W=document.getElementById('watch'),LOG=document.getElementById('log');
-function fresh(){S={scr:'draw',mode:null,sets:[],g:{a:0,b:0},p:{a:0,b:0},tb:false,order:null,si:0,tbn:0,pick:[],st:[newSt(true)]};hist=[];say('')}
-function newSt(t){return{tracked:t,pa:0,pb:0,spa:0,spb:0,sa:0,sb:0}}
 function say(t){LOG.textContent=t}
-function snap(){hist.push(JSON.stringify(S))}
 function av(p){return '<img src="'+p.p+'" alt="">'}
-function srvPl(){return S.order?S.order[S.si%4]:null}
-function srvTeam(){var s=srvPl();return s?s.t:null}
-function pname(x){return P[x.t][x.k].n}
-function ptTxt(t){var a=S.p.a,b=S.p.b;if(S.tb)return ''+S[t==='a'?'p':'p'][t];
- if(a>=3&&b>=3){if(a===b)return t==='a'?'40':'40';var lead=a>b?'a':'b';return t===lead?'AD':'40'}return PT[S.p[t]]}
-function curSt(){return S.st[S.st.length-1]}
-function setNo(){return S.sets.length+1}
+function pn(x){return P[x.t][x.k].n}
+function ordTxt(o){return o.map(pn).join(' → ')}
 
-/* ---------- screens ---------- */
-function vDraw(){return '<h2 class="t">Sorteo</h2><p class="sub">Ana · Luis  vs  Marta · Pablo</p><div class="grow"></div><div class="col">'+
+function vDraw(){return '<h2 class="t">Nuevo partido</h2><p class="sub">Ana · Luis  vs  Marta · Pablo</p><div class="grow"></div><div class="col">'+
  '<button class="wb p" data-a="start">Empezar</button><button class="wb s" data-a="draw">Sorteo</button><button class="wb g" data-a="score">Solo marcador</button></div>'}
-function vPick(team){var k=team==='A'?'A':'B';return '<h2 class="t">¿Quién saca?</h2><p class="sub">Pareja '+k+' · primer saque</p><div class="grow"></div><div class="col">'+
- P[k].map(function(p,i){return '<button class="wb pl" data-a="pick" data-t="'+k+'" data-k="'+i+'">'+av(p)+'<span>'+p.n+'</span></button>'}).join('')+'</div><div class="grow"></div>'+
+function vPick(team){return '<h2 class="t">¿Quién saca?</h2><p class="sub">Pareja '+team+' · su primer saque</p><div class="grow"></div><div class="col">'+
+ P[team].map(function(p,i){return '<button class="wb pl" data-a="pick" data-t="'+team+'" data-k="'+i+'">'+av(p)+'<span>'+p.n+'</span></button>'}).join('')+'</div><div class="grow"></div>'+
  '<button class="wb g" data-a="back">Atrás</button>'}
+function vFirst(){return '<h2 class="t">¿Qué pareja empieza?</h2><p class="sub">Primer game del set</p><div class="grow"></div><div class="col">'+
+ ['A','B'].map(function(t){return '<button class="wb" data-a="first" data-t="'+t+'">'+P[t][0].n+' · '+P[t][1].n+'</button>'}).join('')+'</div><div class="grow"></div><button class="wb g" data-a="back">Atrás</button>'}
+function vDrawn(){return '<h2 class="t">Sorteo</h2><p class="sub">Saca primero</p><div class="grow"></div><p class="t" style="font-size:20px">'+pn(S.drawn[0])+'</p><p class="sub">'+ordTxt(S.drawn)+'</p><div class="grow"></div><div class="col"><button class="wb p" data-a="accept">Empezar</button><button class="wb g" data-a="change">Cambiar</button></div>'}
+function vConfirm(){return '<h2 class="t">¿Solo marcador?</h2><p class="sub">Se pierden el saque y las estadísticas. Solo se vuelve en un set nuevo.</p><div class="grow"></div><div class="col"><button class="wb s" data-a="solook">Sí, solo marcador</button><button class="wb g" data-a="solono">Cancelar</button></div>'}
 function vMatch(){
- var tr=S.mode==='track',sv=srvTeam(),sp=srvPl();
- var sets=S.sets.map(function(s){return s.a+'-'+s.b}).join('  ')||'';
- var h='<div class="setrow"><span>Set '+setNo()+' · '+(S.tb?'<span class="badge o">Tie-break</span>':S.g.a+'-'+S.g.b)+'</span><span>'+sets+'</span></div>';
- ['a','b'].forEach(function(t){var T=t.toUpperCase(),isS=tr&&sv===T&&!(S.tb&&false);
-  h+='<button class="team'+(isS?' srv':'')+'" data-a="pt" data-t="'+t+'" aria-label="Punto para '+P[T][0].n+' y '+P[T][1].n+'"><span class="nm">'+P[T][0].n+' · '+P[T][1].n+'</span><span class="pt">'+ptTxt(t)+'</span>'+
-  (isS?'<span class="dot"></span><span class="sv">saca '+pname(sp)+'</span>':'')+'</button>'});
- h+='<div class="row"><button class="wb g" data-a="undo">↶ Deshacer</button>'+(tr?'<button class="wb g" data-a="stats">Estad.</button>':'<span class="sub" style="align-self:center">Solo marcador</span>')+'</div>';
+ var tr=S.mode==='track',sv=E.srvTeam(),sp=E.srvPl();
+ var sets=S.sets.map(function(s){return s.a+'-'+s.b}).join('  ');
+ var h='<div class="setrow"><span>Set '+(S.sets.length+1)+' · '+(S.tb?'<span class="badge o">Tie-break</span>':S.g.a+'-'+S.g.b)+'</span><span>'+sets+'</span></div>';
+ ['a','b'].forEach(function(t){var T=t.toUpperCase(),isS=tr&&sv===T;
+  h+='<button class="team'+(isS?' srv':'')+'" data-a="pt" data-t="'+t+'" aria-label="Punto para '+P[T][0].n+' y '+P[T][1].n+'"><span class="nm">'+P[T][0].n+' · '+P[T][1].n+'</span><span class="pt">'+E.ptTxt(t)+'</span>'+
+  (isS?'<span class="dot"></span><span class="sv">saca '+pn(sp)+'</span>':'')+'</button>'});
+ h+='<div class="row"><button class="wb g" data-a="undo" aria-label="Deshacer" style="flex:0 0 40px">↶</button>'+(tr?'<button class="wb g" data-a="stats">Estad.</button><button class="wb g" data-a="asksolo" aria-label="Más opciones" style="flex:0 0 40px">···</button>':'<span class="sub" style="align-self:center">Solo marcador</span>')+'</div>';
  return h}
-function vBetween(){var l=S.sets[S.sets.length-1];var done=matchWinner();
+function vBetween(){var done=E.matchWinner();
  var h='<h2 class="t">'+(done?'Partido terminado':'Set '+S.sets.length+' terminado')+'</h2><p class="sub">'+S.sets.map(function(s){return s.a+'-'+s.b}).join('  ')+'</p><div class="grow"></div><div class="col">';
- if(done){h+='<button class="wb p" data-a="stats">Estadísticas</button><button class="wb g" data-a="restart">Nuevo partido</button>'}
+ if(done){if(E.canStats())h+='<button class="wb p" data-a="stats">Estadísticas</button>';h+='<button class="'+(E.canStats()?'wb g':'wb p')+'" data-a="restart">Nuevo partido</button>'}
  else if(S.mode==='track'){h+='<button class="wb p" data-a="next">Siguiente set</button><button class="wb s" data-a="repick">Elegir saque</button><button class="wb g" data-a="stats">Estadísticas</button>'}
  else{h+='<button class="wb p" data-a="next">Siguiente set</button><button class="wb s" data-a="trackfrom">Seguir con saque</button><p class="sub">Los sets anteriores no se completan.</p>'}
  return h+'</div>'}
 function vStats(){
  var h='<h2 class="t">Estadísticas</h2><div class="grow" style="overflow:auto;flex:1 1 0">';
- var all=S.st.filter(function(s,i){return i<=S.sets.length||true});
  S.st.forEach(function(s,i){if(i>S.sets.length)return;
   h+='<p class="sub" style="text-align:left;margin-top:4px">Set '+(i+1)+(s.tracked?'':' · sin seguimiento')+'</p>';
   if(s.tracked){h+='<div class="stat"><span></span><span class="h">AN·LU</span><span class="h">MA·PA</span><span>Puntos</span><b>'+s.pa+'</b><b>'+s.pb+'</b><span>Al saque</span><b>'+s.spa+'</b><b>'+s.spb+'</b></div>'}
   else h+='<p class="sub" style="text-align:left">—</p>'});
  return h+'</div><button class="wb g" data-a="closestats">Cerrar</button>'}
+var V={draw:vDraw,pickA:function(){return vPick('A')},pickB:function(){return vPick('B')},first:vFirst,drawn:vDrawn,confirm:vConfirm,match:vMatch,between:vBetween,stats:vStats};
+function render(){S=E.state();W.innerHTML='<div class="scr">'+V[S.scr]()+'</div>'}
 
-function matchWinner(){var a=0,b=0;S.sets.forEach(function(s){s.a>s.b?a++:b++});return a===2?'A':b===2?'B':null}
-function render(){
- var v=S.scr==='draw'?vDraw():S.scr==='pickA'?vPick('A'):S.scr==='pickB'?vPick('B'):S.scr==='match'?vMatch():S.scr==='between'?vBetween():vStats();
- W.innerHTML='<div class="scr">'+v+'</div>'}
-
-/* ---------- logic ---------- */
-function startTrack(){S.mode='track';S.scr='pickA';S.pick=[];S.order=null;curSt().tracked=true}
-function point(t){
- snap();var st=curSt(),tr=S.mode==='track';
- var T=t.toUpperCase();
- if(tr){if(T==='A')st.pa++;else st.pb++;var sv=srvTeam();if(sv===T){if(T==='A')st.spa++;else st.spb++}}
- S.p[t]++;
- if(S.tb){
-  S.tbn++;
-  if(tr&&S.tbn%2===1)S.si++;
-  var a=S.p.a,b=S.p.b;if((a>=7||b>=7)&&Math.abs(a-b)>=2){gameTo(a>b?'a':'b',true)}
- }else{
-  var a=S.p.a,b=S.p.b;
-  if((a>=4||b>=4)&&Math.abs(a-b)>=2){gameTo(a>b?'a':'b',false)}
- }
- render()}
-function gameTo(t,wasTb){
- S.g[t]++;S.p={a:0,b:0};if(S.tb){S.tb=false;S.tbn=0}
- if(S.mode==='track'&&!wasTb)S.si++;
- var a=S.g.a,b=S.g.b;
- if(wasTb||((a>=6||b>=6)&&Math.abs(a-b)>=2)||(a===7||b===7)){endSet()}
- else if(a===6&&b===6){S.tb=true;S.tbn=0}}
-function endSet(){
- var st=curSt();st.sa=S.g.a;st.sb=S.g.b;
- S.sets.push({a:S.g.a,b:S.g.b});S.g={a:0,b:0};S.tb=false;
- S.st.push(newSt(S.mode==='track'));S.scr='between';
- say(matchWinner()?'Partido terminado.':'Set terminado. En el siguiente set puedes volver a elegir el saque.')}
-
-/* ---------- events ---------- */
-W.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var a=b.dataset.a;
- if(a==='start'){startTrack();S.order=null;
-   /* «Empezar»: sin sorteo, saque por defecto A1 → B1 → A2 → B2 */
-   S.order=[{t:'A',k:0},{t:'B',k:0},{t:'A',k:1},{t:'B',k:1}];S.si=0;S.scr='match';say('Seguimiento activo: saque y estadísticas.')}
- else if(a==='draw'){startTrack();say('Elige quién saca primero en cada pareja.')}
- else if(a==='score'){S.mode='score';S.order=null;curSt().tracked=false;S.scr='match';say('Solo marcador: sin saque ni estadísticas. Se puede volver al seguimiento desde el siguiente set.')}
- else if(a==='back'){S.scr=S.scr==='pickB'?'pickA':'draw';render();return}
- else if(a==='pick'){S.pick.push({t:b.dataset.t,k:+b.dataset.k});
-   if(b.dataset.t==='A'){S.scr='pickB'}else{var A=S.pick[0],B=S.pick[1];
-     S.order=[A,B,{t:'A',k:1-A.k},{t:'B',k:1-B.k}];S.si=0;S.scr='match';
-     say('Orden de saque: '+S.order.map(pname).join(' → ')+'. Los compañeros siguen la cola hasta el final del set.')}}
- else if(a==='pt'){point(b.dataset.t);return}
- else if(a==='undo'){if(hist.length){S=JSON.parse(hist.pop())}}
- else if(a==='stats'){S._back=S.scr;S.scr='stats'}
- else if(a==='closestats'){S.scr=S._back||'match'}
- else if(a==='next'){S.scr='match';
-   if(S.mode==='track'){say('Siguiente set: continúa el orden de saque.')}else say('Siguiente set: solo marcador.')}
- else if(a==='repick'){S.scr='pickA';S.pick=[];S.order=null;say('Elige de nuevo el primer saque.')}
- else if(a==='trackfrom'){S.mode='track';curSt().tracked=true;S.scr='pickA';S.pick=[];S.order=null;say('Seguimiento desde este set. Los sets anteriores no se completan.')}
- else if(a==='restart'){fresh()}
+W.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var a=b.dataset.a;S=E.state();
+ if(a==='pt'){E.point(b.dataset.t);S=E.state();
+   if(S.scr==='between')say(E.matchWinner()?'Partido terminado.':(S.mode==='track'?'Set terminado. Puedes volver a elegir el saque.':'Set terminado.'));
+   render();return}
+ if(a==='start'){E.start();say('Elige quién saca en cada pareja y qué pareja empieza.')}
+ else if(a==='draw'){E.drawRandom();say('Sorteo hecho. Puedes cambiarlo.')}
+ else if(a==='accept'){E.acceptDraw();S=E.state();say('Orden de saque: '+ordTxt(S.order)+'.')}
+ else if(a==='change'){E.changeDraw();say('')}
+ else if(a==='score'){E.soloFromStart();say('Solo marcador: sin saque ni estadísticas.')}
+ else if(a==='back'){E.back();say('')}
+ else if(a==='pick'){E.pick(b.dataset.t,+b.dataset.k)}
+ else if(a==='first'){E.chooseFirst(b.dataset.t);S=E.state();say('Orden de saque: '+ordTxt(S.order)+'.')}
+ else if(a==='undo'){E.undo()}
+ else if(a==='stats'){E.stats()}
+ else if(a==='closestats'){E.closeStats()}
+ else if(a==='asksolo'){E.askSolo()}
+ else if(a==='solono'){E.cancelSolo()}
+ else if(a==='solook'){E.confirmSolo();say('Solo marcador. Para volver al seguimiento, empieza un set nuevo.')}
+ else if(a==='next'){E.nextSet();say('')}
+ else if(a==='repick'){E.repick();say('Elige de nuevo el saque.')}
+ else if(a==='trackfrom'){E.trackFrom();say('Seguimiento desde el siguiente set.')}
+ else if(a==='restart'){E.fresh();say('')}
  render()});
 
-document.getElementById('reset').onclick=function(){fresh();render()};
-document.getElementById('shot').onclick=function(){fresh();render()};
-function jump(g){if(S.scr==='draw'){S.mode='track';S.order=[{t:'A',k:0},{t:'B',k:0},{t:'A',k:1},{t:'B',k:1}];S.scr='match'}
- snap();S.g=g;S.p={a:0,b:0};S.tb=g.a===6&&g.b===6;S.tbn=0;render()}
-document.getElementById('skip').onclick=function(){jump({a:5,b:0});say('Un game más para cerrar el set.')};
-document.getElementById('tbbtn').onclick=function(){jump({a:6,b:6});say('Tie-break: el saque cambia tras el primer punto y luego cada dos.')};
-document.getElementById('sz').onchange=function(){var m={41:[176,215],45:[198,242],49:[205,251]}[this.value];
- var r=document.documentElement.style;r.setProperty('--w',m[0]+'px');r.setProperty('--h',m[1]+'px');
- r.setProperty('--k',Math.min(1.5,(Math.min(innerWidth,420)-40)/m[0]).toFixed(2))};
-(function fit(){var k=Math.min(1.5,(innerWidth-40)/198);document.documentElement.style.setProperty('--k',k.toFixed(2))})();
-fresh();render();
+function reset(){E.fresh();say('');render()}
+document.getElementById('reset').onclick=reset;
+document.getElementById('shot').onclick=reset;
+document.getElementById('skip').onclick=function(){E.demoJump({a:5,b:0});say('Un game más para cerrar el set.');render()};
+document.getElementById('tbbtn').onclick=function(){E.demoJump({a:6,b:6});say('Tie-break: el saque cambia tras el primer punto y luego cada dos.');render()};
+function setSize(id){var m=L.SIZES.filter(function(s){return s.id===id})[0];var r=document.documentElement.style;
+ r.setProperty('--w',m.w+'px');r.setProperty('--h',m.h+'px');r.setProperty('--k',Math.min(1.5,(Math.min(innerWidth,420)-40)/m.w).toFixed(2))}
+document.getElementById('sz').onchange=function(){setSize(this.value)};
+(function(){var q=/[?&]size=(\w+)/.exec(location.search);if(q){document.getElementById('sz').value=q[1];setSize(q[1])}else document.documentElement.style.setProperty('--k',Math.min(1.5,(innerWidth-40)/198).toFixed(2))})();
+window.__E=E;window.__render=render;
+render();
 })();
 </script></main></body></html>
