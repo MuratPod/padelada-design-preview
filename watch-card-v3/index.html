@@ -31,7 +31,7 @@ footer{grid-column:1/-1;color:var(--mu);font-size:13px;border-top:1px solid #333
 <label>Имена<select id="nm"><option value="names">Обычные</option><option value="longnames">Длинные</option></select></label></fieldset>
 <fieldset><legend>Экран и размер</legend>
 <label>Размер Watch<select id="sz"><option value="41mm">41 мм · 352×430</option><option value="45mm">45 мм · 396×484</option><option value="49mm-ultra2">Ultra 1–2 · 410×502</option><option value="49mm-ultra3" selected>Ultra 3 · 422×514</option></select></label>
-<label>Счёт на экране «Игра»<select id="sc"><option value="30-15">30:15</option><option value="40-40">40:40</option><option value="AD-40">AD:40</option><option value="40-AD">40:AD</option></select></label>
+<label>Счёт на экране «Игра»<select id="sc"><option value="0-0" selected>0:0 · подача справа</option><option value="30-15">30:15 · слева</option><option value="40-40">40:40 · справа</option><option value="AD-40">AD:40</option><option value="40-AD">40:AD</option></select></label>
 <label>Перейти к экрану<select id="go"></select></label>
 <label>Масштаб<select id="zm"><option value="1">1× (pt)</option><option value="1.5" selected>1,5×</option><option value="2">2×</option></select></label></fieldset>
 <button class="c" id="back">← Назад</button><button class="c" id="rs">Начать заново</button>
@@ -64,7 +64,7 @@ function nextOf(scr,id){
 function file(forceInit){
  var av=forceInit?"initials":$("av").value,nm=$("nm").value,s=st.scr,sz=$("sz").value;
  var base=s;
- if(s=="s5_game"&&nm=="names")base="s5_state-"+$("sc").value;
+ if(s=="s5_game")base="s5_state-"+$("sc").value;
  return base+"__card-"+av+"-"+nm+"__"+sz+".png"}
 function render(){
  var f=file(false),im=$("im");$("fb").textContent="";
@@ -73,8 +73,8 @@ function render(){
  var meta=SC[st.scr];
  im.onerror=function(){if(im.dataset.fb!=="1"){im.dataset.fb="1";$("fb").textContent="Фото не загрузилось — показаны инициалы.";var f2=file(true);im.src="png/"+f2;buildHits(f2,meta)}};
  im.dataset.fb="0";im.alt=meta.t+". "+meta.d;im.src="png/"+f;buildHits(f,meta);
- $("sc").disabled=!(st.scr=="s5_game"&&$("nm").value=="names");
- $("info").textContent=meta.t+" — "+meta.d+(st.scr=="s5_game"&&$("nm").value=="longnames"?" (для длинных имён доступен счёт 30:15)":"");
+ $("sc").disabled=st.scr!="s5_game";
+ $("info").textContent=meta.t+" — "+meta.d;
  go.value=st.scr;$("back").disabled=!st.hist.length}
 function buildHits(f,meta){
  var old=document.querySelectorAll("#stage button.h");for(var i=0;i<old.length;i++)old[i].remove();
@@ -88,7 +88,7 @@ function focusFirst(){var b=document.querySelector("#stage button.h");if(b)b.foc
 ["av","nm","sz","sc","zm"].forEach(function(i){$(i).onchange=render});
 go.onchange=function(){st.hist.push(st.scr);st.scr=go.value;render()};
 $("back").onclick=function(){if(st.hist.length){st.scr=st.hist.pop();render()}};
-$("rs").onclick=function(){st={scr:"s1_position",hist:[],pick:0};render()};
+$("rs").onclick=function(){st={scr:"s1_position",hist:[],pick:0};$("sc").value="0-0";render()};
 window.addEventListener("resize",function(){});
 render();
 })();
