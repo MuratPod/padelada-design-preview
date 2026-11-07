@@ -106,7 +106,10 @@
     function nextSet() { S.scr = 'match'; }
     function stats() { S.statsBack = S.scr; S.scr = 'stats'; }
     function closeStats() { S.scr = S.statsBack || 'match'; delete S.statsBack; }
-    function canStats() { return S.mode === 'track'; }
+    /* кнопка есть, если в матче есть хоть один tracked-сегмент с данными (в т.ч. матч закончился в Solo marcador) */
+    function canStats() { return S.mode === 'track' || S.st.some(function (s) { return s.tracked && s.pa + s.pb > 0; }); }
+    /* «parcial»: часть матча без seguimiento */
+    function statsPartial() { return S.st.some(function (s, i) { return i < Math.max(S.sets.length, 1) && (!s.tracked || s.partial); }); }
 
     function demoJump(g) {
       if (S.scr === 'draw') { S.mode = 'track'; S.order = buildOrder('A', { t: 'A', k: 0 }, { t: 'B', k: 0 }); S.si = 0; S.scr = 'match'; }
@@ -123,7 +126,7 @@
     return { fresh: fresh, state: function () { return S; }, start: start, sorteo: sorteo, repick: repick, trackFrom: trackFrom, pick: pick,
       chooseFirst: chooseFirst,
       soloFromStart: soloFromStart, back: back, askSolo: askSolo, cancelSolo: cancelSolo, confirmSolo: confirmSolo,
-      point: point, undo: undo, nextSet: nextSet, stats: stats, closeStats: closeStats, canStats: canStats,
+      point: point, undo: undo, nextSet: nextSet, stats: stats, closeStats: closeStats, canStats: canStats, statsPartial: statsPartial,
       demoJump: demoJump, ptTxt: ptTxt, srvPl: srvPl, srvTeam: srvTeam, matchWinner: matchWinner, curSt: curSt };
   }
 

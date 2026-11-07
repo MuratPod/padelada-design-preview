@@ -185,3 +185,21 @@ test('tamaños de reloj: 4, incluido Ultra 3 211×257', () => {
   const u3 = SIZES.find(s => s.id === 'u3');
   assert.deepEqual([u3.w, u3.h], [211, 257]);
 });
+
+test('Solo marcador a mitad de seguimiento: al final hay «Estadísticas · parcial» con solo lo guardado', () => {
+  const e = started(); game(e, 'a'); game(e, 'b');
+  e.askSolo(); e.confirmSolo();
+  for (let s = 0; s < 2; s++) { for (let i = 0; i < 6; i++) game(e, 'a'); if (s === 0) e.nextSet(); }
+  assert.equal(e.matchWinner(), 'A');
+  assert.equal(e.canStats(), true);
+  assert.equal(e.statsPartial(), true);
+  assert.equal(e.state().st[0].pa, 4); assert.equal(e.state().st[0].pb, 4);
+  assert.equal(e.state().st[1].tracked, false);
+  assert.equal(e.state().st[1].pa + e.state().st[1].pb, 0);
+});
+
+test('matchs totalmente score-only: sin botón de estadísticas ni «parcial» de seguimiento', () => {
+  const e = createEngine(); e.soloFromStart();
+  for (let s = 0; s < 2; s++) { for (let i = 0; i < 6; i++) game(e, 'a'); if (s === 0) e.nextSet(); }
+  assert.equal(e.canStats(), false);
+});

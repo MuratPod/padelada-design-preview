@@ -94,13 +94,13 @@ function vMatch(){
  return h}
 function vBetween(){var done=E.matchWinner();
  var h='<h2 class="t">'+(done?'Partido terminado':'Set '+S.sets.length+' terminado')+'</h2><p class="sub">'+S.sets.map(function(s){return s.a+'-'+s.b}).join('  ')+'</p><div class="grow"></div><div class="col">';
- if(done){if(E.canStats())h+='<button class="wb p" data-a="stats">Estadísticas</button>';h+='<button class="'+(E.canStats()?'wb g':'wb p')+'" data-a="restart">Nuevo partido</button>'}
+ if(done){if(E.canStats())h+='<button class="wb p" data-a="stats">'+(E.statsPartial()?'Estad. · parcial':'Estadísticas')+'</button>';h+='<button class="'+(E.canStats()?'wb g':'wb p')+'" data-a="restart">Nuevo partido</button>'}
  else if(S.mode==='track'){h+='<button class="wb p" data-a="next">Siguiente set</button><button class="wb s" data-a="repick">Elegir saque</button><button class="wb g" data-a="stats">Estadísticas</button>'}
  else{h+='<button class="wb p" data-a="next">Siguiente set</button><button class="wb s" data-a="trackfrom">Seguir con saque</button><p class="sub">Los sets anteriores no se completan.</p>'}
  return h+'</div>'}
 function vStats(){
  var h='<h2 class="t">Estadísticas</h2><div class="grow" style="overflow:auto;flex:1 1 0">';
- S.st.forEach(function(s,i){if(i>S.sets.length)return;
+ S.st.forEach(function(s,i){if(i>S.sets.length||(i===S.sets.length&&E.matchWinner()))return;
   h+='<p class="sub" style="text-align:left;margin-top:4px">Set '+(i+1)+(s.tracked?(s.partial?' · parcial':''):' · sin seguimiento')+'</p>';
   if(s.tracked){h+='<div class="stat"><span></span><span class="h">AN·LU</span><span class="h">MA·PA</span><span>Puntos</span><b>'+s.pa+'</b><b>'+s.pb+'</b><span>Al saque</span><b>'+s.spa+'</b><b>'+s.spb+'</b></div>'}
   else h+='<p class="sub" style="text-align:left">—</p>'});
