@@ -35,9 +35,9 @@
       return a === 2 ? 'A' : b === 2 ? 'B' : null;
     }
 
-    /* выбор подающих: «Empezar» и «Elegir saque» ведут сюда; дефолта A1→B1 нет */
+    /* ручной выбор подающих: «Sorteo» (игроки разыграли сами) и «Elegir saque» ведут сюда; дефолта A1→B1 нет */
     function beginPick(from) { S.scr = 'pickA'; S.pickA = null; S.pickB = null; S.pickFrom = from || 'draw'; }
-    function start() { beginPick('draw'); }
+    function sorteo() { beginPick('draw'); }
     function repick() { beginPick('between'); }
     function trackFrom() { beginPick('between'); }
     function pick(team, k) {
@@ -50,14 +50,11 @@
       S.order = order; S.si = 0; S.mode = 'track'; curSt().tracked = true;
       S.pickA = S.pickB = null; hist = []; S.scr = 'match';
     }
-    /* «Sorteo»: случайный первый подающий; результат можно сменить («Cambiar») */
-    function drawRandom() {
+    /* «Empezar»: часы сами жеребьют первого подающего каждой пары и пару, начинающую матч, и сразу идут в матч с отслеживанием */
+    function start() {
       var a = { t: 'A', k: rng() < 0.5 ? 0 : 1 }, b = { t: 'B', k: rng() < 0.5 ? 0 : 1 };
-      var first = rng() < 0.5 ? 'A' : 'B';
-      S.drawn = buildOrder(first, a, b); S.scr = 'drawn'; S.pickFrom = 'draw';
+      finishPick(buildOrder(rng() < 0.5 ? 'A' : 'B', a, b));
     }
-    function acceptDraw() { var o = S.drawn; delete S.drawn; finishPick(o); }
-    function changeDraw() { delete S.drawn; beginPick('draw'); }
     function soloFromStart() {
       S.mode = 'score'; S.order = null; curSt().tracked = false; S.scr = 'match';
     }
@@ -66,7 +63,6 @@
       if (S.scr === 'first') { S.pickB = null; S.scr = 'pickB'; }
       else if (S.scr === 'pickB') { S.pickA = null; S.pickB = null; S.scr = 'pickA'; }
       else if (S.scr === 'pickA') { S.pickA = null; S.pickB = null; S.scr = S.pickFrom === 'between' ? 'between' : 'draw'; }
-      else if (S.scr === 'drawn') { delete S.drawn; S.scr = 'draw'; }
     }
 
     /* отслеживание → «Solo marcador» только с подтверждением; обратно — с нового сета */
@@ -124,8 +120,8 @@
     }
 
     fresh();
-    return { fresh: fresh, state: function () { return S; }, start: start, repick: repick, trackFrom: trackFrom, pick: pick,
-      chooseFirst: chooseFirst, drawRandom: drawRandom, acceptDraw: acceptDraw, changeDraw: changeDraw,
+    return { fresh: fresh, state: function () { return S; }, start: start, sorteo: sorteo, repick: repick, trackFrom: trackFrom, pick: pick,
+      chooseFirst: chooseFirst,
       soloFromStart: soloFromStart, back: back, askSolo: askSolo, cancelSolo: cancelSolo, confirmSolo: confirmSolo,
       point: point, undo: undo, nextSet: nextSet, stats: stats, closeStats: closeStats, canStats: canStats,
       demoJump: demoJump, ptTxt: ptTxt, srvPl: srvPl, srvTeam: srvTeam, matchWinner: matchWinner, curSt: curSt };

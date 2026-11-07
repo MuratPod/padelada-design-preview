@@ -5,13 +5,13 @@ const { createEngine, SIZES } = require('../watch-card-v3/logic.js');
 const A0 = { t: 'A', k: 0 }, A1 = { t: 'A', k: 1 }, B0 = { t: 'B', k: 0 }, B1 = { t: 'B', k: 1 };
 const seq = (...v) => { let i = 0; return () => v[i++ % v.length]; };
 function started(first = 'A', ka = 0, kb = 0) {
-  const e = createEngine(); e.start(); e.pick('A', ka); e.pick('B', kb); e.chooseFirst(first); return e;
+  const e = createEngine(); e.sorteo(); e.pick('A', ka); e.pick('B', kb); e.chooseFirst(first); return e;
 }
 const pts = (e, t, n) => { for (let i = 0; i < n; i++) e.point(t); };
 const game = (e, t) => pts(e, t, 4);
 
-test('«Empezar» no fija A1→B1→A2→B2: primero se elige el saque', () => {
-  const e = createEngine(); e.start();
+test('«Sorteo» (manual) no fija A1→B1→A2→B2: primero se elige el saque', () => {
+  const e = createEngine(); e.sorteo();
   assert.equal(e.state().scr, 'pickA'); assert.equal(e.state().order, null);
   e.pick('A', 1); assert.equal(e.state().scr, 'pickB');
   e.pick('B', 0); assert.equal(e.state().scr, 'first');
@@ -28,7 +28,7 @@ test('cola de saque: cada game pasa al siguiente jugador', () => {
 });
 
 test('Atrás desde B borra la elección de A y la nueva no se acumula', () => {
-  const e = createEngine(); e.start(); e.pick('A', 0);
+  const e = createEngine(); e.sorteo(); e.pick('A', 0);
   e.back();
   assert.equal(e.state().scr, 'pickA'); assert.equal(e.state().pickA, null);
   e.pick('A', 1); e.pick('B', 1); e.chooseFirst('A');
@@ -36,7 +36,7 @@ test('Atrás desde B borra la elección de A y la nueva no se acumula', () => {
 });
 
 test('Atrás desde «primera pareja» borra B; desde A vuelve al menú', () => {
-  const e = createEngine(); e.start(); e.pick('A', 0); e.pick('B', 0);
+  const e = createEngine(); e.sorteo(); e.pick('A', 0); e.pick('B', 0);
   e.back(); assert.equal(e.state().scr, 'pickB'); assert.equal(e.state().pickB, null);
   e.back(); assert.equal(e.state().scr, 'pickA');
   e.back(); assert.equal(e.state().scr, 'draw'); assert.equal(e.state().mode, null);
@@ -51,14 +51,28 @@ test('Atrás en «Elegir saque» entre sets vuelve al descanso sin perder el ord
   assert.equal(e.state().scr, 'between'); assert.deepEqual(e.state().order, order);
 });
 
-test('«Sorteo» es aleatorio, se puede cambiar y no inicia sin aceptar', () => {
+test('«Empezar»: sorteo automático, entra directo al partido con seguimiento', () => {
   const e = createEngine(seq(0.9, 0.1, 0.9)); // A:k=1, B:k=0, primera pareja B
-  e.drawRandom();
-  assert.equal(e.state().scr, 'drawn');
-  assert.deepEqual(e.state().drawn, [B0, A1, B1, A0]);
-  e.changeDraw(); assert.equal(e.state().scr, 'pickA');
-  e.back(); e.drawRandom(); e.acceptDraw();
+  e.start();
   assert.equal(e.state().scr, 'match'); assert.equal(e.state().mode, 'track');
+  assert.deepEqual(e.state().order, [B0, A1, B1, A0]);
+  assert.equal(e.curSt().tracked, true);
+  const e2 = createEngine(seq(0.1, 0.9, 0.1)); e2.start(); // A0, B1, primera A
+  assert.deepEqual(e2.state().order, [A0, B1, A1, B0]);
+});
+
+test('«Sorteo» no usa azar: nunca llama al generador y espera la elección manual', () => {
+  let calls = 0; const e = createEngine(() => { calls++; return 0.5; });
+  e.sorteo(); e.pick('A', 1); e.pick('B', 1); e.chooseFirst('A');
+  assert.equal(calls, 0);
+  assert.deepEqual(e.state().order, [A1, B1, A0, B0]);
+});
+
+test('«Sorteo» → «¿Quién saca?» → «Solo marcador»: solo puntos, sin saque', () => {
+  const e = createEngine(); e.sorteo(); e.pick('A', 0); e.back(); // pickA tras Atrás
+  e.soloFromStart();
+  assert.equal(e.state().mode, 'score'); assert.equal(e.state().order, null);
+  assert.equal(e.state().scr, 'match'); assert.equal(e.canStats(), false);
 });
 
 test('tie-break: saque 1-2-2-2 y el siguiente set empieza quien recibió primero', () => {

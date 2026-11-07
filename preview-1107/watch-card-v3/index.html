@@ -61,7 +61,7 @@ ol{margin:0;padding-left:20px;font-size:14px;color:var(--mu)}
 <button class="ctl" id="skip">Ir al final del set (6-0)</button>
 <button class="ctl" id="tbbtn">Ir al tie-break (6-6)</button>
 <button class="ctl" id="shot">Ir a pantalla de sorteo</button>
-<ol><li>«Empezar»: eliges quién saca; el reloj sigue el saque y las estadísticas.</li><li>«Sorteo»: el reloj elige al azar; puedes cambiarlo.</li><li>«Solo marcador»: solo puntos. Desde el seguimiento (···) se pide confirmación y no se vuelve hasta un set nuevo.</li></ol></div>
+<ol><li>«Empezar»: el reloj sortea el saque solo y empieza el partido con seguimiento y estadísticas.</li><li>«Sorteo»: los jugadores ya lo sortearon (pala/moneda); eliges quién saca en cada pareja.</li><li>«Solo marcador» (también en «¿Quién saca?»): solo puntos. Desde el seguimiento (···) se pide confirmación y no se vuelve hasta un set nuevo.</li></ol></div>
 </aside>
 <script src="logic.js"></script>
 <script>
@@ -76,13 +76,12 @@ function pn(x){return P[x.t][x.k].n}
 function ordTxt(o){return o.map(pn).join(' → ')}
 
 function vDraw(){return '<h2 class="t">Nuevo partido</h2><p class="sub">Ana · Luis  vs  Marta · Pablo</p><div class="grow"></div><div class="col">'+
- '<button class="wb p" data-a="start">Empezar</button><button class="wb s" data-a="draw">Sorteo</button><button class="wb g" data-a="score">Solo marcador</button></div>'}
-function vPick(team){return '<h2 class="t">¿Quién saca?</h2><p class="sub">Pareja '+team+' · su primer saque</p><div class="grow"></div><div class="col">'+
- P[team].map(function(p,i){return '<button class="wb pl" data-a="pick" data-t="'+team+'" data-k="'+i+'">'+av(p)+'<span>'+p.n+'</span></button>'}).join('')+'</div><div class="grow"></div>'+
- '<button class="wb g" data-a="back">Atrás</button>'}
+ '<button class="wb p" data-a="start">Empezar</button><button class="wb s" data-a="sorteo">Sorteo</button><button class="wb g" data-a="score">Solo marcador</button></div>'}
+function vPick(team){return '<h2 class="t">¿Quién saca?</h2><p class="sub">Pareja '+team+' · su primer saque</p><div class="col">'+
+ P[team].map(function(p,i){return '<button class="wb pl" style="min-height:38px" data-a="pick" data-t="'+team+'" data-k="'+i+'">'+av(p)+'<span>'+p.n+'</span></button>'}).join('')+'</div><div class="grow"></div>'+
+ '<div class="row"><button class="wb g" style="flex:0 0 52px;padding:0" data-a="back">Atrás</button>'+(team==='A'?'<button class="wb g" style="padding:0 4px;font-size:12px" data-a="score">Solo marcador</button>':'')+'</div>'}
 function vFirst(){return '<h2 class="t">¿Qué pareja empieza?</h2><p class="sub">Primer game del set</p><div class="grow"></div><div class="col">'+
  ['A','B'].map(function(t){return '<button class="wb" data-a="first" data-t="'+t+'">'+P[t][0].n+' · '+P[t][1].n+'</button>'}).join('')+'</div><div class="grow"></div><button class="wb g" data-a="back">Atrás</button>'}
-function vDrawn(){return '<h2 class="t">Sorteo</h2><p class="sub">Saca primero</p><div class="grow"></div><p class="t" style="font-size:20px">'+pn(S.drawn[0])+'</p><p class="sub">'+ordTxt(S.drawn)+'</p><div class="grow"></div><div class="col"><button class="wb p" data-a="accept">Empezar</button><button class="wb g" data-a="change">Cambiar</button></div>'}
 function vConfirm(){return '<h2 class="t">¿Solo marcador?</h2><p class="sub">Dejamos de seguir el saque y las estadísticas. Lo ya registrado se conserva. Solo se vuelve en un set nuevo.</p><div class="grow"></div><div class="col"><button class="wb s" data-a="solook">Sí, solo marcador</button><button class="wb g" data-a="solono">Cancelar</button></div>'}
 function vMatch(){
  var tr=S.mode==='track',sv=E.srvTeam(),sp=E.srvPl();
@@ -106,17 +105,15 @@ function vStats(){
   if(s.tracked){h+='<div class="stat"><span></span><span class="h">AN·LU</span><span class="h">MA·PA</span><span>Puntos</span><b>'+s.pa+'</b><b>'+s.pb+'</b><span>Al saque</span><b>'+s.spa+'</b><b>'+s.spb+'</b></div>'}
   else h+='<p class="sub" style="text-align:left">—</p>'});
  return h+'</div><button class="wb g" data-a="closestats">Cerrar</button>'}
-var V={draw:vDraw,pickA:function(){return vPick('A')},pickB:function(){return vPick('B')},first:vFirst,drawn:vDrawn,confirm:vConfirm,match:vMatch,between:vBetween,stats:vStats};
+var V={draw:vDraw,pickA:function(){return vPick('A')},pickB:function(){return vPick('B')},first:vFirst,confirm:vConfirm,match:vMatch,between:vBetween,stats:vStats};
 function render(){S=E.state();W.innerHTML='<div class="scr">'+V[S.scr]()+'</div>'}
 
 W.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var a=b.dataset.a;S=E.state();
  if(a==='pt'){E.point(b.dataset.t);S=E.state();
    if(S.scr==='between')say(E.matchWinner()?'Partido terminado.':(S.mode==='track'?'Set terminado. Puedes volver a elegir el saque.':'Set terminado.'));
    render();return}
- if(a==='start'){E.start();say('Elige quién saca en cada pareja y qué pareja empieza.')}
- else if(a==='draw'){E.drawRandom();say('Sorteo hecho. Puedes cambiarlo.')}
- else if(a==='accept'){E.acceptDraw();S=E.state();say('Orden de saque: '+ordTxt(S.order)+'.')}
- else if(a==='change'){E.changeDraw();say('')}
+ if(a==='start'){E.start();S=E.state();say('Sorteo automático. Orden de saque: '+ordTxt(S.order)+'.')}
+ else if(a==='sorteo'){E.sorteo();say('Elige quién saca en cada pareja y qué pareja empieza.')}
  else if(a==='score'){E.soloFromStart();say('Solo marcador: sin saque ni estadísticas.')}
  else if(a==='back'){E.back();say('')}
  else if(a==='pick'){E.pick(b.dataset.t,+b.dataset.k)}
