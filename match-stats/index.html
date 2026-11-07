@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Padelada — статистика матча (демо)</title>
+<style>
+:root{--bg:#0A1124;--card:#141C30;--sunk:#232C45;--text:#F5F5F7;--sec:#A8AAB2;--mint:#4BE3BA;--coral:#FF5E5B;--mango:#FFA62B;--line:#2B3553}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:#05080f;color:var(--text);font-family:"Golos Text",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;font-size:16px;line-height:1.35}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--mango);outline-offset:2px;border-radius:8px}
+#app{max-width:430px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;overflow-x:hidden}
+@media(min-width:460px){#app{margin:16px auto;min-height:calc(100vh - 32px);border-radius:28px;box-shadow:0 0 0 1px #1c2540}}
+.num{font-family:"Montserrat Alternates","Golos Text",system-ui,sans-serif;font-weight:700}
+.status{display:flex;justify-content:space-between;padding:14px 24px 0;font-weight:700;font-size:15px;height:40px}
+.nav{display:grid;grid-template-columns:96px 1fr 96px;align-items:center;height:48px;padding:0 8px}
+.nav .t{text-align:center;font-weight:700;font-size:17px}
+.nav .back{color:var(--mango);font-weight:700;min-height:44px;min-width:44px;text-align:left;padding-left:8px;font-size:17px}
+.nav .share{justify-self:end;width:44px;height:44px;display:grid;place-items:center;color:var(--mango)}
+.banner{margin:4px 16px 12px;padding:8px;text-align:center;font-weight:700;font-size:14px;color:var(--mango);background:rgba(255,166,43,.16);border:1px solid rgba(255,166,43,.45);border-radius:14px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);margin:0 16px 12px;padding:3px;background:var(--card);border-radius:14px}
+.tabs button{min-height:44px;border-radius:11px;font-size:14px;font-weight:600;color:var(--sec)}
+@media(min-width:400px){.tabs button{font-size:15px}}
+.tabs button[aria-current=page]{background:var(--sunk);color:var(--text)}
+.pad{padding:0 16px 40px}
+.card{background:var(--card);border-radius:20px;padding:16px;margin-bottom:12px}
+h2.sec{font-family:"Montserrat Alternates","Golos Text",sans-serif;font-size:22px;margin:20px 0 12px;display:flex;align-items:center;gap:8px}
+.q{min-width:44px;min-height:44px;display:inline-grid;place-items:center;margin:-8px -8px -8px auto}
+.q span{width:28px;height:28px;border:2px solid var(--mango);color:var(--mango);border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:15px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.tile{background:var(--card);border-radius:18px;padding:14px;min-height:118px}
+.tile .l{color:var(--sec);font-size:14px}.tile .v{font-size:22px;margin:6px 0 2px}.tile .s{color:var(--sec);font-size:14px}
+.kicker{font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--sec);display:flex;align-items:center}
+.picker{display:flex;gap:8px;align-items:center;padding:0 16px 12px}
+.picker button{width:48px;height:48px;border-radius:50%;padding:0;border:3px solid transparent;overflow:hidden;opacity:.7}
+.picker button[aria-pressed=true]{border-color:var(--mint);opacity:1}
+.picker img{width:100%;height:100%;object-fit:cover;display:block}
+.picker .cap{color:var(--sec);font-size:14px;margin-left:8px}
+.hero{display:flex;gap:14px;align-items:center}
+.hero img{width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid var(--mint)}
+.hero.us img{border-color:var(--mint)}.hero.them img{border-color:var(--coral)}
+.hero h1{margin:0;font-family:"Montserrat Alternates",sans-serif;font-size:32px;color:var(--mint)}
+.hero.them h1{color:var(--coral)}
+.hero p{margin:2px 0 6px;color:var(--sec);font-size:14px}
+.badge{display:inline-block;background:var(--mango);color:#1a1200;font-weight:800;font-size:14px;border-radius:10px;padding:2px 10px}
+.bar{height:14px;border-radius:7px;background:var(--sunk);overflow:hidden;margin:12px 0}
+.bar i{display:block;height:100%;background:var(--mint);border-radius:7px}
+.row2{display:flex;justify-content:space-between;font-weight:700;gap:8px}
+.big{font-family:"Montserrat Alternates",sans-serif;font-size:44px;color:var(--mango);font-weight:800;margin:6px 0}
+.note{color:var(--sec);font-size:14px}
+.zone{display:grid;grid-template-columns:128px 1fr 56px;gap:8px;align-items:center;margin:10px 0;font-size:14px}
+.zone .tr{height:12px;background:var(--sunk);border-radius:6px;overflow:hidden}.zone .tr i{display:block;height:100%;border-radius:6px}
+.zone b{text-align:right}
+.scorecard h1{margin:0 0 10px;font-family:"Montserrat Alternates",sans-serif;font-size:24px;color:var(--mint)}
+.pairrow{display:flex;align-items:center;gap:10px;margin:8px 0;font-weight:700}
+.pairrow .av{display:flex}.pairrow .av img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--card);margin-right:-10px}
+.pairrow .nm{flex:1;margin-left:12px}.pairrow .sc{display:flex;gap:14px;font-size:24px;font-family:"Montserrat Alternates",sans-serif}
+.sc .w{color:var(--mint)}.sc .l{color:var(--coral)}
+.chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:0 16px 8px}
+.chips button{min-height:44px;border-radius:22px;background:var(--card);color:var(--sec);font-size:14px;font-weight:600;padding:0 2px}
+.chips button[aria-pressed=true]{background:var(--mint);color:#04241b;font-weight:800}
+.setcap{font-family:"Montserrat Alternates",sans-serif;font-size:22px;margin:18px 0 10px}
+.chart{display:block;width:100%;height:auto;overflow:visible}
+.chart text{fill:var(--sec);font-size:16px;font-family:"Golos Text",system-ui,sans-serif}
+.game{display:grid;grid-template-columns:24px 40px 1fr auto;gap:10px;align-items:center;padding:8px 0;min-height:56px;scroll-margin-top:12px}
+.game>span:first-child{color:var(--sec);font-size:14px;text-align:center}
+.game img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.game .a{font-weight:700}.game .b{color:var(--sec);font-size:14px}
+.game .r{font-family:"Montserrat Alternates",sans-serif;font-weight:800;font-size:20px}
+.game .r.us{color:var(--mint)}.game .r.them{color:var(--coral)}
+.game.tp{background:#3a2c0b;border-radius:14px;padding-left:8px;padding-right:8px;outline:2px solid var(--mango)}
+.tplabel{color:var(--mango);font-weight:700;text-align:center;margin:2px 0 6px}
+.flash{animation:fl 1.6s}
+@keyframes fl{0%,60%{box-shadow:0 0 0 4px var(--mango)}100%{box-shadow:none}}
+.mrow{display:flex;gap:12px;align-items:center;width:100%;text-align:left;min-height:64px;padding:10px 14px;background:var(--card);border-radius:18px;margin-bottom:10px}
+.mrow .d{width:64px;color:var(--sec);font-size:14px}.mrow .t{flex:1;font-weight:600}.mrow .sc2{font-size:14px;color:var(--sec);text-align:right}
+.mrow.win .t{color:var(--text)}
+.pimg{position:relative;width:100%}.pimg img{display:block;width:100%;height:auto}
+.hs{position:absolute;display:block;background:transparent;border-radius:12px}
+.hs:focus-visible{outline:3px solid var(--mango);outline-offset:-3px}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);max-width:min(398px,calc(100vw - 32px));background:#F5F5F7;color:#0A1124;font-weight:700;border-radius:16px;padding:14px 18px;z-index:50;text-align:center;box-shadow:0 8px 30px #000a}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:40;display:flex;justify-content:center;align-items:flex-end}
+.sheet{width:100%;max-width:430px;max-height:88vh;overflow:auto;background:var(--bg);border-radius:28px 28px 0 0;padding:12px 24px 32px;border-top:1px solid var(--line)}
+.sheet .grab{width:44px;height:5px;background:var(--sunk);border-radius:3px;margin:0 auto 10px}
+.sheet header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.sheet h2{font-family:"Montserrat Alternates",sans-serif;font-size:26px;margin:0}
+.sheet .x{width:44px;height:44px;font-size:26px;color:var(--text)}
+.def{padding:14px 10px;border-bottom:1px solid var(--line);border-radius:12px}
+.def h3{margin:0 0 6px;font-size:18px}.def p{margin:0;color:var(--sec);font-size:16px}
+.def.on{background:rgba(255,166,43,.12);outline:2px solid var(--mango)}
+.share-card{padding:20px;background:linear-gradient(160deg,#16223f,#0e1730);border:1px solid var(--line)}
+.btn{display:block;width:100%;min-height:52px;border-radius:16px;font-weight:800;font-size:17px;margin-top:12px}
+.btn.p{background:var(--mint);color:#04241b}.btn.s{background:var(--card);border:1px solid var(--line)}
+.stand{width:100%;border-collapse:collapse;font-size:14px}.stand td,.stand th{padding:10px 4px;text-align:right}.stand td:nth-child(2),.stand th:nth-child(2){text-align:left}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="data.js"></script>
+<script>
+window.HOT={"overview": {"promax": {"w": 430, "h": 1384, "rects": [{"id": "back", "x": 8, "y": 61, "w": 79, "h": 44}, {"id": "share", "x": 378, "y": 61, "w": 44, "h": 44}, {"id": "tab-0", "x": 19, "y": 150, "w": 98, "h": 44}, {"id": "tab-1", "x": 117, "y": 150, "w": 98, "h": 44}, {"id": "tab-2", "x": 215, "y": 150, "w": 98, "h": 44}, {"id": "tab-3", "x": 313, "y": 150, "w": 98, "h": 44}, {"id": "def-mvp", "x": 122, "y": 454, "w": 44, "h": 44}, {"id": "def-turn", "x": 212, "y": 620, "w": 44, "h": 44}, {"id": "open-timeline-turn", "x": 32, "y": 748, "w": 366, "h": 44}, {"id": "def-comeback", "x": 98, "y": 812, "w": 44, "h": 44}, {"id": "open-share", "x": 16, "y": 1236, "w": 398, "h": 78}]}, "se": {"w": 375, "h": 1347, "rects": [{"id": "back", "x": 8, "y": 22, "w": 79, "h": 44}, {"id": "share", "x": 323, "y": 22, "w": 44, "h": 44}, {"id": "tab-0", "x": 19, "y": 111, "w": 84, "h": 44}, {"id": "tab-1", "x": 103, "y": 111, "w": 84, "h": 44}, {"id": "tab-2", "x": 188, "y": 111, "w": 84, "h": 44}, {"id": "tab-3", "x": 272, "y": 111, "w": 84, "h": 44}, {"id": "def-mvp", "x": 122, "y": 415, "w": 44, "h": 44}, {"id": "def-turn", "x": 212, "y": 581, "w": 44, "h": 44}, {"id": "open-timeline-turn", "x": 32, "y": 709, "w": 311, "h": 44}, {"id": "def-comeback", "x": 98, "y": 773, "w": 44, "h": 44}, {"id": "open-share", "x": 16, "y": 1233, "w": 343, "h": 78}]}, "std390": {"w": 390, "h": 1408, "rects": [{"id": "back", "x": 8, "y": 49, "w": 79, "h": 44}, {"id": "share", "x": 338, "y": 49, "w": 44, "h": 44}, {"id": "tab-0", "x": 19, "y": 138, "w": 88, "h": 44}, {"id": "tab-1", "x": 107, "y": 138, "w": 88, "h": 44}, {"id": "tab-2", "x": 195, "y": 138, "w": 88, "h": 44}, {"id": "tab-3", "x": 283, "y": 138, "w": 88, "h": 44}, {"id": "def-mvp", "x": 122, "y": 442, "w": 44, "h": 44}, {"id": "def-turn", "x": 212, "y": 608, "w": 44, "h": 44}, {"id": "open-timeline-turn", "x": 32, "y": 736, "w": 326, "h": 44}, {"id": "def-comeback", "x": 98, "y": 800, "w": 44, "h": 44}, {"id": "open-share", "x": 16, "y": 1260, "w": 358, "h": 78}]}}, "players": {"promax": {"w": 430, "h": 1102, "rects": [{"id": "back", "x": 8, "y": 61, "w": 79, "h": 44}, {"id": "share", "x": 378, "y": 61, "w": 44, "h": 44}, {"id": "tab-0", "x": 19, "y": 150, "w": 98, "h": 44}, {"id": "tab-1", "x": 117, "y": 150, "w": 98, "h": 44}, {"id": "tab-2", "x": 215, "y": 150, "w": 98, "h": 44}, {"id": "tab-3", "x": 313, "y": 150, "w": 98, "h": 44}, {"id": "player-3", "x": 16, "y": 490, "w": 398, "h": 120}, {"id": "player-4", "x": 16, "y": 622, "w": 398, "h": 98}, {"id": "player-1", "x": 16, "y": 732, "w": 398, "h": 98}, {"id": "player-2", "x": 16, "y": 842, "w": 398, "h": 119}]}, "se": {"w": 375, "h": 1029, "rects": [{"id": "back", "x": 8, "y": 22, "w": 79, "h": 44}, {"id": "share", "x": 323, "y": 22, "w": 44, "h": 44}, {"id": "tab-0", "x": 19, "y": 111, "w": 84, "h": 44}, {"id": "tab-1", "x": 103, "y": 111, "w": 84, "h": 44}, {"id": "tab-2", "x": 188, "y": 111, "w": 84, "h": 44}, {"id": "tab-3", "x": 272, "y": 111, "w": 84, "h": 44}, {"id": "player-3", "x": 16, "y": 451, "w": 343, "h": 120}, {"id": "player-4", "x": 16, "y": 583, "w": 343, "h": 98}, {"id": "player-1", "x": 16, "y": 693, "w": 343, "h": 98}, {"id": "player-2", "x": 16, "y": 803, "w": 343, "h": 119}]}, "std390": {"w": 390, "h": 1090, "rects": [{"id": "back", "x": 8, "y": 49, "w": 79, "h": 44}, {"id": "share", "x": 338, "y": 49, "w": 44, "h": 44}, {"id": "tab-0", "x": 19, "y": 138, "w": 88, "h": 44}, {"id": "tab-1", "x": 107, "y": 138, "w": 88, "h": 44}, {"id": "tab-2", "x": 195, "y": 138, "w": 88, "h": 44}, {"id": "tab-3", "x": 283, "y": 138, "w": 88, "h": 44}, {"id": "player-3", "x": 16, "y": 478, "w": 358, "h": 120}, {"id": "player-4", "x": 16, "y": 610, "w": 358, "h": 98}, {"id": "player-1", "x": 16, "y": 720, "w": 358, "h": 98}, {"id": "player-2", "x": 16, "y": 830, "w": 358, "h": 119}]}}, "company": {"promax": {"w": 430, "h": 1699, "rects": [{"id": "back", "x": 8, "y": 61, "w": 79, "h": 44}, {"id": "share", "x": 378, "y": 61, "w": 44, "h": 44}, {"id": "tab-0", "x": 19, "y": 150, "w": 98, "h": 44}, {"id": "tab-1", "x": 117, "y": 150, "w": 98, "h": 44}, {"id": "tab-2", "x": 215, "y": 150, "w": 98, "h": 44}, {"id": "tab-3", "x": 313, "y": 150, "w": 98, "h": 44}, {"id": "def-rating", "x": 195, "y": 284, "w": 44, "h": 44}]}, "se": {"w": 375, "h": 1626, "rects": [{"id": "back", "x": 8, "y": 22, "w": 79, "h": 44}, {"id": "share", "x": 323, "y": 22, "w": 44, "h": 44}, {"id": "tab-0", "x": 19, "y": 111, "w": 84, "h": 44}, {"id": "tab-1", "x": 103, "y": 111, "w": 84, "h": 44}, {"id": "tab-2", "x": 188, "y": 111, "w": 84, "h": 44}, {"id": "tab-3", "x": 272, "y": 111, "w": 84, "h": 44}, {"id": "def-rating", "x": 195, "y": 245, "w": 44, "h": 44}]}, "std390": {"w": 390, "h": 1687, "rects": [{"id": "back", "x": 8, "y": 49, "w": 79, "h": 44}, {"id": "share", "x": 338, "y": 49, "w": 44, "h": 44}, {"id": "tab-0", "x": 19, "y": 138, "w": 88, "h": 44}, {"id": "tab-1", "x": 107, "y": 138, "w": 88, "h": 44}, {"id": "tab-2", "x": 195, "y": 138, "w": 88, "h": 44}, {"id": "tab-3", "x": 283, "y": 138, "w": 88, "h": 44}, {"id": "def-rating", "x": 195, "y": 272, "w": 44, "h": 44}]}}, "share": {"promax": {"w": 430, "h": 932, "rects": [{"id": "back", "x": 8, "y": 61, "w": 68, "h": 44}, {"id": "share", "x": 378, "y": 61, "w": 44, "h": 44}, {"id": "share-send", "x": 16, "y": 506, "w": 398, "h": 52}, {"id": "share-save", "x": 18, "y": 586, "w": 394, "h": 52}]}, "se": {"w": 375, "h": 667, "rects": [{"id": "back", "x": 8, "y": 22, "w": 68, "h": 44}, {"id": "share", "x": 323, "y": 22, "w": 44, "h": 44}, {"id": "share-send", "x": 16, "y": 467, "w": 343, "h": 52}, {"id": "share-save", "x": 18, "y": 547, "w": 339, "h": 52}]}, "std390": {"w": 390, "h": 844, "rects": [{"id": "back", "x": 8, "y": 49, "w": 68, "h": 44}, {"id": "share", "x": 338, "y": 49, "w": 44, "h": 44}, {"id": "share-send", "x": 16, "y": 494, "w": 358, "h": 52}, {"id": "share-save", "x": 18, "y": 574, "w": 354, "h": 52}]}}};
+</script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+{
+ "status": "PROSPECTIVE ONLY \u2014 nothing published; publication awaits original native approval handled separately by parent/Manager",
+ "note": "Clean runnable set: index.html + assets/ + png/ (relative paths, no external deps). Excludes screenshots/, sheets/, tests/, REPORT.md, DESIGN_SPEC_ru.md, prototype_manifest.json (hit rects embedded in index.html).",
+ "files": [
+  {
+   "path": "FONTS_LICENSES.txt",
+   "bytes": 262,
+   "sha256": "7732a23007a172a5096285778e3757ddcdeefc95017ed8e14a6fd63d320a3525"
+  },
+  {
+   "path": "assets/avatar/paddi_avatar_24pt@1x.png",
+   "bytes": 1763,
+   "sha256": "5914e792877b46369cc69654d0b4b7be9ab07037d8a0c117e1f4a97b3aa03871"
+  },
+  {
+   "path": "assets/avatar/paddi_avatar_24pt@2x.png",
+   "bytes": 5394,
+   "sha256": "663874f271721f0e5245b4b4583b5700c3cc76deb78f11634fe7281f5eec1fff"
+  },
+  {
+   "path": "assets/avatar/paddi_avatar_24pt@3x.png",
+   "bytes": 9973,
+   "sha256": "9888e789eef3130e6d741006bda4af7cb307ed006f3bb393b77bb300bed0201a"
+  },
+  {
+   "path": "assets/avatar/paddi_avatar_32pt@1x.png",
+   "bytes": 2819,
+   "sha256": "bde67f45c1e5d6c3d4e7a050b471037964cfdefaf2710f01467415a12316bf3e"
+  },
+  {
+   "path": "assets/avatar/paddi_avatar_32pt@2x.png",
+   "bytes": 8364,
+   "sha256": "19504b0357bd9b7807243cab65c1fc82c6b20a0d4be6fd171fbde5e4abc35bdb"
+  },
+  {
+   "path": "assets/avatar/paddi_avatar_32pt@3x.png",
+   "bytes": 16056,
+   "sha256": "36b44c06f8c0b5dae0940afb46533f164dcbf8beeec8c26a2a17be912a53b7a6"
+  },
+  {
+   "path": "assets/avatar/paddi_avatar_40pt@1x.png",
+   "bytes": 3912,
+   "sha256": "ef5df2faa6911566cbd7407caf0fbafe6702fe4f99b4e06901ac2abbf56d89cb"
+  },
+  {
+   "path": "assets/avatar/paddi_avatar_40pt@2x.png",
+   "bytes": 11937,
+   "sha256": "d22bdc636c565ac9e9c442553d268be00cee8ce29070cacc79a72eb32bd982c6"
+  },
+  {
+   "path": "assets/avatar/paddi_avatar_40pt@3x.png",
+   "bytes": 22871,
+   "sha256": "e8fbcf29dcd6b163f5b7f9e389ae9751c9e74a7af7a0b018fc7944d8c3524865"
+  },
+  {
+   "path": "assets/avatar/paddi_avatar_64pt@1x.png",
+   "bytes": 8364,
+   "sha256": "19504b0357bd9b7807243cab65c1fc82c6b20a0d4be6fd171fbde5e4abc35bdb"
+  },
+  {
+   "path": "assets/avatar/paddi_avatar_64pt@2x.png",
+   "bytes": 25236,
+   "sha256": "d01ef0ecfecf7e889086daddf62f340f2e40dd7d02258cf99d9c2907595945ad"
+  },
+  {
+   "path": "assets/avatar/paddi_avatar_64pt@3x.png",
+   "bytes": 47589,
+   "sha256": "66ed2284dde69293f8b6e271156ee2fae817f6f775e978784d5fde7e6c43d3b9"
+  },
+  {
+   "path": "assets/illustrations/paddi_apologetic_1024.png",
+   "bytes": 926830,
+   "sha256": "41a08e1722c841dc469dfa71bb81e80491b5363adfb5fe8409a92cb77e94a8b8"
+  },
+  {
+   "path": "assets/illustrations/paddi_apologetic_1024_on-navy.png",
+   "bytes": 786128,
+   "sha256": "d4509ce050a7a5f0178b708bbe5d200b4e99a91dfc790be9f2c62fce593624a6"
+  },
+  {
+   "path": "assets/illustrations/paddi_happy_1024.png",
+   "bytes": 931920,
+   "sha256": "946dd7195bfea3f7b6f668f7984b964ea98402f4116d88a44982237dcb632b7f"
+  },
+  {
+   "path": "assets/illustrations/paddi_happy_1024_on-navy.png",
+   "bytes": 790810,
+   "sha256": "a32983fcca74a260a25a746ddff7160c7d87d98a57a612366ad86d869bbbd2b4"
+  },
+  {
+   "path": "assets/illustrations/paddi_neutral_1024.png",
+   "bytes": 911952,
+   "sha256": "da48143dfd19b1e9de94a4d59ed0078cce7eae4f67527e58b7c498c1341fa15d"
+  },
+  {
+   "path": "assets/illustrations/paddi_neutral_1024_on-navy.png",
+   "bytes": 772837,
+   "sha256": "de1771d9d84c6723578f731c9b6e970d84486f21a4e9e1dcdefc268f6de0d778"
+  },
+  {
+   "path": "assets/illustrations/paddi_thinking_1024.png",
+   "bytes": 941297,
+   "sha256": "294173cd220eec39c9cb2eee71adaa18c034e20ed9f1b4b86668d81d51cbcc5e"
+  },
+  {
+   "path": "assets/illustrations/paddi_thinking_1024_on-navy.png",
+   "bytes": 799893,
+   "sha256": "4753199e171c6621b8c35128a6ee9c7d03197542ac0e0b7672c7eacfd3dc07c5"
+  },
+  {
+   "path": "assets/typing_dots_sprite_4frames@3x.png",
+   "bytes": 3146,
+   "sha256": "71030ba84386d0cb9f15ddc18c1376053ab5ee98a44c1d333d77d6e4969cfa4c"
+  },
+  {
+   "path": "index.html",
+   "bytes": 22997,
+   "sha256": "d5e29228d9d098ffbcae03c8d9880226f3d4b933041f89dce3f4d755181f2fa5"
+  },
+  {
+   "path": "png/01_paddi-hello__promax.png",
+   "bytes": 1227455,
+   "sha256": "465e77cc9ee7056e1a950b087527d66f6081d6cb3b91231cfc6041bd23558567"
+  },
+  {
+   "path": "png/01_paddi-hello__se.png",
+   "bytes": 830128,
+   "sha256": "2edaffce5a13bd25289baaaf47b32857af1020a3965e686f64a98f1768baaf97"
+  },
+  {
+   "path": "png/02_paddi-whatcan__promax.png",
+   "bytes": 650407,
+   "sha256": "7263112b5c66ac5ba87c2215c84d03bd030f1251fe98e1396837c08661694416"
+  },
+  {
+   "path": "png/02_paddi-whatcan__se.png",
+   "bytes": 315459,
+   "sha256": "6dced3a5d977c6108bfe01cf6a6653723a39ed4f92bd802bd18fe4a0b55cd818"
+  },
+  {
+   "path": "png/03_paddi-draft__promax.png",
+   "bytes": 795785,
+   "sha256": "d78efa0fcd3fee6dbfe8f1b5a996fa77c2a3e2bae676a3302b7c83718760db53"
+  },
+  {
+   "path": "png/03_paddi-draft__se.png",
+   "bytes": 519487,
+   "sha256": "02e5b3743649541ea36c5074082a6e024fecc010d766916670d8a28b607f1e3b"
+  },
+  {
+   "path": "png/04_paddi-attach__promax.png",
+   "bytes": 453747,
+   "sha256": "a52f31f4098445b4d1d43bd29d60761b9c0acaea37f18ebdf5ee2a0939d9db2d"
+  },
+  {
+   "path": "png/04_paddi-attach__se.png",
+   "bytes": 310579,
+   "sha256": "d604b42563c075214cb088d8ae2b1c81b4123cf9a1ca0ed9cd07663413ec1785"
+  },
+  {
+   "path": "png/05_typing__promax.png",
+   "bytes": 913673,
+   "sha256": "252bf02a7523ee05d4b92c7d4304ac100f470efbd04ef718fc1c21f3df8548e5"
+  },
+  {
+   "path": "png/05_typing__se.png",
+   "bytes": 672316,
+   "sha256": "949387b611c535930f1270919f0fabbdde00029130330149402fb246973faca8"
+  },
+  {
+   "path": "png/06_empty-saved__promax.png",
+   "bytes": 1140066,
+   "sha256": "e928a5f1fdc6f90e1c360cd277b704cad85ff269f24e4a45766808c6ad8bf094"
+  },
+  {
+   "path": "png/06_empty-saved__se.png",
+   "bytes": 739358,
+   "sha256": "d2800c2781423c6f6e1003d6fc9b86057c300cbdf69d250d8dd195f659dc8cbd"
+  },
+  {
+   "path": "png/07_limit__promax.png",
+   "bytes": 833264,
+   "sha256": "c5eb4b076d37b0db83a75ae702c26a7c484d7e34531a90406e4f54da91865934"
+  },
+  {
+   "path": "png/07_limit__se.png",
+   "bytes": 502478,
+   "sha256": "ac9b6d2f7b6071cd93df181700dad6c049532c4444074d1ab5e8705d169ac7d5"
+  }
+ ]
+}
