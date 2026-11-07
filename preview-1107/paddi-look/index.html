@@ -245,7 +245,7 @@ function renderChip(){
  w.innerHTML='<button class="chip" id="chipb">Del chat «'+esc(ctx.n)+'»</button><button class="chipx" id="chipx" aria-label="Quitar contexto">✕</button>';
  s.appendChild(w);
  $('#chipb').onclick=function(){openSheet('ctx')};
- $('#chipx').onclick=function(){var el=$('#chipw');if(el)el.remove();ctx=null}}
+ $('#chipx').onclick=function(){s.innerHTML='';ctx=null}}
 function renderInput(){
  var out=S.left<=0&&S.msgs.length&&S.msgs[S.msgs.length-1].limit;
  var inp=$('#inp'),has=inp.value.trim().length>0;
@@ -321,5 +321,7 @@ $('#hm').onclick=function(){openSheet('menu')};
 var _show=show;show=function(v){_show(v);if(v==='chats')renderChats()};
 $('#tabs').addEventListener('click',function(e){if(e.target.closest('button[data-tab="chats"]'))renderChats()});
 renderChats();show('chats');
+/* воспроизводимый вход: ?state=chip — экран Paddi с контекстным чипом «Del chat …» */
+if(/[?&]state=chip\b/.test(location.search)){ctx=GROUPS[0];$('#gname').textContent=ctx.n;show('paddi')}
 })();
 </script></body></html>

@@ -63,10 +63,12 @@ ol{margin:0;padding-left:20px;font-size:14px;color:var(--mu)}
 <button class="ctl" id="shot">Ir a pantalla de sorteo</button>
 <ol><li>«Empezar»: el reloj sortea el saque solo y empieza el partido con seguimiento y estadísticas.</li><li>«Sorteo»: los jugadores ya lo sortearon (pala/moneda); eliges quién saca en cada pareja.</li><li>«Solo marcador» (también en «¿Quién saca?»): solo puntos. Desde el seguimiento (···) se pide confirmación y no se vuelve hasta un set nuevo.</li></ol></div>
 </aside>
-<script src="logic.js"></script>
+<script src="logic.js?v=1107b"></script>
 <script>
 (function(){
+if(!window.WatchLogic||!WatchLogic.createEngine){document.getElementById('log').textContent='Error: logic.js no se cargó. Recarga la página.';return}
 var L=WatchLogic,E=L.createEngine(),S;
+['start','sorteo','soloFromStart','pick','chooseFirst','back','point'].forEach(function(m){if(typeof E[m]!=='function')document.getElementById('log').textContent='Error: logic.js desactualizado ('+m+'). Recarga la página.'});
 var P={A:[{n:'Ana',i:'AN',p:'assets/avatar_player1_illustrative.jpg'},{n:'Luis',i:'LU',p:'assets/avatar_player2_illustrative.jpg'}],
        B:[{n:'Marta',i:'MA',p:'assets/avatar_player3_illustrative.jpg'},{n:'Pablo',i:'PA',p:'assets/avatar_player4_illustrative.jpg'}]};
 var W=document.getElementById('watch'),LOG=document.getElementById('log');

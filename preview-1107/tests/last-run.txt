@@ -1,136 +1,166 @@
 TAP version 13
-# Subtest: «Sorteo» (manual) no fija A1→B1→A2→B2: primero se elige el saque
-ok 1 - «Sorteo» (manual) no fija A1→B1→A2→B2: primero se elige el saque
+# Subtest: Watch @390: Empezar (click, tap, Enter, Space) → матч
+ok 1 - Watch @390: Empezar (click, tap, Enter, Space) → матч
   ---
-  duration_ms: 2.214726
+  duration_ms: 740.862729
+  type: 'test'
+  ...
+# Subtest: Watch @390: Sorteo → ¿Quién saca? A → B → Atrás
+ok 2 - Watch @390: Sorteo → ¿Quién saca? A → B → Atrás
+  ---
+  duration_ms: 522.476731
+  type: 'test'
+  ...
+# Subtest: Watch @390: Solo marcador → 6-0 → «Estad. · parcial»
+ok 3 - Watch @390: Solo marcador → 6-0 → «Estad. · parcial»
+  ---
+  duration_ms: 669.580319
+  type: 'test'
+  ...
+# Subtest: Watch @390: кнопка «Estad. · parcial» после матча со Solo marcador
+ok 4 - Watch @390: кнопка «Estad. · parcial» после матча со Solo marcador
+  ---
+  duration_ms: 968.778047
+  type: 'test'
+  ...
+# Subtest: Paddi @390: ?state=chip показывает чип, X скрывает весь контейнер
+ok 5 - Paddi @390: ?state=chip показывает чип, X скрывает весь контейнер
+  ---
+  duration_ms: 308.761979
+  type: 'test'
+  ...
+# Subtest: «Sorteo» (manual) no fija A1→B1→A2→B2: primero se elige el saque
+ok 6 - «Sorteo» (manual) no fija A1→B1→A2→B2: primero se elige el saque
+  ---
+  duration_ms: 2.433176
   type: 'test'
   ...
 # Subtest: cola de saque: cada game pasa al siguiente jugador
-ok 2 - cola de saque: cada game pasa al siguiente jugador
+ok 7 - cola de saque: cada game pasa al siguiente jugador
   ---
-  duration_ms: 0.883877
+  duration_ms: 0.662962
   type: 'test'
   ...
 # Subtest: Atrás desde B borra la elección de A y la nueva no se acumula
-ok 3 - Atrás desde B borra la elección de A y la nueva no se acumula
+ok 8 - Atrás desde B borra la elección de A y la nueva no se acumula
   ---
-  duration_ms: 0.227119
+  duration_ms: 0.209639
   type: 'test'
   ...
 # Subtest: Atrás desde «primera pareja» borra B; desde A vuelve al menú
-ok 4 - Atrás desde «primera pareja» borra B; desde A vuelve al menú
+ok 9 - Atrás desde «primera pareja» borra B; desde A vuelve al menú
   ---
-  duration_ms: 0.15395
+  duration_ms: 0.178844
   type: 'test'
   ...
 # Subtest: Atrás en «Elegir saque» entre sets vuelve al descanso sin perder el orden
-ok 5 - Atrás en «Elegir saque» entre sets vuelve al descanso sin perder el orden
+ok 10 - Atrás en «Elegir saque» entre sets vuelve al descanso sin perder el orden
   ---
-  duration_ms: 0.336284
+  duration_ms: 0.330357
   type: 'test'
   ...
 # Subtest: «Empezar»: sorteo automático, entra directo al partido con seguimiento
-ok 6 - «Empezar»: sorteo automático, entra directo al partido con seguimiento
+ok 11 - «Empezar»: sorteo automático, entra directo al partido con seguimiento
   ---
-  duration_ms: 0.171121
+  duration_ms: 0.219531
   type: 'test'
   ...
 # Subtest: «Sorteo» no usa azar: nunca llama al generador y espera la elección manual
-ok 7 - «Sorteo» no usa azar: nunca llama al generador y espera la elección manual
+ok 12 - «Sorteo» no usa azar: nunca llama al generador y espera la elección manual
   ---
-  duration_ms: 0.137676
+  duration_ms: 0.249552
   type: 'test'
   ...
 # Subtest: «Sorteo» → «¿Quién saca?» → «Solo marcador»: solo puntos, sin saque
-ok 8 - «Sorteo» → «¿Quién saca?» → «Solo marcador»: solo puntos, sin saque
+ok 13 - «Sorteo» → «¿Quién saca?» → «Solo marcador»: solo puntos, sin saque
   ---
-  duration_ms: 0.112963
+  duration_ms: 0.139487
   type: 'test'
   ...
 # Subtest: tie-break: saque 1-2-2-2 y el siguiente set empieza quien recibió primero
-ok 9 - tie-break: saque 1-2-2-2 y el siguiente set empieza quien recibió primero
+ok 14 - tie-break: saque 1-2-2-2 y el siguiente set empieza quien recibió primero
   ---
-  duration_ms: 0.463437
+  duration_ms: 0.52403
   type: 'test'
   ...
 # Subtest: tie-break: sin importar cuántos puntos dure, el saque del set siguiente es el mismo
-ok 10 - tie-break: sin importar cuántos puntos dure, el saque del set siguiente es el mismo
+ok 15 - tie-break: sin importar cuántos puntos dure, el saque del set siguiente es el mismo
   ---
-  duration_ms: 0.404619
+  duration_ms: 0.521047
   type: 'test'
   ...
 # Subtest: set normal 6-x: el saque sigue la cola
-ok 11 - set normal 6-x: el saque sigue la cola
+ok 16 - set normal 6-x: el saque sigue la cola
   ---
-  duration_ms: 0.283817
+  duration_ms: 0.320971
   type: 'test'
   ...
 # Subtest: Solo marcador: pide confirmación y no cambia nada hasta confirmar
-ok 12 - Solo marcador: pide confirmación y no cambia nada hasta confirmar
+ok 17 - Solo marcador: pide confirmación y no cambia nada hasta confirmar
   ---
-  duration_ms: 0.147408
+  duration_ms: 0.278247
   type: 'test'
   ...
 # Subtest: Solo marcador: tracked → score conserva las estadísticas ya registradas y los puntos nuevos no las amplían
-ok 13 - Solo marcador: tracked → score conserva las estadísticas ya registradas y los puntos nuevos no las amplían
+ok 18 - Solo marcador: tracked → score conserva las estadísticas ya registradas y los puntos nuevos no las amplían
   ---
-  duration_ms: 0.093923
+  duration_ms: 0.139519
   type: 'test'
   ...
 # Subtest: Solo marcador: no hay vuelta al seguimiento a mitad de set ni deshacer hacia él
-ok 14 - Solo marcador: no hay vuelta al seguimiento a mitad de set ni deshacer hacia él
+ok 19 - Solo marcador: no hay vuelta al seguimiento a mitad de set ni deshacer hacia él
   ---
-  duration_ms: 0.064401
+  duration_ms: 0.143733
   type: 'test'
   ...
 # Subtest: Solo marcador: al volver con «Seguir con saque» solo desde el set nuevo; Atrás no activa seguimiento
-ok 15 - Solo marcador: al volver con «Seguir con saque» solo desde el set nuevo; Atrás no activa seguimiento
+ok 20 - Solo marcador: al volver con «Seguir con saque» solo desde el set nuevo; Atrás no activa seguimiento
   ---
-  duration_ms: 0.102601
+  duration_ms: 0.150177
   type: 'test'
   ...
 # Subtest: Solo marcador: no guarda agregados de games ni ofrece estadísticas al final
-ok 16 - Solo marcador: no guarda agregados de games ni ofrece estadísticas al final
+ok 21 - Solo marcador: no guarda agregados de games ni ofrece estadísticas al final
   ---
-  duration_ms: 1.103679
+  duration_ms: 4.221541
   type: 'test'
   ...
 # Subtest: seguimiento: con estadísticas disponibles
-ok 17 - seguimiento: con estadísticas disponibles
+ok 22 - seguimiento: con estadísticas disponibles
   ---
-  duration_ms: 0.150898
+  duration_ms: 0.168411
   type: 'test'
   ...
 # Subtest: Deshacer restaura puntos y saque
-ok 18 - Deshacer restaura puntos y saque
+ok 23 - Deshacer restaura puntos y saque
   ---
-  duration_ms: 0.148391
+  duration_ms: 0.12996
   type: 'test'
   ...
 # Subtest: tamaños de reloj: 4, incluido Ultra 3 211×257
-ok 19 - tamaños de reloj: 4, incluido Ultra 3 211×257
+ok 24 - tamaños de reloj: 4, incluido Ultra 3 211×257
   ---
-  duration_ms: 0.084663
+  duration_ms: 0.115155
   type: 'test'
   ...
 # Subtest: Solo marcador a mitad de seguimiento: al final hay «Estadísticas · parcial» con solo lo guardado
-ok 20 - Solo marcador a mitad de seguimiento: al final hay «Estadísticas · parcial» con solo lo guardado
+ok 25 - Solo marcador a mitad de seguimiento: al final hay «Estadísticas · parcial» con solo lo guardado
   ---
-  duration_ms: 0.179795
+  duration_ms: 0.302839
   type: 'test'
   ...
 # Subtest: matchs totalmente score-only: sin botón de estadísticas ni «parcial» de seguimiento
-ok 21 - matchs totalmente score-only: sin botón de estadísticas ni «parcial» de seguimiento
+ok 26 - matchs totalmente score-only: sin botón de estadísticas ni «parcial» de seguimiento
   ---
-  duration_ms: 0.107849
+  duration_ms: 0.199844
   type: 'test'
   ...
-1..21
-# tests 21
+1..26
+# tests 26
 # suites 0
-# pass 21
+# pass 26
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 76.070099
+# duration_ms 3709.312001
