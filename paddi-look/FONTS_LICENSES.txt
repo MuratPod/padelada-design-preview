@@ -1,0 +1,5 @@
+Fonts used in renders:
+- Golos Text — SIL Open Font License 1.1
+- Montserrat Alternates — SIL Open Font License 1.1
+Fonts are not bundled; https://openfontlicense.org
+Illustrations: AI-generated from the Padelada Paddi mascot reference; fictional character.

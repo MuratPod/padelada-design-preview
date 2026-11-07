@@ -1,0 +1,194 @@
+PASS mobile se hello->whatcan
+PASS mobile se close->hello
+PASS mobile se game->typing
+PASS mobile se typing->draft auto
+PASS mobile se create toast
+PASS mobile se draft->attach
+PASS mobile se attach-n->draft
+PASS mobile se close-attach->draft
+PASS mobile se cancel->hello
+PASS mobile se saved
+PASS mobile se back-to-chat
+PASS mobile se partner stays typing
+PASS mobile se typing stays
+PASS mobile se typing back
+PASS mobile se cap-4->typing
+PASS mobile se cap-1->hello
+PASS mobile se limit toggle
+PASS mobile se limit-ok
+PASS mobile se chip hidden
+PASS mobile se chip restored
+PASS mobile se state 01_paddi-hello loaded
+PASS mobile se 01_paddi-hello has exit
+PASS mobile no h-overflow 01_paddi-hello
+PASS mobile se state 02_paddi-whatcan loaded
+PASS mobile se 02_paddi-whatcan has exit
+PASS mobile no h-overflow 02_paddi-whatcan
+PASS mobile se state 03_paddi-draft loaded
+PASS mobile se 03_paddi-draft has exit
+PASS mobile no h-overflow 03_paddi-draft
+PASS mobile se state 04_paddi-attach loaded
+PASS mobile se 04_paddi-attach has exit
+PASS mobile no h-overflow 04_paddi-attach
+PASS mobile se state 05_typing loaded
+PASS mobile se 05_typing has exit
+PASS mobile no h-overflow 05_typing
+PASS mobile se state 06_empty-saved loaded
+PASS mobile se 06_empty-saved has exit
+PASS mobile no h-overflow 06_empty-saved
+PASS mobile se state 07_limit loaded
+PASS mobile se 07_limit has exit
+PASS mobile no h-overflow 07_limit
+PASS mobile promax hello->whatcan
+PASS mobile promax close->hello
+PASS mobile promax game->typing
+PASS mobile promax typing->draft auto
+PASS mobile promax create toast
+PASS mobile promax draft->attach
+PASS mobile promax attach-n->draft
+PASS mobile promax close-attach->draft
+PASS mobile promax cancel->hello
+PASS mobile promax saved
+PASS mobile promax back-to-chat
+PASS mobile promax partner stays typing
+PASS mobile promax typing stays
+PASS mobile promax typing back
+PASS mobile promax cap-4->typing
+PASS mobile promax cap-1->hello
+PASS mobile promax limit toggle
+PASS mobile promax limit-ok
+PASS mobile promax chip hidden
+PASS mobile promax chip restored
+PASS mobile promax state 01_paddi-hello loaded
+PASS mobile promax 01_paddi-hello has exit
+PASS mobile no h-overflow 01_paddi-hello
+PASS mobile promax state 02_paddi-whatcan loaded
+PASS mobile promax 02_paddi-whatcan has exit
+PASS mobile no h-overflow 02_paddi-whatcan
+PASS mobile promax state 03_paddi-draft loaded
+PASS mobile promax 03_paddi-draft has exit
+PASS mobile no h-overflow 03_paddi-draft
+PASS mobile promax state 04_paddi-attach loaded
+PASS mobile promax 04_paddi-attach has exit
+PASS mobile no h-overflow 04_paddi-attach
+PASS mobile promax state 05_typing loaded
+PASS mobile promax 05_typing has exit
+PASS mobile no h-overflow 05_typing
+PASS mobile promax state 06_empty-saved loaded
+PASS mobile promax 06_empty-saved has exit
+PASS mobile no h-overflow 06_empty-saved
+PASS mobile promax state 07_limit loaded
+PASS mobile promax 07_limit has exit
+PASS mobile no h-overflow 07_limit
+PASS mobile hotspot coords scale 23.0,384.0,330.0,44.0
+PASS mobile keyboard Enter
+PASS mobile keyboard Space
+PASS mobile tab moves focus
+PASS mobile typing animates frames=4
+PASS mobile reduce motion static
+PASS mobile emotion Рад
+PASS mobile emotion Нейтральный
+PASS mobile emotion Думает
+PASS mobile emotion Извиняется
+PASS mobile navy variant
+PASS mobile 4 avatars
+PASS mobile no h-overflow end
+PASS mobile zero 4xx/failed (0)
+PASS mobile no external requests (0)
+PASS desktop se hello->whatcan
+PASS desktop se close->hello
+PASS desktop se game->typing
+PASS desktop se typing->draft auto
+PASS desktop se create toast
+PASS desktop se draft->attach
+PASS desktop se attach-n->draft
+PASS desktop se close-attach->draft
+PASS desktop se cancel->hello
+PASS desktop se saved
+PASS desktop se back-to-chat
+PASS desktop se partner stays typing
+PASS desktop se typing stays
+PASS desktop se typing back
+PASS desktop se cap-4->typing
+PASS desktop se cap-1->hello
+PASS desktop se limit toggle
+PASS desktop se limit-ok
+PASS desktop se chip hidden
+PASS desktop se chip restored
+PASS desktop se state 01_paddi-hello loaded
+PASS desktop se 01_paddi-hello has exit
+PASS desktop no h-overflow 01_paddi-hello
+PASS desktop se state 02_paddi-whatcan loaded
+PASS desktop se 02_paddi-whatcan has exit
+PASS desktop no h-overflow 02_paddi-whatcan
+PASS desktop se state 03_paddi-draft loaded
+PASS desktop se 03_paddi-draft has exit
+PASS desktop no h-overflow 03_paddi-draft
+PASS desktop se state 04_paddi-attach loaded
+PASS desktop se 04_paddi-attach has exit
+PASS desktop no h-overflow 04_paddi-attach
+PASS desktop se state 05_typing loaded
+PASS desktop se 05_typing has exit
+PASS desktop no h-overflow 05_typing
+PASS desktop se state 06_empty-saved loaded
+PASS desktop se 06_empty-saved has exit
+PASS desktop no h-overflow 06_empty-saved
+PASS desktop se state 07_limit loaded
+PASS desktop se 07_limit has exit
+PASS desktop no h-overflow 07_limit
+PASS desktop promax hello->whatcan
+PASS desktop promax close->hello
+PASS desktop promax game->typing
+PASS desktop promax typing->draft auto
+PASS desktop promax create toast
+PASS desktop promax draft->attach
+PASS desktop promax attach-n->draft
+PASS desktop promax close-attach->draft
+PASS desktop promax cancel->hello
+PASS desktop promax saved
+PASS desktop promax back-to-chat
+PASS desktop promax partner stays typing
+PASS desktop promax typing stays
+PASS desktop promax typing back
+PASS desktop promax cap-4->typing
+PASS desktop promax cap-1->hello
+PASS desktop promax limit toggle
+PASS desktop promax limit-ok
+PASS desktop promax chip hidden
+PASS desktop promax chip restored
+PASS desktop promax state 01_paddi-hello loaded
+PASS desktop promax 01_paddi-hello has exit
+PASS desktop no h-overflow 01_paddi-hello
+PASS desktop promax state 02_paddi-whatcan loaded
+PASS desktop promax 02_paddi-whatcan has exit
+PASS desktop no h-overflow 02_paddi-whatcan
+PASS desktop promax state 03_paddi-draft loaded
+PASS desktop promax 03_paddi-draft has exit
+PASS desktop no h-overflow 03_paddi-draft
+PASS desktop promax state 04_paddi-attach loaded
+PASS desktop promax 04_paddi-attach has exit
+PASS desktop no h-overflow 04_paddi-attach
+PASS desktop promax state 05_typing loaded
+PASS desktop promax 05_typing has exit
+PASS desktop no h-overflow 05_typing
+PASS desktop promax state 06_empty-saved loaded
+PASS desktop promax 06_empty-saved has exit
+PASS desktop no h-overflow 06_empty-saved
+PASS desktop promax state 07_limit loaded
+PASS desktop promax 07_limit has exit
+PASS desktop no h-overflow 07_limit
+PASS desktop hotspot coords scale 23.0,384.0,330.0,44.0
+PASS desktop keyboard Enter
+PASS desktop keyboard Space
+PASS desktop tab moves focus
+PASS desktop typing animates frames=4
+PASS desktop reduce motion static
+PASS desktop emotion Рад
+PASS desktop emotion Нейтральный
+PASS desktop emotion Думает
+PASS desktop emotion Извиняется
+PASS desktop navy variant
+PASS desktop 4 avatars
+PASS desktop no h-overflow end
+PASS desktop zero 4xx/failed (0)
+PASS desktop no external requests (0)
